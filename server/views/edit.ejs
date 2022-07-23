@@ -1,0 +1,49 @@
+<% if (user){ %>
+
+    
+
+<form action="/edit-action"  method="post" enctype="multipart/form-data">
+   
+
+  
+
+    <input type="text" name="id" value="<%= user.id %>" hidden>
+
+    <input type="file" name="upload" value="<%= user.image %>"/>
+   
+    <br>
+    <img src="/<%= user.image %>" alt="" width="50px">
+    <br> <br>
+    <input type="text" name="nome" value="<%= user.nome %>">
+    <br> <br>
+    
+    <textarea name="description" id="" cols="20" rows="5"><%= user.description %></textarea>
+    <br> <br>
+    
+    <input type="text" name="preco" value="<%= user.preco %>">
+    <br> <br>
+    
+    <select name="categoria" id="">
+        <option value="">Categoria</option>
+        <option value="pizza" <%=user.categoria==='pizza' ? 'selected' : '' %>>pizza</option>
+        <option value="hamburguer" <%=user.categoria==='hamburguer' ? 'selected' : '' %>>hambúrguer</option>
+    </select>
+    <br> <br>
+    
+    <select name="destaque" id="">
+        <option value="">Destaque</option>
+        <option value="sim" <%=user.destaque==='sim' ? 'selected' : '' %>>Sim</option>
+        <option value="não" <%=user.destaque==='não' ? 'selected' : '' %>>Não</option>
+    </select>
+
+    
+    <br> <br>
+    <input type="submit" value="adicionar">
+    <button><a href="/">cancelar</a></button>
+
+
+   
+</form>
+
+<% } %>
+

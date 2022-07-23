@@ -1,0 +1,42 @@
+<style>
+    .confim{
+        opacity: 0;
+        display: none;
+    }
+</style>
+<h2>tem certeza de confirmar esse pedido?</h2>
+<% if (user){ %>
+
+<form action="/editconfim-action" method="post">
+    
+<!--        
+    <input type="text" placeholder="nome" name="nome" value="<%= user.nome %>"/>
+    <br> <br>
+    <input type="text" placeholder="cpf" name="cpf" value="<%= user.cpf %>"/>
+    
+    <br> <br> -->
+    <div class="confim">
+
+        <input type="text" name="id" value="<%= user.id %>" hidden>
+        <input type="text" placeholder="nome do produto" name="nomep" value="<%= user.nomep %>"/>
+        <br> <br>
+        <input type="text" placeholder="preço" name="preco" value="<%= user.preco %>"/>
+        <br> <br>
+        <textarea name="comment" id="" cols="20" rows="5" placeholder="adicionar um comentario"><%= user.comment %></textarea>
+        <br>
+        <input type="number" placeholder="quantidate" name="quant" value="<%= user.quant %>"/>
+        <br> <br>
+        <label for="pago">pague agora</label>
+        <input type="checkbox" placeholder="preço" name="pago" id="pago" <% if(user.pago=='on'){ %>
+            checked
+         <% } else{ %>
+           
+          <% }%>/>
+        <br> <br>
+    </div>
+
+    <input type="submit" value="comfimar">
+    <button><a href="/">cancelar</a></button>
+</form>
+
+<% } %>

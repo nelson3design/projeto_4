@@ -1,0 +1,32 @@
+<h2>adicionar item</h2>
+
+<form action="/add-action" method="post" enctype="multipart/form-data">
+    
+    <input type="file" name="upload" required="true"/>
+    <br> <br>
+    <input type="text" placeholder="nome" name="nome">
+    <br> <br>
+
+    <textarea name="description" id="" cols="20" rows="5"></textarea>
+    <br> <br>
+
+    <input type="text" placeholder="preço" name="preco">
+    <br> <br>
+
+    <select name="categoria" id="">
+        <option value="">Categoria</option>
+        <option value="pizza">pizza</option>
+        <option value="hamburguer">hambúrguer</option>
+    </select>
+    <br> <br>
+
+    <select name="destaque" id="">
+        <option value="">Destaque</option>
+        <option value="sim">Sim</option>
+        <option value="não">Não</option>
+    </select>
+    <br> <br>
+   
+    <input type="submit" value="adicionar">
+    <button><a href="/">cancelar</a></button>
+</form>

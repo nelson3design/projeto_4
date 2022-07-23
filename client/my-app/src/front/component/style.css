@@ -1,0 +1,183 @@
+header{
+background: rgb(255,0,0);
+background: linear-gradient(90deg, rgba(255,0,0,1) 0%, rgba(255,0,0,1) 15%, rgba(20,23,31,1) 15%, rgba(20,23,31,1) 69%, rgba(255,0,0,1) 69%, rgba(255,0,0,1) 100%);
+    width: 100%;
+  /* height: 50px; */
+  display: grid;
+  place-items: center;
+}
+.container{
+    width: 80%;
+}
+.nav{
+   
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 100%;
+    
+}
+
+.logo{
+    font-size: 30px;
+    color: white;
+    text-transform: uppercase;
+    font-weight: 800;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-left: 1px solid white;
+    border-right: 1px solid white;
+    padding: 0 40px;
+    height: 100%;
+    background-color: red;
+}
+.navlist {
+    
+    display: flex;
+   
+    height: 100%;
+   
+}
+
+.navlist li {
+
+  list-style: none;
+ font-size: 14px;
+color: white;
+padding: 0 40px;
+height: 100%;
+border-left: 1px solid white;
+border-right: 1px solid white;
+display: flex;
+align-items: center;
+text-transform: uppercase;
+font-weight: 500;
+gap: 10px;
+cursor: pointer;
+background-color: red;
+}
+.navlist li:hover{
+    background-color: white;
+    color: red;
+}
+.navlist li:nth-child(1){
+border-right: none;
+background-color: #14171F;
+
+}
+.navlist li:nth-child(3) {
+   border: none;
+}
+
+.navlist li:nth-child(2) {
+    color: red;
+    
+}
+.ative {
+    background-color: white!important;
+    color: red!important;
+}
+.ative:hover {
+    background-color: red!important;
+    color: white!important;
+}
+
+
+.form{
+    display: flex;
+    align-items: center;
+}
+.barra{
+    height: 30px;
+    border: none;
+    /* display: none; */
+}
+.barra:focus {
+   
+    outline: none;
+   
+}
+
+.search{
+    padding: 0 10px;
+   border: 1px solid white;
+    height: 28px;
+    display: flex;
+    align-items: center;
+}
+.semBorder{
+    padding: 0 10px;
+       
+        height: 28px;
+        display: flex;
+        align-items: center;
+}
+.star{
+    font-size: 18px;
+}
+
+.iconSearch{
+    color: red;
+    font-size: 20px;
+   margin-top: 5px;
+}
+
+.formContent{
+    display: flex;
+    align-items: center;
+}
+
+
+
+
+
+
+.swiper {
+    width: 100%;
+    height: 100%;
+}
+
+.swiper-slide {
+    text-align: center;
+    font-size: 18px;
+    background: #fff;
+
+    /* Center slide text vertically */
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: -webkit-flex;
+    display: flex;
+    -webkit-box-pack: center;
+    -ms-flex-pack: center;
+    -webkit-justify-content: center;
+    justify-content: center;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    -webkit-align-items: center;
+    align-items: center;
+}
+
+.swiper-slide img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.cardContent{
+    background-color: #5F5F5F;
+   width: 100%;
+        display: flex;
+            align-items: center;
+            justify-content: center;
+
+            padding: 50px 0 100px 0;
+}
+
+.title{
+font-size: 20px;
+color: white;
+text-transform: uppercase;
+margin-left: 20px;
+}

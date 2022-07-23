@@ -1,0 +1,94 @@
+
+
+<style>
+    .box{
+        width: 300px;
+        height: auto;
+        border: 1px solid black;
+        padding: 10px;
+    }
+
+    .title{
+        font-size: 20px;
+        font-weight: 600;
+    }
+
+    .title span{
+        font-size: 20px;
+        font-weight: 300;
+    }
+</style>
+<% resultado.slice(-1).forEach((user)=>{ %>
+   
+
+       <h2>Nome:  <%= user.nome %></h2>
+        <h2>CPF: <%= user.cpf %></h2>
+      
+    <%})%>
+
+   
+  
+
+      <% if(resultado==0){ %>
+        <h4>não tem pedido registrado nesse cpf</h4>
+     <% } else{ %>
+        <h4>meus pedidos</h4>
+      <% }%>
+   
+
+
+        <% resultado.forEach((user)=>{ %>
+            <div class="box">
+
+               <div class="title">Nome do pedido: <span> <%= user.nomep %></span></div>
+                <div class="title">Preço: R$ <span><%= user.preco %></span></div>
+                <div class="title">Comentario: <span><%= user.comment %></span></div>
+                <div class="title">Pago:
+
+                    <% if(user.pago=='on'){ %>
+                        <span>Sim</span>
+                     <% } else{ %>
+                        <span>Não</span>
+                      <% }%>
+
+                </div>
+
+                <div class="title">Confirmado: 
+                    <% if(user.confim=='off'){ %>
+                        <span>Não</span>
+                     <% } else{ %>
+                        <span>Sim</span>
+                      <% }%>
+                </div>
+
+                <div class="title">Cancelado: 
+                    <% if(user.cancelar=='off'){ %>
+                        <span>Não</span>
+                     <% } else{ %>
+                        <span>Sim</span>
+                      <% }%>
+                </div>
+
+                <div class="title">Preparado: 
+                    <% if(user.preparo=='off'){ %>
+                        <span>Não</span>
+                     <% } else{ %>
+                        <span>Sim</span>
+                      <% }%>
+                </div>
+
+                <div class="title">Entregado: 
+                    <% if(user.entrega=='off'){ %>
+                        <span>Não</span>
+                     <% } else{ %>
+                        <span>Sim</span>
+                      <% }%>
+                </div>
+                <div class="title">Data: <span><%= user.data %></span></div>
+
+                
+            
+            </div>
+            <br>
+            <%})%>
+ 

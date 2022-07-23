@@ -1,0 +1,58 @@
+
+
+<form action="/item" method="get">
+    <input type="search" placeholder="search..." name="q">
+    <input type="submit" value="search">
+</form>
+
+<button>
+
+    <a href="/adicionar">Adicionar</a>
+</button>
+</br>
+<table width="100%"; border="1";>
+    <thead>
+       <tr>
+           <td>Id</td>
+        <td>Imagem</td>
+           <td>Nome</td>
+           <td>Descrição</td>
+           <td>Preço</td>
+            <td>Categoria</td>
+           <td>Destaque</td>
+        <td>Ações</td>
+       </tr>
+    </thead>
+
+    <tbody>
+        <% resultado.forEach((user)=>{ %>
+
+            <tr>
+                <td><%= user.id %></td>
+                <td>
+                    <img src="<%= user.image %>" width="50px" alt="">
+                </td>
+                <td><%= user.nome %></td>
+                <td><%= user.description %></td>
+                <td><%= user.preco %></td>
+                <td>
+                    <%= user.categoria %>
+                </td>
+                <td>
+                    <%= user.destaque %>
+                </td>
+               <td>
+                   <button>
+
+                       <a href="/edit-action/<%= user.id %>">editar</a>
+                   </button>
+                   <button>
+
+                       <a href="/delete-action/<%= user.id %>" onclick=" return confirm('tem certeza de excluir esse usuario?')">excluir</a>
+                   </button>
+               </td>
+            
+            </tr>
+        <%})%>
+    </tbody>
+</table>
