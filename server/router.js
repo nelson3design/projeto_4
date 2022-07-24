@@ -71,6 +71,25 @@ router.get('/', function (req, res){
 })
 
 
+
+
+// produtos em destaques
+router.get('/destaque', function (req, res){
+
+    const destaque="sim"
+    
+    conn.query('SELECT * FROM tb_user WHERE destaque=? ORDER BY id DESC',[destaque], (error, result)=>{
+        if(error){
+            throw error;
+        }else{
+    
+           res.send(result)
+
+        }
+    })
+})
+
+
 // selecionar 1 item
 
 // router.get('/:id',(req, res)=>{
@@ -98,7 +117,6 @@ router.get('/', function (req, res){
 router.get('/item',(req, res)=>{
       
        const q= req.query.q
-      
 
     conn.query("SELECT * FROM tb_user WHERE nome LIKE '%"+q+"%'",(error, result)=>{
       
@@ -106,8 +124,8 @@ router.get('/item',(req, res)=>{
             throw error
         }else{
 
-             res.render('index', {resultado: result})
-
+            res.json(result)
+    
            
         }
     })
