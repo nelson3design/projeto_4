@@ -80,7 +80,9 @@ axios.post("http://localhost:5000/edit-action/"+id, formdata,{
 })
 
   return (
-    <div className="App">
+    
+    <div className="listas">
+
       <h2 className="title">editar item</h2>
 
       <form onSubmit={handleSubmit} enctype="multipart/form-data">
@@ -122,6 +124,8 @@ axios.post("http://localhost:5000/edit-action/"+id, formdata,{
           <option value="">Categoria</option>
           <option value="pizza">pizza</option>
           <option value="hamburguer">hambúrguer</option>
+          <option value="bebida">bebida</option>
+          
         </select>
         <br></br>
         <br></br>
@@ -138,7 +142,10 @@ axios.post("http://localhost:5000/edit-action/"+id, formdata,{
            <button className="btnAtion1 btnAtion">cancel</button>
           </Link>
       </form>
-    </div>
+        <div className="listasContent container">
+
+        </div>
+        </div>
   );
 }
 

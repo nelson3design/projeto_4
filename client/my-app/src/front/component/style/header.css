@@ -1,0 +1,184 @@
+header {
+    background: rgb(255, 0, 0);
+    background: linear-gradient(90deg, rgba(255, 0, 0, 1) 0%, rgba(255, 0, 0, 1) 15%, rgba(20, 23, 31, 1) 15%, rgba(20, 23, 31, 1) 69%, rgba(255, 0, 0, 1) 69%, rgba(255, 0, 0, 1) 100%);
+    width: 100%;
+    /* height: 50px; */
+    display: grid;
+    place-items: center;
+}
+
+.container {
+    width: 80%;
+}
+
+.nav {
+
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 100%;
+
+}
+
+.logo {
+    font-size: 30px;
+    color: white;
+    text-transform: uppercase;
+    font-weight: 800;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-left: 1px solid white;
+    border-right: 1px solid white;
+    padding: 0 40px;
+    height: 100%;
+    background-color: red;
+    text-decoration: none;
+}
+
+.navlist {
+
+    display: flex;
+
+    height: 100%;
+
+}
+
+.navlist li {
+
+    list-style: none;
+    font-size: 14px;
+    color: white;
+    padding: 0 40px;
+    height: 100%;
+    border-left: 1px solid white;
+    border-right: 1px solid white;
+    display: flex;
+    align-items: center;
+    text-transform: uppercase;
+    font-weight: 500;
+    gap: 10px;
+    cursor: pointer;
+    background-color: red;
+    width: 100%;
+}
+.navlist li a{
+    gap: 10px;
+   display: flex;
+    align-items: center;
+    text-decoration: none;
+    height: 100%;
+  
+}
+
+.navlist li:hover {
+    background-color: white;
+    color: red!important;
+}
+.navlist li:hover a {
+   
+    color: red;
+}
+
+.navlist li:nth-child(1) {
+    border-right: none;
+    background-color: #14171F;
+
+}
+
+.navlist li:nth-child(3) {
+    border: none;
+}
+
+.navlist li:nth-child(2) {
+    color: red;
+
+}
+
+.ative {
+    background-color: white !important;
+    color: red;
+}
+.ative a {
+   
+    color: red;
+}
+.ative:hover {
+    background-color: red !important;
+    color: white !important;
+}
+.ative:hover a {
+   
+    color: white !important;
+}
+
+.form {
+    display: flex;
+    align-items: center;
+}
+
+.barra {
+    height: 30px;
+    border: none;
+    /* display: none; */
+    width: 200px;
+    transition: all 0.3s;
+}
+
+.hideBarra {
+    width: 0px;
+    border: none;
+   transition: all 0.3s;
+   outline: none;
+   padding: 0;
+    height: 30px;
+}
+
+.barra:focus {
+
+    outline: none;
+
+}
+
+.search {
+    padding: 0 10px;
+    border: 1px solid white;
+    height: 28px;
+    display: flex;
+    align-items: center;
+}
+
+.semBorder {
+    padding: 0 10px;
+
+    height: 28px;
+    display: flex;
+    align-items: center;
+}
+
+.star {
+    font-size: 18px;
+}
+
+.iconSearch {
+    color: red;
+    font-size: 20px;
+    margin-top: 5px;
+}
+
+.formContent {
+    display: flex;
+    align-items: center;
+}
+
+a{
+    color: white;
+}
+
+
+.navlist li a {
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}

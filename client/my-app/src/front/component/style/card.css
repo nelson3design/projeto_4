@@ -3,10 +3,14 @@
 }
 
 .cardBase{
-    width: 300px;
+    width: 270px;
     height: auto;
     border-radius: 10px;
     overflow: hidden;
+}
+
+.linkHover:hover{
+    opacity: 0.5;
 }
 .cardImg{
     width: 100%;
@@ -21,7 +25,7 @@
     z-index: 1;
 }
 .cardImg h3 {
-    width: 100%;
+    left: 20px;
     position: absolute;
     z-index: 2;
     bottom: 0;
@@ -35,9 +39,15 @@
     height: 100px;
     display: flex;
     justify-content: space-between;
-    align-items: center;
+    align-items: start;
     flex-direction: column;
     padding: 20px;
+}
+
+.cardText .texts{
+    font-size: 14px;
+align-items: start;
+text-align: start;
 }
 
 .cardPreco{

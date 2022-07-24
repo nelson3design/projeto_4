@@ -1,7 +1,7 @@
 
 
 import Update from "./component/update"
-
+import Header from "./component/header"
 
 
 function BackUpdate(){
@@ -9,11 +9,11 @@ function BackUpdate(){
 
     return(
        <>
-         <h2>header</h2>
+          <Header/>
 
         <Update/>
 
-        <h2>footer</h2>
+      
        </>
     )
 }

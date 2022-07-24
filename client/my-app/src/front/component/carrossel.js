@@ -1,9 +1,10 @@
-import React from "react";
-// Import Swiper React components
+import React,{useEffect,useState} from "react";
+import axios from "axios";
 import { Swiper, SwiperSlide } from "swiper/react";
+import "./style/card.css"
 
-import Card from "./card"
-// Import Swiper styles
+import { Link } from "react-router-dom";
+
 import "swiper/css";
 import "swiper/css/pagination";
 import "swiper/css/navigation";
@@ -11,9 +12,29 @@ import "swiper/css/navigation";
 import "./style/carrossel.css";
 
 // import required modules
-import { Pagination, Navigation,Autoplay } from "swiper";
+import { Navigation, Pagination, Mousewheel, Keyboard,Autoplay } from "swiper";
 
 export default function Carrossel() {
+
+
+  const [item, setItem] = useState([])
+    const url="http://localhost:5000/destaque"
+    const url2="http://localhost:5000/"
+
+    useEffect(()=>{
+  
+
+        listItem()
+         
+      },[])
+
+      const listItem=()=>{
+        axios.get(`${url}`).then((response) => {
+            setItem(response.data);
+            
+        });
+      }
+
    
   return (
     <>
@@ -32,15 +53,39 @@ export default function Carrossel() {
         }}
         
         navigation={false}
-        modules={[Autoplay,Pagination, Navigation]}
+         modules={[Navigation, Pagination, Mousewheel, Keyboard,Autoplay]}
         className="mySwiper"
       >
-        <SwiperSlide><Card/></SwiperSlide>
-         <SwiperSlide><Card/></SwiperSlide>
-          <SwiperSlide><Card/></SwiperSlide>
-           <SwiperSlide><Card/></SwiperSlide>
-            <SwiperSlide><Card/></SwiperSlide>
-             <SwiperSlide><Card/></SwiperSlide>
+       
+
+         {
+              
+              item && item.map((dados)=>(
+                <SwiperSlide>
+                      <Link to={`/comprar/${dados.id}`} style={{textDecoration: "none"}} className="linkHover">
+              <div className="cardBase">
+            <div className="cardImg">
+                <img src={url2+dados.image} alt={url2+dados.image}/>
+                <h3>{dados.nome}</h3>
+
+            </div>
+
+             <div className="cardText">
+                {/* <div className="texts">{dados.description.slice(0,50)+"..."}</div> */}
+                 <div className="texts">{dados.description.length < "30" ? dados.description: dados.description.slice(0,60)+"..." }</div>
+                <div className="cardPreco">
+                    <div className="preco">R$ {dados.preco}</div>
+                   
+                    <div className="btn"><span>comprar</span></div>
+                </div>
+                
+            </div>
+
+        </div>
+                </Link>
+        </SwiperSlide>
+            ))
+              }
        
       </Swiper>
     </>

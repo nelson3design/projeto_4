@@ -1,7 +1,7 @@
 
 
 import Create from "./component/create"
-
+import Header from "./component/header"
 
 
 function BackCreate(){
@@ -9,11 +9,11 @@ function BackCreate(){
 
     return(
        <>
-         <h2>header</h2>
+         <Header/>
 
         <Create/>
 
-        <h2>footer</h2>
+       
        </>
     )
 }

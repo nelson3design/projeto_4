@@ -3,6 +3,10 @@ import { useState } from 'react';
  import { useNavigate } from 'react-router-dom';
 import {Link} from 'react-router-dom'
 import axios from 'axios'
+import "../styles/create.css"
+
+
+
 function Create() {
    const navigate = useNavigate();
   const [upload, setUpload] = useState("")
@@ -43,62 +47,68 @@ axios.post("http://localhost:5000/add-action", formdata,{
 })
 
   return (
-    <div className="App">
-      <h2 className="title">adicionar item</h2>
+     <div className="listas">
 
-      <form onSubmit={handleSubmit} enctype="multipart/form-data">
+        <div className="listasContent container">
 
-      <input type="file" name="upload" onChange={(e) => setUpload(e.target.files[0])} />
+        <h2 className="titleCreate">adicionar item</h2>
+  
+        <form className='formCreate' onSubmit={handleSubmit} enctype="multipart/form-data">
+  
+        <input type="file" name="upload" onChange={(e) => setUpload(e.target.files[0])} />
+        
+          <br /> <br />
+          <input
+            name='nome'
+            value={nome}
+            setNome={setNome}
+            onChange={(e) => setNome(e.target.value)}
+            placeholder="Nome"
+          /> 
+          <br /> <br />
+          <textarea
+            name="description"
+            id=""
+            cols="20"
+            rows="5"
+            value={description}
+            setNome={setDescription}
+            onChange={(e) => setDescription(e.target.value)}
+            placeholder="descrição do item"
+          ></textarea>
+          <br /> <br />
+          <input
+            name='preco'
+            value={preco}
+            setContato={setPreco}
+            onChange={(e) => setPreco(e.target.value)}
+            placeholder="preço"
+          />
+          <br></br><br></br>
+          <select name="categoria" id=""  value={categoria} setContato={setCategoria}  onChange={(e) => setCategoria(e.target.value)}>
+            <option value="">Categoria</option>
+            <option value="pizza">pizza</option>
+            <option value="hamburguer">hambúrguer</option>
+            <option value="bebida">bebida</option>
+          </select>
+          <br></br>
+          <br></br>
+          <select name="destaque" id="" value={destaque} setContato={setDestaque}  onChange={(e) => setDestaque(e.target.value)}>
+            <option value="">Destaque</option>
+            <option value="sim">Sim</option>
+            <option value="não">Não</option>
+          </select>
+          <br /> <br />
+          <input type="submit" className="btnAtion1 btnAtion" />
+        
+  
+          <Link to='/admin/dashboard'>
+             <button className="btnAtion1 btnAtion">cancel</button>
+            </Link>
+        </form>
+        </div>
       
-        <br /> <br />
-        <input
-          name='nome'
-          value={nome}
-          setNome={setNome}
-          onChange={(e) => setNome(e.target.value)}
-          placeholder="Nome"
-        /> 
-        <br /> <br />
-        <textarea
-          name="description"
-          id=""
-          cols="20"
-          rows="5"
-          value={description}
-          setNome={setDescription}
-          onChange={(e) => setDescription(e.target.value)}
-          placeholder="descrição do item"
-        ></textarea>
-        <br /> <br />
-        <input
-          name='preco'
-          value={preco}
-          setContato={setPreco}
-          onChange={(e) => setPreco(e.target.value)}
-          placeholder="preço"
-        />
-        <br></br><br></br>
-        <select name="categoria" id=""  value={categoria} setContato={setCategoria}  onChange={(e) => setCategoria(e.target.value)}>
-          <option value="">Categoria</option>
-          <option value="pizza">pizza</option>
-          <option value="hamburguer">hambúrguer</option>
-        </select>
-        <br></br>
-        <br></br>
-        <select name="destaque" id="" value={destaque} setContato={setDestaque}  onChange={(e) => setDestaque(e.target.value)}>
-          <option value="">Destaque</option>
-          <option value="sim">Sim</option>
-          <option value="não">Não</option>
-        </select>
-        <br /> <br />
-        <input type="submit" className="btnAtion1 btnAtion" />
-      
-
-        <Link to='/admin/dashboard'>
-           <button className="btnAtion1 btnAtion">cancel</button>
-          </Link>
-      </form>
-    </div>
+        </div>
   );
 }
 

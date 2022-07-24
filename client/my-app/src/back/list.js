@@ -1,7 +1,7 @@
 
 
 import List from "./component/list"
-
+import Header from "./component/header"
 
 
 function BackList(){
@@ -9,11 +9,9 @@ function BackList(){
 
     return(
        <>
-         <h2>header</h2>
-
+        <Header/>
         <List/>
 
-        <h2>footer</h2>
        </>
     )
 }

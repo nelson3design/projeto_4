@@ -1,3 +1,6 @@
+
+
+
 import { useState } from "react";
 import "./style/header.css"
 import { MdSearch, MdStarOutline,MdOutlineRestaurant } from "react-icons/md";
@@ -6,7 +9,7 @@ import { FaClipboardCheck } from "react-icons/fa";
 
 
 
-function Header(){
+function HeaderPedido(){
 
     const [showBarra, setShowBarra] = useState(false)
 
@@ -42,9 +45,9 @@ function Header(){
                         </form>
                     </li>
 
-                    <li className="ative"><a href="http://localhost:3000/"><MdStarOutline className="star"/> <span>destaques</span></a></li>
-                    <li><a href="http://localhost:3000/cardapio"><MdOutlineRestaurant/> <span>cardapio</span></a></li>
-                    <li><a href="http://localhost:3000/meus-pedidos"><FaClipboardCheck/> <span>meus pedidos</span></a></li>
+                    <li><a href="http://localhost:3000/"><MdStarOutline className="star"/> <span>destaques</span></a></li>
+                    <li ><a href="http://localhost:3000/cardapio"><MdOutlineRestaurant/> <span>cardapio</span></a></li>
+                    <li className="ative"><a href="http://localhost:3000/meus-pedidos"><FaClipboardCheck/> <span>meus pedidos</span></a></li>
 
                     
 
@@ -61,4 +64,4 @@ function Header(){
     )
 }
 
-export default Header
+export default HeaderPedido

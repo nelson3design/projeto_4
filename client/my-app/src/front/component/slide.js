@@ -6,24 +6,23 @@ import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
 
-import "./style.css";
+import "./style/slide.css";
 
 // import required modules
-import { Navigation, Pagination, Mousewheel, Keyboard,Autoplay } from "swiper";
+import { Navigation, Pagination, Mousewheel, Keyboard, Autoplay } from "swiper";
 
 export default function Slide() {
   return (
     <>
       <Swiper
-      slidesPerView={1}
       
-       
         loop={true}
         cssMode={true}
         navigation={false}
         pagination={true}
         mousewheel={true}
         keyboard={true}
+         loopFillGroupWithBlank={true}
          autoplay={{
           delay: 2500,
           disableOnInteraction: false,
@@ -33,8 +32,8 @@ export default function Slide() {
         className="mySwiper"
       >
         <SwiperSlide><img src={require('./assets/img_1.png')} alt="imag_1"/></SwiperSlide>
-         <SwiperSlide><img src={require('./assets/img_2.png')} alt="imag_2"/></SwiperSlide>
-          <SwiperSlide><img src={require('./assets/img_3.png')} alt="imag_3"/></SwiperSlide>
+        <SwiperSlide><img src={require('./assets/img_2.png')} alt="imag_2"/></SwiperSlide>
+        <SwiperSlide><img src={require('./assets/img_3.png')} alt="imag_3"/></SwiperSlide>
        
       </Swiper>
     </>
