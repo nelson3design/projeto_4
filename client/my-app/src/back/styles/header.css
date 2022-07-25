@@ -63,7 +63,11 @@ background: rgb(255, 0, 0);
 }
 
 .navlistBack li:hover {
-    background-color: white;
+    background-color: rgb(255, 255, 255);
+    color: red!important;
+}
+.navlistBack li:hover a {
+   
     color: red;
 }
 
@@ -80,8 +84,14 @@ background: rgb(255, 0, 0);
 
 .navlistBack .ative:hover {
     background-color: red !important;
-    color: white !important;
+    color: white;
 }
+
+.navlistBack .ative:hover a{
+   
+    color: white;
+}
+
 
 .navlistBack li a {
     text-decoration: none;
