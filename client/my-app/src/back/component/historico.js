@@ -1,3 +1,5 @@
+import React,{useEffect,useState} from "react";
+import axios from "axios"
 import HeaderPedido from "./headerPedido"
 
 import "../styles/links.css"
@@ -5,10 +7,32 @@ import "../styles/links.css"
 
 export default function Historico(){
 
+  
+  const [item, setItem] = useState([])
+  const url="http://localhost:5000/pedidofinalizar"
+  const url2="http://localhost:5000/"
+
+  useEffect(()=>{
+
+
+      listItem()
+       
+    },[])
+
+    const listItem=()=>{
+      axios.get(`${url}`).then((response) => {
+          setItem(response.data);
+          
+      });
+    }
+
+
+
 
     return(
         <>
         <HeaderPedido/>
+        <div className="baseContent">
         <div className="links">
         <ul className="linkContent">
           <li><a href="/admin/dashboard/andamento">em aberto</a></li>
@@ -18,7 +42,45 @@ export default function Historico(){
          
         </ul>
       </div>
-        <h2>pedidos historicos</h2>
+      <section className="baseItens">
+
+{
+         
+         item && item.map((dados)=>(
+         
+   <div className="caixa">
+       <div className="caixaImg">
+           <img src={url2+dados.image} alt={dados.image}/>
+       </div>
+       <div className="descrip">{dados.description}</div>
+       <div className="info">
+           <div><span>Cliente:</span> <span>{dados.nomeCliente}</span></div>
+           <div><span>Valor:</span> <span>R$ {dados.preco}</span></div>
+           <div><span>Pedido:</span> <span>{dados.pedido}</span></div>
+           <div><span>Quant:</span> <span>{dados.quant}</span></div>
+           <div><span>Pago:</span> <span>{dados.pago==="on"? "sim" : "não" }</span></div>
+           <div>
+               <span>Endereço:</span> 
+           </div>
+           <p className="endereco">{dados.rua}, {dados.cidade}, {dados.numero}, {dados.cep}</p>
+
+       </div>
+
+       <div className="btns">
+        {dados.finalizar==="on"? <button className="entregado">entregado</button> : null}
+        {dados.cancelar==="on"? <button className="entregado">cancelado</button> : null}
+           
+           
+       </div>
+
+   </div>
+       ))
+         }
+</section>
+
+
+
+      </div>
         </>
     )
 }

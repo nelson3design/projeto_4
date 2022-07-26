@@ -101,8 +101,8 @@ router.get('/destaque', function (req, res){
 //         if(error){
 //             throw error
 //         }else{
-//             res.send(result[0]);
-//             // res.render('index', {resultado: result})
+//             res.json(result)
+           
 //         }
 //     })
 
@@ -191,6 +191,8 @@ router.post('/add-action', upload.single('upload'),(req, res)=>{
           res.redirect('/')
       }
   })
+
+  console.log(req.body)
 })
 
 
@@ -206,9 +208,6 @@ router.get('/edit-action/:id',(req, res)=>{
         if(error){
             throw error
         }else{
-
-            // res.render('edit',{user: result[0]})
-            // res.send(result[0])
 
             res.json(result)
         }
@@ -284,28 +283,54 @@ router.get('/compra',(req, res)=>{
     res.render('compra')
 })
 
-
-router.post('/compra-action',(req, res)=>{
+router.post('/teste',(req, res)=>{
     const nome= req.body.nome
-    const cpf= req.body.cpf
-     const nomep= req.body.nomep 
-     const preco= req.body.preco
-     const comment= req.body.comment
-     const quant= req.body.quant
-     const pago= req.body.pago
+console.log(req.body)
+
+conn.query('INSERT INTO tb_teste SET?',{ nome: nome },(error, result)=>{
+    if(error){
+        console.log(error)
+    }else{
+        res.json(result)
+    }
+})
+})
+
+
+router.post('/compra-action/',(req, res)=>{
+
+    //dados do cliente
+     const nomeCliente= req.body.nomeCliente
+     const cpf= req.body.cpf
+     const cep= req.body.cep 
+     const rua= req.body.rua
+     const cidade= req.body.cidade
+     const numero= req.body.numero
+     const complemento= req.body.complemento
+
+      //dados do pedido
+    const quant= req.body.quant 
+    const bebida= req.body.bebida 
+    const quantBebida= req.body.quantBebida 
+    const pago= req.body.pago 
+    const idProduto=req.body.idProduto
+     
+    console.log(idProduto)
+    console.log(req.body)
+    const pedido="#" + cpf
 
       conn.query('SELECT * FROM tb_cliente WHERE cpf=?',[cpf],(error, result)=>{
            
 
             if(!result[0]){
-                conn.query('INSERT INTO tb_cliente SET?',{ nome: nome, cpf: cpf },(error, result)=>{
+                conn.query('INSERT INTO tb_cliente SET?',{ nomeCliente: nomeCliente, cpf: cpf, cep:cep, rua:rua,cidade:cidade, numero:numero, complemento:complemento },(error, result)=>{
       if(error){
           console.log(error)
       }else{
 
       const idCliente=result.insertId
       const data= new Date()
-         conn.query('INSERT INTO tb_pedido SET?',{ nomep: nomep, preco: preco,comment: comment, quant: quant, pago: pago, data: data, id_cliente: idCliente },(error, result)=>{
+         conn.query('INSERT INTO tb_pedido SET?',{ quant: quant, bebida: bebida,quant_bebida: quantBebida, pago: pago,  data: data, id_cliente: idCliente,id_produto:idProduto,pedido:pedido },(error, result)=>{
       if(error){
           console.log(error)
       }else{
@@ -319,7 +344,7 @@ router.post('/compra-action',(req, res)=>{
             }else{
                  const oldIdCliente = result[0].id
                  const data=new Date()
-                   conn.query('INSERT INTO tb_pedido SET?',{ nomep: nomep, preco: preco, comment: comment, quant: quant, pago: pago, data:data,id_cliente: oldIdCliente },(error, result)=>{
+                   conn.query('INSERT INTO tb_pedido SET?',{ quant: quant, bebida: bebida, quant_bebida: quantBebida, pago: pago, data:data,id_cliente: oldIdCliente, id_produto:idProduto, pedido:pedido },(error, result)=>{
       if(error){
           console.log(error)
       }else{
@@ -341,39 +366,74 @@ router.post('/compra-action',(req, res)=>{
 
 // lista dos pedidos ativos que não confirmados
 
-router.get('/pedidosativos', function (req, res){
-    conn.query('SELECT * FROM tb_cliente JOIN tb_pedido ON tb_cliente.id=tb_pedido.id_cliente ORDER BY tb_cliente.id DESC', (error, result)=>{
+router.get('/pedidoandamento', function (req, res){
+
+    const confirmar='off'
+    const cancelar='off'
+
+    conn.query('SELECT * FROM tb_cliente JOIN tb_pedido ON tb_cliente.id=tb_pedido.id_cliente JOIN tb_user ON tb_pedido.id_produto=tb_user.id WHERE tb_pedido.confirmar=? AND tb_pedido.cancelar=? ORDER BY tb_cliente.id DESC',[confirmar,cancelar],(error, result)=>{
         if(error){
             throw error;
         }else{
-           res.render('pedidoativo', {resultado: result})
+        //    res.render('pedidoativo', {resultado: result})
+
+        res.json(result)
         }
     })
 })
 
 // lista dos pedidos preparado que estão confirmados para preparar só tem pedido confirmados
 
-router.get('/pedidospreparados', function (req, res){
-    const confim='on'
-    conn.query('SELECT * FROM tb_cliente JOIN tb_pedido ON tb_cliente.id=tb_pedido.id_cliente WHERE confim=?',[confim], (error, result)=>{
+router.get('/pedidopreparo', function (req, res){
+
+    const confirmar='on'
+    const terminar='off'
+
+    conn.query('SELECT * FROM tb_cliente JOIN tb_pedido ON tb_cliente.id=tb_pedido.id_cliente JOIN tb_user ON tb_pedido.id_produto=tb_user.id WHERE tb_pedido.confirmar=? AND tb_pedido.terminar=?  ORDER BY tb_cliente.id DESC',[confirmar,terminar],(error, result)=>{
         if(error){
             throw error;
         }else{
-           res.render('pedidopreparo', {resultado: result})
+        //    res.render('pedidoativo', {resultado: result})
+
+        res.json(result)
         }
     })
 })
 
 
+
 // lista dos pedidos entregado que estão confirmados como entregado só tem pedido preparados
 
-router.get('/pedidosentregados', function (req, res){
-    const confim='on'
-    conn.query('SELECT * FROM tb_cliente JOIN tb_pedido ON tb_cliente.id=tb_pedido.id_cliente WHERE preparo=?',[confim], (error, result)=>{
+router.get('/pedidoterminar', function (req, res){
+
+    const terminar='on'
+    const finalizar='off'
+    conn.query('SELECT * FROM tb_cliente JOIN tb_pedido ON tb_cliente.id=tb_pedido.id_cliente JOIN tb_user ON tb_pedido.id_produto=tb_user.id WHERE tb_pedido.terminar=? AND tb_pedido.finalizar=? ORDER BY tb_cliente.id DESC',[terminar,finalizar],(error, result)=>{
         if(error){
             throw error;
         }else{
-           res.render('pedidopreparo', {resultado: result})
+        //    res.render('pedidoativo', {resultado: result})
+
+        res.json(result)
+        }
+    })
+})
+
+
+// lista dos pedidos entregado 
+
+router.get('/pedidofinalizar', function (req, res){
+
+    const finalizar='on'
+    const cancelar='on'
+
+    conn.query('SELECT * FROM tb_cliente JOIN tb_pedido ON tb_cliente.id=tb_pedido.id_cliente JOIN tb_user ON tb_pedido.id_produto=tb_user.id WHERE tb_pedido.finalizar=? OR tb_pedido.cancelar=? ORDER BY tb_cliente.id DESC',[finalizar,cancelar],(error, result)=>{
+        if(error){
+            throw error;
+        }else{
+        //    res.render('pedidoativo', {resultado: result})
+
+        res.json(result)
         }
     })
 })
@@ -412,46 +472,66 @@ router.post('/clientes', function (req, res){
 
 // confirmar pedido pra ser confirmado
 
-router.get('/editconfim-action/:id',(req, res)=>{
+// router.get('/editconfim-action/:id',(req, res)=>{
       
-    const id= req.params.id
+//     const id= req.params.id
 
    
 
- conn.query('SELECT * FROM tb_pedido WHERE id=?',[id],(error, result)=>{
+//  conn.query('SELECT * FROM tb_pedido WHERE id=?',[id],(error, result)=>{
    
-     if(error){
-         throw error
-     }else{
+//      if(error){
+//          throw error
+//      }else{
 
-         res.render('editconfim',{user: result[0]})
+//          res.render('editconfim',{user: result[0]})
         
-     }
- })
+//      }
+//  })
 
-})
+// })
 
-router.post('/editconfim-action/',(req, res)=>{
+
+//confirmar pedido
+
+router.post('/editconfim-action/:idPedido',(req, res)=>{
       
-    const id= req.body.id
-     const nomep= req.body.nomep 
-     const preco= req.body.preco
-     const comment= req.body.comment
-     const quant= req.body.quant
-     const pago= req.body.pago
-     const confim='on'
-    //  const cancelar='on'
-    //  const preparo='on'
-    //  const entrega='on'
+    const idPedido= req.params.idPedido
+    const pago= 'on'
+     const confirmar='on'
+   
      const data=new Date()
 
-   
 
-     conn.query('UPDATE tb_pedido SET? WHERE id = ?',[{nomep: nomep, preco: preco,comment: comment, quant: quant,confim:confim, pago: pago, data: data }, id],(error, result)=>{
+     conn.query('UPDATE tb_pedido SET? WHERE idPedido = ?',[{ pago: pago, confirmar:confirmar, data: data }, idPedido],(error, result)=>{
         if(error){
             console.log(error)
       }else{
-      res.redirect('/pedidosativos')
+      res.json(result)
+   
+     }
+     })
+
+
+
+})
+
+//preparar pedido
+
+router.post('/editpreparar-action/:idPedido',(req, res)=>{
+      
+    const idPedido= req.params.idPedido
+    const pago= 'on'
+     const preparar='on'
+   
+     const data=new Date()
+
+
+     conn.query('UPDATE tb_pedido SET? WHERE idPedido = ?',[{ pago: pago, preparar:preparar, data: data }, idPedido],(error, result)=>{
+        if(error){
+            console.log(error)
+      }else{
+      res.json(result)
    
      }
      })
@@ -461,50 +541,90 @@ router.post('/editconfim-action/',(req, res)=>{
 })
 
 
-// confirmar pedidos preparados 
-
-
-
-router.get('/editpreparo-action/:id',(req, res)=>{
+// confirmar pedidos terminar de preparar 
+router.post('/editterminar-action/:idPedido',(req, res)=>{
       
-    const id= req.params.id
-
+    const idPedido= req.params.idPedido
+    const pago= 'on'
+     const terminar='on'
    
-
- conn.query('SELECT * FROM tb_pedido WHERE id=?',[id],(error, result)=>{
-   
-     if(error){
-         throw error
-     }else{
-
-         res.render('editpreparo',{user: result[0]})
-        
-     }
- })
-
-})
-
-router.post('/editpreparo-action/',(req, res)=>{
-      
-    const id= req.body.id
-     const nomep= req.body.nomep 
-     const preco= req.body.preco
-     const comment= req.body.comment
-     const quant= req.body.quant
-     const pago= req.body.pago
-     const preparo='on'
-    //  const cancelar='on'
-    //  const preparo='on'
-    //  const entrega='on'
      const data=new Date()
 
-   
 
-     conn.query('UPDATE tb_pedido SET? WHERE id = ?',[{nomep: nomep, preco: preco,comment: comment, quant: quant,preparo:preparo, pago: pago, data: data }, id],(error, result)=>{
+     conn.query('UPDATE tb_pedido SET? WHERE idPedido = ?',[{ pago: pago, terminar:terminar, data: data }, idPedido],(error, result)=>{
         if(error){
             console.log(error)
       }else{
-      res.redirect('/pedidospreparados')
+      res.json(result)
+   
+     }
+     })
+
+
+
+})
+
+
+// confirmar para sair para entregar
+router.post('/editsair-action/:idPedido',(req, res)=>{
+      
+    const idPedido= req.params.idPedido
+    const pago= 'on'
+     const entregar='on'
+   
+     const data=new Date()
+
+
+     conn.query('UPDATE tb_pedido SET? WHERE idPedido = ?',[{ pago: pago, entregar:entregar, data: data }, idPedido],(error, result)=>{
+        if(error){
+            console.log(error)
+      }else{
+      res.json(result)
+   
+     }
+     })
+
+
+
+})
+
+
+router.post('/editfinalizar-action/:idPedido',(req, res)=>{
+      
+    const idPedido= req.params.idPedido
+    const pago= 'on'
+     const finalizar='on'
+   
+     const data=new Date()
+
+
+     conn.query('UPDATE tb_pedido SET? WHERE idPedido = ?',[{ pago: pago, finalizar:finalizar, data: data }, idPedido],(error, result)=>{
+        if(error){
+            console.log(error)
+      }else{
+      res.json(result)
+   
+     }
+     })
+
+
+
+})
+
+router.post('/editcancelar-action/:idPedido',(req, res)=>{
+      
+    const idPedido= req.params.idPedido
+    const pago= 'on'
+     const cancelar='on'
+   
+     const data=new Date()
+
+
+     conn.query('UPDATE tb_pedido SET? WHERE idPedido = ?',[{ pago: pago, cancelar:cancelar, data: data }, idPedido],(error, result)=>{
+        if(error){
+            console.log(error)
+      }else{
+      res.json(result)
    
      }
      })

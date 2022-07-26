@@ -1,13 +1,49 @@
-
+import React,{useEffect,useState} from "react";
+import axios from "axios"
 import HeaderPedido from "./headerPedido"
 
 import "../styles/links.css"
-import Image1 from "../assets/imageteste.jpg"
+
 import "../styles/ativos.css"
 
 
 
 export default function Ativos(){
+
+    const [item, setItem] = useState([])
+    const url="http://localhost:5000/pedidoandamento"
+    const url2="http://localhost:5000/"
+
+    useEffect(()=>{
+  
+
+        listItem()
+         
+      },[])
+
+      const listItem=()=>{
+        axios.get(`${url}`).then((response) => {
+            setItem(response.data);
+            
+        });
+      }
+    //   console.log(item[0].idPedido)
+
+   const handleConfirm=(idPedido)=>{
+      
+
+          axios.post(url2+"editconfim-action/"+idPedido).then((response)=>{
+            console.log(response)
+            listItem()
+          })
+   }
+   const handleCancel=(idPedido)=>{
+   
+    axios.post(url2+"editcancelar-action/"+idPedido).then((response)=>{
+        console.log(response)
+        listItem()
+      })
+}
 
 
     return(
@@ -27,30 +63,40 @@ export default function Ativos(){
       </div>
        
      <section className="baseItens">
+
+     {
+              
+              item && item.map((dados)=>(
+              
         <div className="caixa">
             <div className="caixaImg">
-                <img src={Image1}/>
+            <img src={url2+dados.image} alt={dados.image}/>
             </div>
-            <div className="descrip">Coxa e sobrecoxa empanados ao estilo ame...</div>
+            <div className="descrip">{dados.description}</div>
             <div className="info">
-                <div><span>Cliente:</span> <span>nelson</span></div>
-                <div><span>Valor:</span> <span>R$ 22.90</span></div>
-                <div><span>Pedido:</span> <span>#59233</span></div>
-                <div><span>Quant:</span> <span>1</span></div>
-                <div><span>Pago:</span> <span>sim</span></div>
+                <div><span>Cliente:</span> <span>{dados.nomeCliente}</span></div>
+                <div><span>Valor:</span> <span>R$ {dados.preco}</span></div>
+                <div><span>Pedido:</span> <span>{dados.pedido}</span></div>
+                <div><span>Bebida:</span> <span>{dados.bebida}</span></div>
+                <div><span>Quant Bebida:</span> <span>{dados.quant_bebida}</span></div>
+                <div><span>Quant:</span> <span>{dados.quant}</span></div>
+                <div><span>Pago:</span> <span>{dados.pago==="on"? "sim" : "não" }</span></div>
                 <div>
                     <span>Endereço:</span> 
                 </div>
-                <p className="endereco">rua caraúna 86, bela vista Palhoça, 88137626</p>
+                <p className="endereco">{dados.rua}, {dados.cidade}, {dados.numero}, {dados.cep}</p>
 
             </div>
-
+             
+            
             <div className="btns">
-                <button>confirmar</button>
-                <button>cancelar</button>
+                <button className="confirmar" onClick={()=>handleConfirm(dados.idPedido)}>confirmar</button>
+                <button className="cancelar" onClick={()=>handleCancel(dados.idPedido)}>cancelar</button>
             </div>
 
         </div>
+            ))
+              }
      </section>
 
         </div>
@@ -58,3 +104,4 @@ export default function Ativos(){
         </>
     )
 }
+

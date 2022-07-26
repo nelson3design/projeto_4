@@ -7,9 +7,12 @@
     padding-bottom: 50px;
 }
 
-.baseItenst{
+.baseItens{
+    margin-top: 30px;
     width: 80%;
-    
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap;
 }
 .caixa{
     width: 350px;
@@ -56,9 +59,9 @@
     font-weight: 700;
   }
 
-  .info div:nth-child(6){
+  /* .info div:nth-child(6){
     flex-direction: column;
-  }
+  } */
   .endereco{
     padding: 0 20px;
     font-size: 17px;
@@ -85,12 +88,17 @@
     cursor: pointer;
     text-transform: capitalize;
 }
-.btns button:nth-child(1){
+.btns .preparar,.btns .confirmar{
    background-color: green;
      
  }
 
- .btns button:nth-child(2){
+ .btns .terminar,.btns .cancelar{
     background-color: red;
+      
+  }
+
+  .btns .entregado, .btns .cancelado{
+    background-color: rgb(175, 175, 175);
       
   }
