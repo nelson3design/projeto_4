@@ -156,6 +156,23 @@ router.get('/bebidas', function (req, res){
 
 // })
 
+router.get('/item/:id',(req, res)=>{
+      
+       const id= req.params.id
+
+    conn.query('SELECT * FROM tb_user WHERE id=?',[id],(error, result)=>{
+      
+        if(error){
+            throw error
+        }else{
+            res.json(result)
+           
+        }
+    })
+
+})
+
+
 // router.get('*', function(req, res){
 //   res.send('pagina não encontrado', 404);
 // });
@@ -331,9 +348,10 @@ router.get('/compra',(req, res)=>{
     res.render('compra')
 })
 
-router.post('/teste',(req, res)=>{
+router.post('/teste/:id',(req, res)=>{
     const nome= req.body.nome
 console.log(req.body)
+console.log(req.params.id)
 
 conn.query('INSERT INTO tb_teste SET?',{ nome: nome },(error, result)=>{
     if(error){
@@ -345,7 +363,7 @@ conn.query('INSERT INTO tb_teste SET?',{ nome: nome },(error, result)=>{
 })
 
 
-router.post('/compra-action/',(req, res)=>{
+router.post('/compra-action/:idProduto',(req, res)=>{
 
     //dados do cliente
      const nomeCliente= req.body.nomeCliente
@@ -360,12 +378,17 @@ router.post('/compra-action/',(req, res)=>{
     const quant= req.body.quant 
     const bebida= req.body.bebida 
     const quantBebida= req.body.quantBebida 
-    const pago= req.body.pago 
-    const idProduto=req.body.idProduto
+    const pago= "on"
+    const idProduto=req.params.idProduto
      
     console.log(idProduto)
     console.log(req.body)
-    const pedido="#" + cpf
+
+    const min= new Date().getMinutes()
+
+    const stringCpf=cpf.toString()
+    const num=stringCpf.slice(-4)
+    const pedido="#" + min +num
 
       conn.query('SELECT * FROM tb_cliente WHERE cpf=?',[cpf],(error, result)=>{
            

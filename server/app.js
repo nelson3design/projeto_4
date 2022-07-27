@@ -1,5 +1,4 @@
 const express = require('express');
-const { json } = require('express/lib/response');
 const cors = require("cors");
 const path = require('path')
 
@@ -22,7 +21,7 @@ app.use(express.static('upload'))
 
 
 app.use(express.urlencoded({extended: false}))
-app.use(express(json))
+app.use(express.json())
 
 
 

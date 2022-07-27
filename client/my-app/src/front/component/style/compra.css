@@ -1,0 +1,38 @@
+
+
+.compraBase{
+    width: 100%;
+    background-color: #5F5F5F;
+    display: grid;
+    place-items: center;
+    padding: 50px 0;
+}
+
+.compraContent{
+    width: 80%;
+    display: flex;
+    justify-content: space-between;
+    position: relative;
+}
+.cardCompra{
+    margin-bottom: 100px;
+   
+}
+.adicional{
+    position: absolute;
+    bottom: 0;
+    right: 0;
+     width: 270px;
+     background-color: red;
+}
+
+.adicional input{
+  width: 100%;
+}
+
+
+.plus{
+    font-size: 40px;
+    cursor: pointer;
+    color: white;
+}
