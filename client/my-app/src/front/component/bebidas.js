@@ -5,9 +5,9 @@ import "./style/cardapio.css"
 import { Link } from "react-router-dom";
 
 
-export default function Cardapio(){
+export default function Bebidas(){
      const [item, setItem] = useState([])
-    const url="http://localhost:5000/hamburguer"
+    const url="http://localhost:5000/bebidas"
     const url2="http://localhost:5000/"
 
      useEffect(()=>{
@@ -32,9 +32,9 @@ export default function Cardapio(){
       <div className="linksBack">
          <div className="links">
         <ul className="linkContentBack">
-          <li className="ativo"><a href="/cardapio">hambúrguer</a></li>
+          <li><a href="/cardapio">hambúrguer</a></li>
           <li><a href="/pizza">pizza</a></li>
-          <li><a href="/bebidas">bebidas</a></li>
+          <li className="ativo"><a href="/bebidas">bebidas</a></li>
          
         </ul>
         </div>

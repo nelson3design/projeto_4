@@ -6,7 +6,7 @@ import './App.css';
 import BackList from "./back/list";
 import BackCreate from "./back/create";
 import BackUpdate from "./back/update"
-import Cardapio from "./front/component/cardapio";
+
 import MeusPedidos from "./front/component/meusPedidos";
 
 import Compra from "./front/component/compra";
@@ -18,6 +18,9 @@ import Preparo from "./back/component/preparo";
 import Entrega from "./back/component/entrega";
 import Historico from "./back/component/historico";
 
+import Cardapio from "./front/component/cardapio";
+import Pizza  from "./front/component/pizza";
+import Bebidas from "./front/component/bebidas";
 
 function App() {
 
@@ -33,6 +36,8 @@ function App() {
 
         <Route path="/" element={<Start/>}></Route> 
         <Route path="/cardapio" element={<Cardapio/>}></Route> 
+         <Route path="/pizza" element={<Pizza/>}></Route> 
+          <Route path="/bebidas" element={<Bebidas/>}></Route> 
         <Route path="/meus-pedidos" element={<MeusPedidos/>}></Route> 
          <Route path="/comprar/:id" element={<Compra/>}></Route>  
      

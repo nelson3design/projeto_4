@@ -90,6 +90,54 @@ router.get('/destaque', function (req, res){
 })
 
 
+// hamburguer
+router.get('/hamburguer', function (req, res){
+
+    const hamburguer="hamburguer"
+    
+    conn.query('SELECT * FROM tb_user WHERE categoria=? ORDER BY id DESC',[hamburguer], (error, result)=>{
+        if(error){
+            throw error;
+        }else{
+    
+           res.send(result)
+
+        }
+    })
+})
+
+// pizza
+router.get('/pizza', function (req, res){
+
+    const pizza="pizza"
+    
+    conn.query('SELECT * FROM tb_user WHERE categoria=? ORDER BY id DESC',[pizza], (error, result)=>{
+        if(error){
+            throw error;
+        }else{
+    
+           res.send(result)
+
+        }
+    })
+})
+
+// bebidas
+router.get('/bebidas', function (req, res){
+
+    const bebida="bebida"
+    
+    conn.query('SELECT * FROM tb_user WHERE categoria=? ORDER BY id DESC',[bebida], (error, result)=>{
+        if(error){
+            throw error;
+        }else{
+    
+           res.send(result)
+
+        }
+    })
+})
+
 // selecionar 1 item
 
 // router.get('/:id',(req, res)=>{
