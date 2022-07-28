@@ -1,14 +1,16 @@
 import axios from 'axios';
 import { useState,useEffect } from 'react';
-
+import { useNavigate } from 'react-router-dom';
 import { useParams } from 'react-router-dom';
 
 import HeaderCardapio from "./headerCardapio"
 
 import "./style/compra.css"
+import Footer from './footer';
 
 export default function Compra(){
 
+  const navigate = useNavigate();
    
   
 
@@ -19,15 +21,20 @@ export default function Compra(){
     const [cidade, setCidade] = useState("")
     const [numero, setNumero] = useState("")
     const [complemento, setComplemento] = useState("")
-
-
-    const [quant, setQuant] = useState("")
-    const [bebida, setBebida] = useState("")
-    const [quantBebida, setQuantBebida] = useState("")
  
+
+    const [valor, setValor] = useState("")
+    const [bebida, setBebida] = useState("")
+    const [valorAdicional, setValorAdicional] = useState("")
+ 
+
+    var valorTotal=Number(valor)+ Number(valorAdicional)
     
    
-  
+    console.log(valorTotal)
+
+
+
     const data={
         nomeCliente: nomeCliente,
         cpf: cpf,
@@ -36,22 +43,27 @@ export default function Compra(){
         cidade: cidade,
         numero: numero,
         complemento: complemento,
-        quant: quant,
+        valor: valor,
         bebida: bebida,
-        quantBebida: quantBebida,
-       
+        valorAdicional: valorAdicional,
+        valorTotal:valorTotal
       
     }
+    console.log(data)
     
     const {id} =useParams()
-    console.log(id)
+   
 
     const handleSubmit=((e)=>{
         e.preventDefault()
-        axios.post("http://localhost:5000/compra-action/"+id, data).then(() => {
+        axios.post("http://localhost:5000/compra-action/"+id, data).then((res) => {
+         
+               if(res.status === 200){
+                navigate('/obrigado')
+               }
            
           });
-        
+        console.log(data)
        
     })
 
@@ -96,10 +108,12 @@ listItem()
      const [total2, setTotal2]=useState("")
 
    
-   const handlePlus =(preco)=>{
+   const handlePlus =(id,title)=>{
      
-     setTotal((Number(total))+(Number(preco)))
+     setTotal((Number(total))+(Number(id)))
+     setValor(title)
 
+    
    
    }
   const handleMenos =(preco)=>{
@@ -110,20 +124,24 @@ console.log(total)
    }
 
 
-   
-   const handlePlus2 =(preco)=>{
-     
-     setTotal2((Number(total2))+(Number(preco)))
+
 
    
+   const handlePlus2 =(id,title)=>{
+    
+     setTotal2((Number(total2))+(Number(id)))
+     setBebida(title)
+     setValorAdicional(id)
+   
    }
-  const handleMenos2 =(preco)=>{
+  const handleMenos2 =(id)=>{
  
-     setTotal2((Number(total2))-(Number(preco)))
-console.log(total)
+      setTotal2((Number(total2))-(Number(id)))
+     
     
    }
 
+  
 
    
 
@@ -140,133 +158,182 @@ console.log(total)
         <div className='compraForm'>
 
       
-         <form onSubmit={handleSubmit}>
-       <div>
+         <form onSubmit={handleSubmit} className="formabase1">
+          <div className='formdados'>
+
+      <div className='formInput'>
+      <div className='compraFormContent'>
         <label>Nome</label>   
-        <input value={nomeCliente} onChange={(e)=>setNomeCliente(e.target.value)} placeholder="nome"/>
+        <input value={nomeCliente} onChange={(e)=>setNomeCliente(e.target.value)} placeholder="nome" required/>
        </div>
         
-       <div>
+       <div className='compraFormContent'>
        <label>Cpf</label>
-        <input value={cpf} onChange={(e)=>setCpf(e.target.value)} placeholder="cpf"/>
+        <input value={cpf} onChange={(e)=>setCpf(e.target.value)} placeholder="70093395642" required/>
        </div>
-        
-      <div>
-        <label>Cep</label>
-        <input value={cep} onChange={(e)=>setCep(e.target.value)} placeholder="cep"/>
+
       </div>
         
-       <div>
+     <div className='formInput'>
+     <div className='compraFormContent'>
+        <label>Cep</label>
+        <input value={cep} onChange={(e)=>setCep(e.target.value)} placeholder="88137624" required/>
+      </div>
+        
+       <div className='compraFormContent'>
        <label>Rua</label>
-        <input value={rua} onChange={(e)=>setRua(e.target.value)} placeholder="rua"/>
+        <input value={rua} onChange={(e)=>setRua(e.target.value)} placeholder="rua jão vitor" required/>
        </div>
+     </div>
        
-      <div>
+     <div className='formInput'>
+     <div className='compraFormContent'>
         <label>Cidade</label>
-        <input value={cidade} onChange={(e)=>setCidade(e.target.value)} placeholder="cidade"/>
+        <input value={cidade} onChange={(e)=>setCidade(e.target.value)} placeholder="palhoça" required/>
       </div>
        
 
-      <div>
+      <div  className='formInput'>
+      <div className='compraFormContent numerInput1'>
         <label>Numero</label>
-        <input value={numero} onChange={(e)=>setNumero(e.target.value)} placeholder="numero"/>
+        <input value={numero} onChange={(e)=>setNumero(e.target.value)} placeholder="65" required/>
       </div>
        
-        <div>
+        <div className='compraFormContent numerInput2'>
         <label>Complemento</label>
-        <input value={complemento} onChange={(e)=>setComplemento(e.target.value)} placeholder="complemento"/>
+        <input value={complemento} onChange={(e)=>setComplemento(e.target.value)} placeholder="apto 2" required/>
         </div>
+      </div>
+     </div>
+
+     {/* card-cartao */}
+     <div className='pagamento'>
+      <div className='titlePagamento'>pagamento</div>
+      <div className='aviso'>Preencha os dados do seu Cartão</div>
+
+      <div className='pagamentoInput'>
+        <label>Número do Cartão</label>
+        <input type="text"/>
+      </div>
+
+      <div className='pagamentoInput'>
+        <label>Nome do Titular do Cartão</label>
+        <input type="text"/>
+      </div>
+
+      <div className='pagamentoInput2'>
+      <div className='pagamentoInput'>
+        <label>Vencimento</label>
+        <input type="text"/>
+      </div>
+      <div className='pagamentoInput'>
+        <label>Código de segurança</label>
+        <input type="text"/>
+      </div>
+
+      </div>
+
+     </div>
       
-        <div>
-        <label>Quantidade</label>
-        <input value={quant} onChange={(e)=>setQuant(e.target.value)} placeholder="quantidade"/>
-        </div>
-       
+     </div> 
        
        <div className='adicional'>
-        <div>Adicional</div>
-        <label>Bebidas</label>
+        <div className='adicionalTitle'>Adicional</div>
+       
       
-
+        <div className='adicionalContent'>
           
            {
               
               beb && beb.map((dado)=>(
                  <>
-                 <img src={url2+dado.image} alt={url2+dado.image}/>
+                <div className='adicinalCard'>
+
                   <div>{dado.nome}</div>
-                  <div>{dado.preco}</div>
-                  <div className='plus' onClick={()=>handleMenos2(dado.preco)}>-</div>
-                 <div className='plus' onClick={()=>handlePlus2(dado.preco)}>+</div>
+                  
+                   <input type="hidden" value={bebida} onChange={(e)=>setBebida(e.target.value)}/>
+                   <input type="hidden" value={valorAdicional} onChange={(e)=>setValorAdicional(e.target.value)}/>
+                  <div className='btnPrecoAdicional'>
+                  <div className='preco'>R$ {dado.preco}</div>
+                  <div className='btnAdicional'>
+
+                  {total2>=dado.preco? <div id={dado.preco} className="plusAdd" onClick={(e)=>handleMenos2(e.target.id)}>-</div>:null}
+
+               
+                 <div className="plusAdd" title={dado.nome} id={dado.preco} onClick={(e)=>handlePlus2(e.target.id,e.target.title)}>+</div>
+                  </div>
+                 
+                  </div>
+                </div>
                   </>
               ))
               
               }
-           
-        
-          <label>Quantidade</label>
-
-        <select name="bebida" id=""  value={quantBebida}  onChange={(e) => setQuantBebida(e.target.value)}>
-           <option value="">selecione...</option>
-           <option value="1">1</option>
-           <option value="2">2</option>
-           <option value="3">3</option>
-           <option value="4">4</option>
-           <option value="5">5</option>
-           <option value="6">6</option>
-           <option value="7">7</option>
-
-          </select>
-       </div>
+           </div>
         
       
-        <input type="submit" className="btnAtion1 btnAtion"/>
-        
+
+       
+       </div>
+        <div className='formdados dados2'>
+
+        <input type="submit" className="btnFormCompra" value="Pagar agora"/>
+        </div>
+      
+       
     </form>
 
     </div>
+
+    <div className='infoCompra'>
+
+      <div className='titleCompra'>RESUMO DO PEDIDO</div>
 
     {
               
 
               item && item.map((dados)=>(
                      
-        <div className="cardBase cardCompra">
-            <div className="cardImg">
+        <div className="cardBaseCompra">
+            <div className="cardImgCompra">
                 <img src={url2+dados.image} alt={url2+dados.image}/>
                 <h3>{dados.nome}</h3>
 
             </div>
 
-             <div className="cardText">
-               
+             <div className="cardTextCompra">
+             <input type="hidden" value={valor} onChange={(e)=>setValor(e.target.value)}/>
                  <div className="texts">{dados.description}</div>
-                <div className="cardPreco">
-                    <div className="preco">R$ {total===""? Number(dados.preco): Number(total.toFixed(2))}</div>
+                <div className="cardPrecoCompra">
+                    <div className="precoCompra">R$ {Number(Number(total2)+ Number(dados.preco)+total).toFixed(2)}</div>
                    
-                    
-                    {total<=dados.preco? null : <div className='plus' onClick={()=>handleMenos(dados.preco)}>-</div>}
+                    <input type="hidden" value={valor===""? setValor( Number(dados.preco)):null} onChange={(e)=>setValor(e.target.value)}/>
+
+                    {total>=dados.preco? <div className='plus' onClick={()=>handleMenos(dados.preco)}>-</div>:null}
                    
-                     <div className='plus' onClick={()=>handlePlus(dados.preco)}>+</div>
+                     <div className='plus' id={dados.preco} title={   (Number(Number(total2)+ Number(dados.preco*2)+total).toFixed(2)) } onClick={(e)=>handlePlus(e.target.id,e.target.title)}>+</div>
                 </div>
                
-               <div>{total2}</div>
-
-               <div>total: {total2+total}</div>
+             
+             
+            
 
            
             </div>
 
            
 
-            {/* <div className='plus'>{total==total? total+total: null}</div> */}
+           
         </div>
              
              ))
             }
+            </div>
 
     </div>
     </section>
+
+    <Footer/>
        
         </>
     )

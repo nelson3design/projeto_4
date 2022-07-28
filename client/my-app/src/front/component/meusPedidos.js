@@ -1,4 +1,4 @@
-
+import Footer from "./footer"
 import "./style/meusPedidos.css"
 
 import HeaderPedido from "./headerPedido"
@@ -32,6 +32,8 @@ export default function MeusPedidos(){
 
          </div>
          </div>
+
+         <Footer/>
         </>
     )
 }

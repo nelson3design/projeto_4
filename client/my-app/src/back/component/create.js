@@ -1,6 +1,7 @@
 import { useState } from 'react';
 
  import { useNavigate } from 'react-router-dom';
+
 import {Link} from 'react-router-dom'
 import axios from 'axios'
 import "../styles/create.css"
@@ -61,7 +62,6 @@ axios.post("http://localhost:5000/add-action", formdata,{
           <input
             name='nome'
             value={nome}
-            setNome={setNome}
             onChange={(e) => setNome(e.target.value)}
             placeholder="Nome"
           /> 
@@ -71,8 +71,7 @@ axios.post("http://localhost:5000/add-action", formdata,{
             id=""
             cols="20"
             rows="5"
-            value={description}
-            setNome={setDescription}
+            value={description}  
             onChange={(e) => setDescription(e.target.value)}
             placeholder="descrição do item"
           ></textarea>
@@ -80,12 +79,11 @@ axios.post("http://localhost:5000/add-action", formdata,{
           <input
             name='preco'
             value={preco}
-            setContato={setPreco}
             onChange={(e) => setPreco(e.target.value)}
             placeholder="preço"
           />
           <br></br><br></br>
-          <select name="categoria" id=""  value={categoria} setContato={setCategoria}  onChange={(e) => setCategoria(e.target.value)}>
+          <select name="categoria" id=""  value={categoria} onChange={(e) => setCategoria(e.target.value)}>
             <option value="">Categoria</option>
             <option value="pizza">pizza</option>
             <option value="hamburguer">hambúrguer</option>
@@ -93,7 +91,7 @@ axios.post("http://localhost:5000/add-action", formdata,{
           </select>
           <br></br>
           <br></br>
-          <select name="destaque" id="" value={destaque} setContato={setDestaque}  onChange={(e) => setDestaque(e.target.value)}>
+          <select name="destaque" id="" value={destaque} onChange={(e) => setDestaque(e.target.value)}>
             <option value="">Destaque</option>
             <option value="sim">Sim</option>
             <option value="não">Não</option>

@@ -3,7 +3,7 @@ import axios from "axios";
 import HeaderCardapio from "./headerCardapio"
 import "./style/cardapio.css"
 import { Link } from "react-router-dom";
-
+import Footer from "./footer";
 
 export default function Bebidas(){
      const [item, setItem] = useState([])
@@ -70,6 +70,8 @@ export default function Bebidas(){
               }
               </section>
               </div>
+
+              <Footer/>
         </>
     )
 }

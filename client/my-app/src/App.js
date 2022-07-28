@@ -22,6 +22,9 @@ import Cardapio from "./front/component/cardapio";
 import Pizza  from "./front/component/pizza";
 import Bebidas from "./front/component/bebidas";
 
+import Obrigado from "./front/component/abrigado";
+import Pedido from "./front/component/pedido";
+
 function App() {
 
 
@@ -40,6 +43,8 @@ function App() {
           <Route path="/bebidas" element={<Bebidas/>}></Route> 
         <Route path="/meus-pedidos" element={<MeusPedidos/>}></Route> 
          <Route path="/comprar/:id" element={<Compra/>}></Route>  
+         <Route path="/obrigado" element={<Obrigado/>}></Route>
+         <Route path="/pedido" element={<Pedido/>}></Route>
      
 
         {/* back-end */}

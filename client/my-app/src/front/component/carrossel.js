@@ -39,7 +39,7 @@ export default function Carrossel() {
   return (
     <>
       <Swiper
-        slidesPerView={4}
+        slidesPerView={5}
         spaceBetween={5}
         slidesPerGroup={1}
         loop={true}

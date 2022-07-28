@@ -375,9 +375,10 @@ router.post('/compra-action/:idProduto',(req, res)=>{
      const complemento= req.body.complemento
 
       //dados do pedido
-    const quant= req.body.quant 
+    const valor= req.body.valor
     const bebida= req.body.bebida 
-    const quantBebida= req.body.quantBebida 
+    const valorAdicional= req.body.valorAdicional 
+    const valorTotal= req.body.valorTotal 
     const pago= "on"
     const idProduto=req.params.idProduto
      
@@ -401,7 +402,7 @@ router.post('/compra-action/:idProduto',(req, res)=>{
 
       const idCliente=result.insertId
       const data= new Date()
-         conn.query('INSERT INTO tb_pedido SET?',{ quant: quant, bebida: bebida,quant_bebida: quantBebida, pago: pago,  data: data, id_cliente: idCliente,id_produto:idProduto,pedido:pedido },(error, result)=>{
+         conn.query('INSERT INTO tb_pedido SET?',{ valor: valor, bebida: bebida,valorAdicional: valorAdicional, valorTotal: valorTotal, pago: pago,  data: data, id_cliente: idCliente,id_produto:idProduto,pedido:pedido },(error, result)=>{
       if(error){
           console.log(error)
       }else{
@@ -415,7 +416,7 @@ router.post('/compra-action/:idProduto',(req, res)=>{
             }else{
                  const oldIdCliente = result[0].id
                  const data=new Date()
-                   conn.query('INSERT INTO tb_pedido SET?',{ quant: quant, bebida: bebida, quant_bebida: quantBebida, pago: pago, data:data,id_cliente: oldIdCliente, id_produto:idProduto, pedido:pedido },(error, result)=>{
+                   conn.query('INSERT INTO tb_pedido SET?',{ valor: valor, bebida: bebida,valorAdicional: valorAdicional, valorTotal: valorTotal, pago: pago, data:data,id_cliente: oldIdCliente, id_produto:idProduto, pedido:pedido },(error, result)=>{
       if(error){
           console.log(error)
       }else{
@@ -526,41 +527,25 @@ router.get('/verpedido',(req, res)=>{
 
 // consultar se o cliente tem pedidos
 
-router.post('/clientes', function (req, res){
+router.get('/clientes', function (req, res){
     const nome= req.body.nome
-    const cpf= req.body.cpf
+    var cpf
 
-    conn.query('SELECT * FROM tb_cliente JOIN tb_pedido ON tb_cliente.id=tb_pedido.id_cliente WHERE cpf=?',[cpf],(error, result)=>{
+    cpf="70093359233"
+
+    conn.query('SELECT * FROM tb_cliente JOIN tb_pedido ON tb_cliente.id=tb_pedido.id_cliente  JOIN tb_user ON tb_pedido.id_produto=tb_user.id WHERE cpf=?',[cpf],(error, result)=>{
         if(error){
             throw error;
         }else{
-           res.render('clientes', {resultado: result})
+        //    res.render('clientes', {resultado: result})
+
+           res.json(result)
         }
     })
 })
 
 
 
-// confirmar pedido pra ser confirmado
-
-// router.get('/editconfim-action/:id',(req, res)=>{
-      
-//     const id= req.params.id
-
-   
-
-//  conn.query('SELECT * FROM tb_pedido WHERE id=?',[id],(error, result)=>{
-   
-//      if(error){
-//          throw error
-//      }else{
-
-//          res.render('editconfim',{user: result[0]})
-        
-//      }
-//  })
-
-// })
 
 
 //confirmar pedido
