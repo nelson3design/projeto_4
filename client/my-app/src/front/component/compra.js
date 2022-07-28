@@ -62,8 +62,8 @@ export default function Compra(){
 
     useEffect(()=>{
   
-
-        listItem()
+listItem()
+      
         listBebida()
          
       },[])
@@ -89,27 +89,43 @@ export default function Compra(){
               
           });
         }
-   var valor =item
-
-
-
-   const [total, setTotal]=useState("")
-
-   const handlePlus =()=>{
    
+
+    const [total, setTotal]=useState("")
+
+     const [total2, setTotal2]=useState("")
+
+   
+   const handlePlus =(preco)=>{
      
-    var valorFim=valor[0].preco
+     setTotal((Number(total))+(Number(preco)))
 
-   var nume=valorFim
-    
-    console.log(nume)
    
-    setTotal((Number(total)) +(Number(nume)))
+   }
+  const handleMenos =(preco)=>{
+ 
+     setTotal((Number(total))-(Number(preco)))
+console.log(total)
     
    }
 
 
-   var add= 20
+   
+   const handlePlus2 =(preco)=>{
+     
+     setTotal2((Number(total2))+(Number(preco)))
+
+   
+   }
+  const handleMenos2 =(preco)=>{
+ 
+     setTotal2((Number(total2))-(Number(preco)))
+console.log(total)
+    
+   }
+
+
+   
 
     return(
         <>
@@ -170,18 +186,24 @@ export default function Compra(){
        <div className='adicional'>
         <div>Adicional</div>
         <label>Bebidas</label>
-       <select name="bebida" id=""  value={bebida}  onChange={(e) => setBebida(e.target.value)}>
+      
 
-           <option value="">selecione...</option>
-       {
+          
+           {
               
-              beb && beb.map((dados)=>(
-                  <option value={dados.preco}>{dados.nome}, R$ {dados.preco}</option>
+              beb && beb.map((dado)=>(
+                 <>
+                 <img src={url2+dado.image} alt={url2+dado.image}/>
+                  <div>{dado.nome}</div>
+                  <div>{dado.preco}</div>
+                  <div className='plus' onClick={()=>handleMenos2(dado.preco)}>-</div>
+                 <div className='plus' onClick={()=>handlePlus2(dado.preco)}>+</div>
+                  </>
               ))
               
               }
            
-          </select>
+        
           <label>Quantidade</label>
 
         <select name="bebida" id=""  value={quantBebida}  onChange={(e) => setQuantBebida(e.target.value)}>
@@ -206,8 +228,8 @@ export default function Compra(){
 
     {
               
+
               item && item.map((dados)=>(
-              
                      
         <div className="cardBase cardCompra">
             <div className="cardImg">
@@ -220,12 +242,19 @@ export default function Compra(){
                
                  <div className="texts">{dados.description}</div>
                 <div className="cardPreco">
-                    <div className="preco">R$ {total===""? Number(dados.preco)+add: Number(total.toFixed(2))+add}</div>
-                    <div className='plus' onClick={handlePlus}>+</div>
+                    <div className="preco">R$ {total===""? Number(dados.preco): Number(total.toFixed(2))}</div>
+                   
+                    
+                    {total<=dados.preco? null : <div className='plus' onClick={()=>handleMenos(dados.preco)}>-</div>}
+                   
+                     <div className='plus' onClick={()=>handlePlus(dados.preco)}>+</div>
                 </div>
-                
-                
-            {/* <div className='plus' onClick={handlePlus(dados.preco)}>+</div> */}
+               
+               <div>{total2}</div>
+
+               <div>total: {total2+total}</div>
+
+           
             </div>
 
            
