@@ -12,6 +12,10 @@ export default function MeusPedidos(){
     const [nome, setNome]=useState("")
     const [cpf, setCpf]=useState("")
 
+    if(cpf===""){
+        localStorage.removeItem("cpf")
+      }
+
     const navigate = useNavigate();
 
   

@@ -21,6 +21,10 @@ export default function Pedido(){
 
 const [logout, setLogout]= useState(false)
 
+if(cpf===""){
+  localStorage.removeItem("cpf")
+}
+
 if(logout){
   localStorage.removeItem("cpf")
   navigate('/meus-pedidos')
