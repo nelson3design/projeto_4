@@ -14,7 +14,7 @@ export default function MeusPedidos(){
          <div className="links">
             <div className="formPedidos">
                 <div className="titlePedido">acesse o seu pedido</div>
-                <form>
+                <form action="http://localhost:5000/clientes" method="POST">
                 <div className="formItens">
                   <div>
                     <label>nome</label>

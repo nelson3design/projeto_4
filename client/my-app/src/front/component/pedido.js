@@ -2,7 +2,7 @@ import React,{useEffect,useState} from "react";
 import axios from "axios";
 import HeaderPedido from "./headerPedido"
 import { MdDone } from "react-icons/md";
-
+import Footer from "./footer";
 import { Audio,ThreeDots } from  'react-loader-spinner'
 import "./style/pedido.css"
 
@@ -38,32 +38,48 @@ export default function Pedido(){
 
        <HeaderPedido/>
 
+       <div className="baseContent">
+
+        <div className="links pedidoBase1">
+
+
+
+       <div className="infoCliente">
+
        {
               
               item && item.slice(-1).map((dados)=>(
            
                  <>
-                  <div>Nome: {dados.nomeCliente}</div>
-                   <div>Cpf: {dados.cpf}</div>
-                   <div>Cep: {dados.cep}</div>
-                   <div>Rua: {dados.rua}</div>
-                   <div>Cidade: {dados.cidade}</div>
-                   <div>Numero: {dados.numero}</div>
-                   <div>Complemento: {dados.complemneto}</div>
+                  <div>Nome: <span>{dados.nomeCliente}</span></div>
+                   <div>Cpf: <span>{dados.cpf}</span></div>
+                   <div>Cep: <span>{dados.cep}</span></div>
+                   <div>Rua: <span>{dados.rua}</span></div>
+                   <div>Cidade: <span>{dados.cidade}</span></div>
+                   <div>Numero: <span> {dados.numero}</span></div>
+                   <div>Complemento: <span>{dados.complemneto}</span></div>
                  
                  </>
        
             ))
               }
+       </div>
 
-      
+
+      <div className="cardBasePedido">
        {
               
               item && item.map((dados)=>(
-             <>
 
-                   <div>Pedido: {dados.pedido}</div>
-                   <div>Confirmado: {dados.confirmar==="on"?   <MdDone style={{color:"green"}}/>: <MdDone style={{color:"#B2B2B2"}}/> }</div>
+                <>
+               
+             <div className="cardCliente">
+
+              <div className="dadoPedido">
+
+                   <div className="nuPedido">Numero do pedido: <span>{dados.pedido}</span></div>
+                  <div className="barra2"></div>
+                   <div>Confirmado: {dados.confirmar==="on"?   <MdDone style={{color:"green",marginTop:5}}/>: <MdDone style={{color:"#B2B2B2"}}/> }</div>
               
 
                    {dados.preparar==="on" && dados.terminar==="off"?  <div className="preparando">Preparando: {dados.preparar==="on" && dados.terminar==="off"?     <ThreeDots
@@ -71,16 +87,21 @@ export default function Pedido(){
           width="40"
           color='green'
           ariaLabel='loading'
-        />: <MdDone/>}</div> : <div>Preparado: {dados.terminar==="on"?   <MdDone style={{color:"green"}}/>: <MdDone style={{color:"#B2B2B2"}}/> }</div>}
+        />: <MdDone style={{color:"green",marginTop:5}}/>}</div> : <div>Preparado: {dados.terminar==="on"?   <MdDone style={{color:"green",marginTop:5}}/>: <MdDone style={{color:"#B2B2B2",marginTop:5}}/> }</div>}
                    
        
-                   <div>Sair pra entregar: {dados.entregar==="on"?   <MdDone style={{color:"green"}}/>: <MdDone style={{color:"#B2B2B2"}}/> }</div>
-                   <div>Entregado: {dados.finalizar==="on"?   <MdDone style={{color:"green"}}/>: <MdDone style={{color:"#B2B2B2"}}/> }</div>
-                   <div>Data: {dados.data.slice(0,10)} / {dados.data.slice(11,19)}</div>
-                   {/* <div>Data: {dados.data}</div> */}
+                   <div>Sair pra entregar: {dados.entregar==="on"?   <MdDone style={{color:"green"}}/>: <MdDone style={{color:"#B2B2B2",marginTop:5}}/> }</div>
+                   <div>Entregado: {dados.finalizar==="on"?   <MdDone style={{color:"green",marginTop:5}}/>: <MdDone style={{color:"#B2B2B2",marginTop:5}}/> }</div>
+                   <div>Data: <span>{dados.data.slice(0,10)} / {dados.data.slice(11,19)}</span></div>
+                    <div className="">Bebida: <span>{dados.bebida}</span></div>
 
-                 
-                 
+                    <div className="valorTotal">Total: <span>R${dados.valorTotal}</span></div>
+
+                    {dados.confirmar==="on"? <button className="btnPedidoCancelar colorZinca">cancelar</button> : <button className="btnPedidoCancelar">cancelar</button> }
+                    
+                 </div>
+
+                 {/* fim */}
 
                   <div className="cardBase">
                
@@ -94,9 +115,9 @@ export default function Pedido(){
             
                  <div className="texts">{dados.description}</div>
                 <div className="cardPreco">
-                    <div className="preco">R$ {dados.preco}</div>
+                    {/* <div className="preco">R$ {dados.preco}</div> */}
                    
-                    <div className="btn"><span>comprar</span></div>
+                    {/* <div className="btn"><span>comprar</span></div> */}
                 </div>
                 
             </div>
@@ -104,15 +125,9 @@ export default function Pedido(){
         </div>
 
 
-{/*    
-          <ThreeDots
-          height="200"
-          width="100"
-          color='red'
-          ariaLabel='loading'
-        /> */}
      
-   
+   </div>
+
              
              </>
                
@@ -120,7 +135,12 @@ export default function Pedido(){
             ))
               }
 
+              </div>
 
+</div>
+</div>
+
+<Footer/>
        </>
     )
 }

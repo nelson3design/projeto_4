@@ -527,11 +527,11 @@ router.get('/verpedido',(req, res)=>{
 
 // consultar se o cliente tem pedidos
 
-router.get('/clientes', function (req, res){
+router.post('/clientes', function (req, res){
     const nome= req.body.nome
-    var cpf
+    const cpf=req.body.cpf
 
-    cpf="70093359233"
+    // cpf="70093359233"
 
     conn.query('SELECT * FROM tb_cliente JOIN tb_pedido ON tb_cliente.id=tb_pedido.id_cliente  JOIN tb_user ON tb_pedido.id_produto=tb_user.id WHERE cpf=?',[cpf],(error, result)=>{
         if(error){
@@ -544,6 +544,23 @@ router.get('/clientes', function (req, res){
     })
 })
 
+router.get('/clientes', function (req, res){
+    const nome= req.body.nome
+    // const cpf=req.body.cpf
+
+    const cpf="1234567891"	
+
+
+    conn.query('SELECT * FROM tb_cliente JOIN tb_pedido ON tb_cliente.id=tb_pedido.id_cliente  JOIN tb_user ON tb_pedido.id_produto=tb_user.id WHERE cpf=?',[cpf],(error, result)=>{
+        if(error){
+            throw error;
+        }else{
+        //    res.render('clientes', {resultado: result})
+
+           res.json(result)
+        }
+    })
+})
 
 
 
