@@ -10,7 +10,6 @@
     display: grid;
     background-color: #5F5F5F;
     grid-template-columns: 1fr 1fr 1fr 1fr;
-    border: 1px solid white;
     padding: 0;
 }
 

@@ -539,28 +539,39 @@ router.post('/clientes', function (req, res){
         }else{
         //    res.render('clientes', {resultado: result})
 
-           res.json(result)
+           if(result.length>0){
+            res.json(result)
+           }else{
+            res.status(400).send("usuario não tem pedido cadastrado")
+           }
         }
     })
 })
 
-router.get('/clientes', function (req, res){
-    const nome= req.body.nome
-    // const cpf=req.body.cpf
 
-    const cpf="1234567891"	
+router.get('/clientes/:id', function (req, res){
+    const nome= req.body
+    const cpf=req.params.id
 
+   
 
+    console.log(cpf)
+    console.log(nome)
     conn.query('SELECT * FROM tb_cliente JOIN tb_pedido ON tb_cliente.id=tb_pedido.id_cliente  JOIN tb_user ON tb_pedido.id_produto=tb_user.id WHERE cpf=?',[cpf],(error, result)=>{
         if(error){
             throw error;
         }else{
         //    res.render('clientes', {resultado: result})
 
-           res.json(result)
+           
+            res.json(result)
+           
         }
     })
 })
+
+
+
 
 
 

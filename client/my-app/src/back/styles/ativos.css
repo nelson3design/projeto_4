@@ -2,9 +2,11 @@
 .baseContent{
     width: 100%;
     display: grid;
-    place-items: center;
+  place-items: center;
     background-color: #5F5F5F;
     padding-bottom: 50px;
+    height: auto;
+    flex-direction: column;
 }
 
 .baseItens{
@@ -13,6 +15,7 @@
     display: flex;
     gap: 20px;
     flex-wrap: wrap;
+   
 }
 .caixa{
     width: 350px;
@@ -74,7 +77,7 @@
    
     width: 100%;
     display: flex;
-    justify-content: space-between;
+    justify-content: center;
     
 }
 

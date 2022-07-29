@@ -3,17 +3,50 @@ import axios from "axios";
 import HeaderPedido from "./headerPedido"
 import { MdDone } from "react-icons/md";
 import Footer from "./footer";
-import { Audio,ThreeDots } from  'react-loader-spinner'
+import { ThreeDots } from  'react-loader-spinner'
 import "./style/pedido.css"
+import { FaUserCircle,FaCaretDown } from "react-icons/fa";
+import {useNavigate} from 'react-router-dom';
 
 export default function Pedido(){
 
-   
 
+  const navigate = useNavigate();
+
+  var cpfstring= localStorage.getItem("cpf")
+
+  var cpf1= cpfstring.slice(1,-1)
+
+  var cpf = Number(cpf1)
+
+const [logout, setLogout]= useState(false)
+
+if(logout){
+  localStorage.removeItem("cpf")
+  navigate('/meus-pedidos')
+}
+
+const handlelogout =()=>{
+  setLogout(true)
+}
+
+   
+  const [profile , setProfile]= useState(false)
+
+  let className='profileContent'
+
+  if(!profile){
+      className = "hideProfileContent"
+  }
+
+
+  const handleShow = ()=>{
+    setProfile(!profile)
+  }
 
 
     const [item, setItem] = useState([])
-    const url="http://localhost:5000/clientes"
+    const url="http://localhost:5000/clientes/"
     const url2="http://localhost:5000/"
 
     
@@ -25,11 +58,20 @@ export default function Pedido(){
       },[])
 
       const listItem=()=>{
-        axios.get(`${url}`).then((response) => {
+        axios.get(`${url}${cpf}`).then((response) => {
             setItem(response.data);
-            console.log(item)
+         
         });
       }
+
+      const handleCancel=(idPedido)=>{
+   
+        axios.post(url2+"editcancelar-action/"+idPedido).then((response)=>{
+           
+            console.log(idPedido)
+            listItem()
+          })
+    }
 
 
     return(
@@ -45,21 +87,33 @@ export default function Pedido(){
 
 
        <div className="infoCliente">
-
+     
        {
               
               item && item.slice(-1).map((dados)=>(
-           
-                 <>
-                  <div>Nome: <span>{dados.nomeCliente}</span></div>
-                   <div>Cpf: <span>{dados.cpf}</span></div>
-                   <div>Cep: <span>{dados.cep}</span></div>
-                   <div>Rua: <span>{dados.rua}</span></div>
-                   <div>Cidade: <span>{dados.cidade}</span></div>
-                   <div>Numero: <span> {dados.numero}</span></div>
-                   <div>Complemento: <span>{dados.complemneto}</span></div>
+                <div>
+
+                <div className="profile">
+                <div className="avatar"><FaUserCircle className="iconProfile"/> <span>{dados.nomeCliente}</span></div> <FaCaretDown onClick={handleShow} style={{cursor: "pointer"}}/>
+                </div>
+
+               
+              
                  
-                 </>
+                 <div className={className}>
+           
+                  <div className="profileItem"><div>Nome: </div><span>{dados.nomeCliente}</span></div>
+                   <div className="profileItem"><div>Cpf: </div><span>{dados.cpf}</span></div>
+                   <div className="profileItem"><div>Cep: </div><span>{dados.cep}</span></div>
+                   <div className="profileItem"><div>Rua: </div><span>{dados.rua}</span></div>
+                   <div className="profileItem"><div>Cidade: </div><span>{dados.cidade}</span></div>
+                   <div className="profileItem"><div>Numero: </div><span> {dados.numero}</span></div>
+                   <div className="profileItem"><div>Complemneto: </div><span>{dados.complemneto}</span></div>
+                   <div onClick={handlelogout} className="sair">Sair</div>
+                 </div>
+              
+
+                 </div>
        
             ))
               }
@@ -79,7 +133,7 @@ export default function Pedido(){
 
                    <div className="nuPedido">Numero do pedido: <span>{dados.pedido}</span></div>
                   <div className="barra2"></div>
-                   <div>Confirmado: {dados.confirmar==="on"?   <MdDone style={{color:"green",marginTop:5}}/>: <MdDone style={{color:"#B2B2B2"}}/> }</div>
+                  {dados.cancelar==="on"?  <div>Cancelado:   <MdDone style={{color:"green",marginTop:5}}/></div> :  <div>Confirmado: {dados.confirmar==="on"?   <MdDone style={{color:"green",marginTop:5}}/>: <MdDone style={{color:"#B2B2B2"}}/> }</div>}
               
 
                    {dados.preparar==="on" && dados.terminar==="off"?  <div className="preparando">Preparando: {dados.preparar==="on" && dados.terminar==="off"?     <ThreeDots
@@ -97,7 +151,7 @@ export default function Pedido(){
 
                     <div className="valorTotal">Total: <span>R${dados.valorTotal}</span></div>
 
-                    {dados.confirmar==="on"? <button className="btnPedidoCancelar colorZinca">cancelar</button> : <button className="btnPedidoCancelar">cancelar</button> }
+                    {dados.confirmar==="on" || dados.cancelar==="on"? <button className="btnPedidoCancelar colorZinca">cancelar</button> : <button className="btnPedidoCancelar"  onClick={()=>handleCancel(dados.idPedido)}>cancelar</button> }
                     
                  </div>
 
@@ -115,9 +169,7 @@ export default function Pedido(){
             
                  <div className="texts">{dados.description}</div>
                 <div className="cardPreco">
-                    {/* <div className="preco">R$ {dados.preco}</div> */}
                    
-                    {/* <div className="btn"><span>comprar</span></div> */}
                 </div>
                 
             </div>

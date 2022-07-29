@@ -2,11 +2,12 @@
 
 .listas{
     width: 100%;
-    display: grid;
-    place-items: center;
+   display: flex;
+   justify-content: center;
     background-color: #5F5F5F;
     padding-bottom: 50px;
-    
+    height: 100vh;
+    padding-top: 50px;
 }
 
 .btnBarPes{
@@ -24,6 +25,12 @@
     text-transform: uppercase;
     border-radius: 3px;
     cursor: pointer;
+    height: 30px;
+    font-size: 17px;
+    text-align: center;
+    display: flex;
+    align-items: center;
+
 }
 
 
@@ -34,24 +41,26 @@
 }
 
 .formPes .barText{
-    height: 22px;
+    height: 30px;
     background-color: rgb(255, 255, 255);
     border: none;
     border-top-left-radius: 3px;
     border-bottom-left-radius: 3px;
     outline: none;
+    width: 212px;
 }
 
 .formPes .btnPes{
   background-color: red;
   color: white;
   border: none;
- height: 24px;
+ height: 32px;
  text-transform: uppercase;
  border-top-right-radius: 3px;
 border-bottom-right-radius: 3px;
 cursor: pointer;
 margin-top: 1px;
+padding: 0 20px;
 }
 
 .table {
@@ -95,3 +104,23 @@ margin-top: 1px;
     border-radius: 3px;
     cursor: pointer;
 }
+
+
+
+.paginationBase{
+    width: 100%;
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+    margin-top: 20px;
+   
+}
+
+.paginationBase button{
+   font-size: 20px;
+   border: none;
+   cursor: pointer;
+}
+.paginationBase button:hover{
+  opacity: 0.3;
+ }

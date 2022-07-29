@@ -1,6 +1,6 @@
 
 import React ,{useState,useEffect} from "react";
-
+import Footer from "./footer";
 import axios from 'axios'
 import "../styles/list.css"
 import {Link} from 'react-router-dom'
@@ -38,6 +38,8 @@ function List(){
          })
         
     }
+
+
   
 
        const handleRemove=(id)=>{
@@ -49,6 +51,19 @@ function List(){
             });
         }
    }
+
+
+       // paginação
+
+       const [itensPerPage, setItensPerPage]=useState(8)
+
+       const [currentPage, setCurrentPage]=useState(0)
+
+
+       const pages= Math.ceil(item.length / itensPerPage)
+       const startIndex= currentPage * itensPerPage
+       const endIndex= startIndex + itensPerPage
+       const currentItens = item.slice(startIndex,endIndex)
 
     return(
         <>
@@ -80,9 +95,11 @@ function List(){
                 </tr>
             </thead>
             <tbody className="tbody">
+
+              
             {
               
-              item && item.map((dados)=>(
+              currentItens && currentItens.map((dados)=>(
                     
                      <tr key={dados.id}>  
                     <td data-label="Imagem"><img src={url+dados.image} width="60px" alt=""/></td>
@@ -108,8 +125,15 @@ function List(){
             </tbody>
 
         </table>
+
+        <div className="paginationBase">
+                    {Array.from(Array(pages), (itens, index)=>{
+                        return <button style={ index == currentPage ? {background: "red",color:"white"}: null} value={index} onClick={(e)=>setCurrentPage(Number(e.target.value))}>{index + 1}</button>
+                    })}
+                </div>
         </div>
         </div>
+        <Footer/>
         </>
     )
 

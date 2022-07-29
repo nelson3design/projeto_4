@@ -1,7 +1,7 @@
 import { useState } from 'react';
 
  import { useNavigate } from 'react-router-dom';
-
+import Footer from './footer';
 import {Link} from 'react-router-dom'
 import axios from 'axios'
 import "../styles/create.css"
@@ -48,24 +48,37 @@ axios.post("http://localhost:5000/add-action", formdata,{
 })
 
   return (
+    <>
      <div className="listas">
 
         <div className="listasContent container">
 
+          {/* form */}
+          <div className='formCreatebase'>
+
         <h2 className="titleCreate">adicionar item</h2>
   
+        <hr className='bars'/>
         <form className='formCreate' onSubmit={handleSubmit} enctype="multipart/form-data">
-  
-        <input type="file" name="upload" onChange={(e) => setUpload(e.target.files[0])} />
-        
-          <br /> <br />
+
+         <div className='formCreateContent'>
+         <label>Nome</label>
           <input
             name='nome'
             value={nome}
             onChange={(e) => setNome(e.target.value)}
-            placeholder="Nome"
+            placeholder="Nola Chicken Crispy"
           /> 
-          <br /> <br />
+         </div>
+
+         <div className='formCreateContent'>
+          <label>Imagem</label>
+            <input className='uplaod' type="file" name="upload" onChange={(e) => setUpload(e.target.files[0])} />
+         </div>
+
+         <div className='formCreateContent'>
+          <label>Descrição</label>
+           
           <textarea
             name="description"
             id=""
@@ -73,40 +86,60 @@ axios.post("http://localhost:5000/add-action", formdata,{
             rows="5"
             value={description}  
             onChange={(e) => setDescription(e.target.value)}
-            placeholder="descrição do item"
+            placeholder="Coxa e sobrecoxa empanados ao estilo ame..."
           ></textarea>
-          <br /> <br />
+         </div>
+          
+        
+        <div className='formCreateContent'>
+        <label>Preço</label>
           <input
+           Type="number"
             name='preco'
             value={preco}
             onChange={(e) => setPreco(e.target.value)}
-            placeholder="preço"
+            placeholder="22.00"
           />
-          <br></br><br></br>
+        </div>
+
+        <div className='formCreateContent categoria'>
           <select name="categoria" id=""  value={categoria} onChange={(e) => setCategoria(e.target.value)}>
             <option value="">Categoria</option>
             <option value="pizza">pizza</option>
             <option value="hamburguer">hambúrguer</option>
             <option value="bebida">bebida</option>
           </select>
-          <br></br>
-          <br></br>
+          
           <select name="destaque" id="" value={destaque} onChange={(e) => setDestaque(e.target.value)}>
             <option value="">Destaque</option>
             <option value="sim">Sim</option>
             <option value="não">Não</option>
           </select>
-          <br /> <br />
-          <input type="submit" className="btnAtion1 btnAtion" />
-        
+
+          </div>
+
+
+          <div className='formCreateContent buttons'>
+          <input type="submit" className="submitCreate" value="adicionar"/>
   
           <Link to='/admin/dashboard'>
-             <button className="btnAtion1 btnAtion">cancel</button>
-            </Link>
+             <button className="cancelCreate">cancel</button>
+          </Link>
+
+          </div> 
+
         </form>
+
+        </div>
+      {/* fim form */}
+
         </div>
       
         </div>
+
+        <Footer/>
+
+       </>
   );
 }
 

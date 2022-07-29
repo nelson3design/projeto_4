@@ -3,7 +3,7 @@ import axios from "axios"
 import HeaderPedido from "./headerPedido"
 
 import "../styles/links.css"
-
+import Footer from "./footer";
 import "../styles/ativos.css"
 
 
@@ -72,19 +72,17 @@ export default function Ativos(){
             <div className="caixaImg">
             <img src={url2+dados.image} alt={dados.image}/>
             </div>
-            <div className="descrip">{dados.description}</div>
+            <div className="descrip">{dados.description.slice(0,40)+"..."}</div>
             <div className="info">
-                <div><span>Cliente:</span> <span>{dados.nomeCliente}</span></div>
-                <div><span>Valor:</span> <span>R$ {dados.preco}</span></div>
                 <div><span>Pedido:</span> <span>{dados.pedido}</span></div>
+                <div><span>Nome:</span> <span>{dados.nome}</span></div>
+                <div><span>Valor:</span> <span>R$ {dados.valorTotal}</span></div>
                 <div><span>Bebida:</span> <span>{dados.bebida}</span></div>
-                <div><span>Quant Bebida:</span> <span>{dados.quant_bebida}</span></div>
-                <div><span>Quant:</span> <span>{dados.quant}</span></div>
-                <div><span>Pago:</span> <span>{dados.pago==="on"? "sim" : "não" }</span></div>
+                <div><span>Cliente:</span> <span>{dados.nomeCliente}</span></div>
                 <div>
                     <span>Endereço:</span> 
                 </div>
-                <p className="endereco">{dados.rua}, {dados.cidade}, {dados.numero}, {dados.cep}</p>
+                <p className="endereco">{dados.rua.slice(0,15)+"..."}, {dados.cidade}, {dados.numero}, {dados.cep}</p>
 
             </div>
              
@@ -100,7 +98,7 @@ export default function Ativos(){
      </section>
 
         </div>
-
+        <Footer/>
         </>
     )
 }
