@@ -5,6 +5,7 @@ import Footer from "./footer"
 import "./style/meusPedidos.css"
 
 import HeaderPedido from "./headerPedido"
+import axios from "axios";
 
 
 export default function MeusPedidos(){
@@ -27,25 +28,35 @@ export default function MeusPedidos(){
     },[])
 
 
-   async function login(){
+    function login(e){
+    e.preventDefault()
     let item ={nome, cpf}
-   let result= await fetch("http://localhost:5000/clientes",{
+   fetch("http://localhost:5000/clientes",{
     method:"post",
     headers:{
         "Content-type":"application/json",
         "Accept":"application/jason"
     },
     body: JSON.stringify(item)
-   });
+   }).then(result=> result.json())
 
-     result = await result.json()
-     localStorage.setItem("cpf",JSON.stringify(result[0].cpf))
-     navigate('/pedido')
+    .then(result=>{
+     
+            
+            localStorage.setItem("cpf",JSON.stringify(result[0].cpf))
+            navigate('/pedido')
+         
+            console.log(result)
+            if(result==400){
+                console.log(result)
+            }
+        
+    })  
+   
 
-     console.log(result)
    }
 
-
+   
 
 
     return(

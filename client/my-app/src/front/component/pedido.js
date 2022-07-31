@@ -3,7 +3,7 @@ import axios from "axios";
 import HeaderPedido from "./headerPedido"
 import { MdDone } from "react-icons/md";
 import Footer from "./footer";
-import { ThreeDots } from  'react-loader-spinner'
+import { ThreeDots,Circles } from  'react-loader-spinner'
 import "./style/pedido.css"
 import { FaUserCircle,FaCaretDown } from "react-icons/fa";
 import {useNavigate} from 'react-router-dom';
@@ -54,8 +54,14 @@ const handlelogout =()=>{
     const url2="http://localhost:5000/"
 
     
-     useEffect(()=>{
+  const [isLoaded, setIsLoaded] = useState(false);
   
+ 
+    
+     useEffect(()=>{
+         setTimeout(() => {
+      setIsLoaded(true);
+    }, 500);
 
         listItem()
          
@@ -77,12 +83,15 @@ const handlelogout =()=>{
           })
     }
 
+     
+
 
     return(
 
        <>
+       {isLoaded ? <>
 
-       <HeaderPedido/>
+        <HeaderPedido/>
 
        <div className="baseContent">
 
@@ -137,6 +146,9 @@ const handlelogout =()=>{
 
                    <div className="nuPedido">Numero do pedido: <span>{dados.pedido}</span></div>
                   <div className="barra2"></div>
+          {
+           dados.finalizar==="off"?
+              <>
                   {dados.cancelar==="on"?  <div>Cancelado:   <MdDone style={{color:"green",marginTop:5}}/></div> :  <div>Confirmado: {dados.confirmar==="on"?   <MdDone style={{color:"green",marginTop:5}}/>: <MdDone style={{color:"#B2B2B2"}}/> }</div>}
               
 
@@ -147,16 +159,26 @@ const handlelogout =()=>{
           ariaLabel='loading'
         />: <MdDone style={{color:"green",marginTop:5}}/>}</div> : <div>Preparado: {dados.terminar==="on"?   <MdDone style={{color:"green",marginTop:5}}/>: <MdDone style={{color:"#B2B2B2",marginTop:5}}/> }</div>}
                    
-       
-                   <div>Sair pra entregar: {dados.entregar==="on"?   <MdDone style={{color:"green"}}/>: <MdDone style={{color:"#B2B2B2",marginTop:5}}/> }</div>
-                   <div>Entregado: {dados.finalizar==="on"?   <MdDone style={{color:"green",marginTop:5}}/>: <MdDone style={{color:"#B2B2B2",marginTop:5}}/> }</div>
+       {dados.entregar==="on" && dados.finalizar==="off"?
+                   <div>Pedido a caminho: {dados.entregar==="on"?  <ThreeDots
+          height="10"
+          width="40"
+          color='green'
+          ariaLabel='loading'
+        />: null}</div> : null}
+  </>
+     :null
+       }
+                   <div>Pedido concluido: {dados.finalizar==="on"?   <MdDone style={{color:"green",marginTop:5}}/>: <MdDone style={{color:"#B2B2B2",marginTop:5}}/> }</div>
                    <div>Data: <span>{dados.data.slice(0,10)} / {dados.data.slice(11,19)}</span></div>
                     <div className="">Bebida: <span>{dados.bebida}</span></div>
 
                     <div className="valorTotal">Total: <span>R${dados.valorTotal}</span></div>
-
+                   {dados.finalizar==="off"?
+                   <>
                     {dados.confirmar==="on" || dados.cancelar==="on"? <button className="btnPedidoCancelar colorZinca">cancelar</button> : <button className="btnPedidoCancelar"  onClick={()=>handleCancel(dados.idPedido)}>cancelar</button> }
-                    
+                    </>
+                    :null}
                  </div>
 
                  {/* fim */}
@@ -172,9 +194,7 @@ const handlelogout =()=>{
              <div className="cardText">
             
                  <div className="texts">{dados.description}</div>
-                <div className="cardPreco">
-                   
-                </div>
+               
                 
             </div>
 
@@ -196,7 +216,12 @@ const handlelogout =()=>{
 </div>
 </div>
 
+
 <Footer/>
+ </> 
+ :
+ <Circles color="red" height={500} width={1920}/>
+}
        </>
     )
 }

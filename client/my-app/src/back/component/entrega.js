@@ -99,7 +99,7 @@ const handleFinalizar=(idPedido)=>{
 
       </div>
         
-      <Footer/>
+      {/* <Footer/> */}
         </>
     )
 }

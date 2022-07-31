@@ -23,7 +23,7 @@ export default function Footer(){
                <div  className="footerText">
                 <p>sobre Menu</p>
                <p>destaques</p>
-               <p>cardapio</p>
+               <p>cardápio</p>
                </div>
                
             </div>

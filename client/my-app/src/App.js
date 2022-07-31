@@ -1,5 +1,5 @@
 import { BrowserRouter, Routes, Route,Link } from "react-router-dom";
-import { useState } from "react";
+
 import Start from "./front/component/start"
 import './App.css';
 
@@ -10,7 +10,7 @@ import BackUpdate from "./back/update"
 import MeusPedidos from "./front/component/meusPedidos";
 
 import Compra from "./front/component/compra";
-import Pedidos from "./back/pedidos";
+
 
 
 import Ativos from "./back/component/ativos";
@@ -25,6 +25,8 @@ import Bebidas from "./front/component/bebidas";
 import Obrigado from "./front/component/abrigado";
 import Pedido from "./front/component/pedido";
 
+import Header from "./front/component/header";
+
 function App() {
 
 
@@ -32,12 +34,12 @@ function App() {
   return (
     <>
     <BrowserRouter>
-
+      {/* <Header/> */}
       <Routes>
 
         {/* front-end */}
 
-        <Route path="/" element={<Start/>}></Route> 
+        <Route exact path="/" element={<Start/>}></Route> 
         <Route path="/cardapio" element={<Cardapio/>}></Route> 
          <Route path="/pizza" element={<Pizza/>}></Route> 
           <Route path="/bebidas" element={<Bebidas/>}></Route> 

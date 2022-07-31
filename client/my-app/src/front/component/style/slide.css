@@ -30,3 +30,6 @@
     object-fit: cover;
 }
 
+:root {
+    --swiper-theme-color: white;
+}

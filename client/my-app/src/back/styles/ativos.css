@@ -17,6 +17,8 @@
     flex-wrap: wrap;
    
 }
+
+
 .caixa{
     width: 350px;
     background-color: white;
@@ -104,4 +106,12 @@
   .btns .entregado, .btns .cancelado{
     background-color: rgb(175, 175, 175);
       
+  }
+
+
+  @media (max-width:1025px) {
+    .baseItens {
+    justify-content: center;
+    
+      }
   }

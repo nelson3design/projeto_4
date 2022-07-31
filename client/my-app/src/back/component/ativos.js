@@ -3,7 +3,7 @@ import axios from "axios"
 import HeaderPedido from "./headerPedido"
 
 import "../styles/links.css"
-import Footer from "./footer";
+
 import "../styles/ativos.css"
 
 
@@ -98,7 +98,7 @@ export default function Ativos(){
      </section>
 
         </div>
-        <Footer/>
+      
         </>
     )
 }

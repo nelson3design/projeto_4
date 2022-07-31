@@ -14,3 +14,11 @@
     text-transform: uppercase;
     margin-left: 20px;
 }
+
+@media (max-width:1025px) {
+.title {
+        
+        margin-left: 0px;
+        text-align: center;
+    }
+}

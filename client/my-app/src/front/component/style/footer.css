@@ -76,3 +76,35 @@
     text-align: center;
     margin-top: 30px;
 }
+
+
+@media (max-width:1025px) {
+    .footer {
+            background-color: red;
+            display: grid;
+            place-items: center;
+    
+            padding-top: 30px;
+        }
+    
+        .container {
+            width: 95%;
+        }
+    
+        .footerContent {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            flex-direction: column;
+            gap: 40px;
+        }
+    
+        .footerItens {
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            flex-direction: column;
+        }
+    
+}

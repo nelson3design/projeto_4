@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { useState,useEffect } from 'react';
+import { useState,useEffect,useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useParams } from 'react-router-dom';
 
@@ -10,6 +10,8 @@ import Footer from './footer';
 
 export default function Compra(){
 
+
+ 
   const navigate = useNavigate();
    
   
@@ -24,16 +26,23 @@ export default function Compra(){
  
 
     const [valor, setValor] = useState("")
-    const [bebida, setBebida] = useState("")
-    const [valorAdicional, setValorAdicional] = useState("")
+    const [bebida, setBebida] = useState([])
+    const [valorAdicional, setValorAdicional] = useState([])
  
 
-    var valorTotal=Number(valor)+ Number(valorAdicional)
+    var valorAddTotal=JSON.parse("[" + valorAdicional + "]")
     
    
-    console.log(valorTotal)
+    console.log(valorAddTotal)
+  
 
+  var soma = 0;    
+for(var i = 0; i < valorAddTotal.length; i++) {
+    soma += valorAddTotal[i];
+}
+console.log(soma);
 
+var valorTotal= Number(valor) + Number(soma)
 
     const data={
         nomeCliente: nomeCliente,
@@ -43,9 +52,9 @@ export default function Compra(){
         cidade: cidade,
         numero: numero,
         complemento: complemento,
-        valor: valor,
-        bebida: bebida,
-        valorAdicional: valorAdicional,
+        valor: Number(valor),
+        bebida: bebida.join(" / "),
+        valorAdicional: soma,
         valorTotal:valorTotal
       
     }
@@ -72,11 +81,23 @@ export default function Compra(){
     const url="http://localhost:5000/item/"
     const url2="http://localhost:5000/"
 
+
+     const ref = useRef([]);
     useEffect(()=>{
   
-listItem()
-      
+        listItem()
         listBebida()
+
+
+         const handleClick = event => {
+      console.log('Button clicked');
+    };
+
+  
+
+    // return () => {
+    //   element.removeEventListener('click', handleClick);
+    // };
          
       },[])
 
@@ -87,7 +108,9 @@ listItem()
         });
       }
 
-
+     
+      
+      
       const [beb, setBeb] = useState([])
 
       const url3="http://localhost:5000/bebidas"
@@ -101,28 +124,33 @@ listItem()
               
           });
         }
-   
+  const [count, setCount]=useState(1)
+  const [countB, setCountB]=useState(0)
 
     const [total, setTotal]=useState("")
 
      const [total2, setTotal2]=useState("")
 
-   
+
+      
+
+
+
    const handlePlus =(id,title)=>{
      
      setTotal((Number(total))+(Number(id)))
      setValor(title)
 
-    
+    setCount(count + 1)
+   
    
    }
   const handleMenos =(preco)=>{
  
      setTotal((Number(total))-(Number(preco)))
-console.log(total)
+    setCount(count - 1)
     
    }
-
 
 
 
@@ -130,15 +158,28 @@ console.log(total)
    const handlePlus2 =(id,title)=>{
     
      setTotal2((Number(total2))+(Number(id)))
-     setBebida(title)
-     setValorAdicional(id)
+     setBebida(index=>[ ...index,title])
+    //  setValorAdicional(id)
+      setValorAdicional(index=>[ ...index,id])
+   setCountB(countB + 1)
+
    
    }
-  const handleMenos2 =(id)=>{
+
+   
+  const handleMenos2 =(id,title)=>{
  
       setTotal2((Number(total2))-(Number(id)))
+     setCountB(countB - 1)
      
+      setBebida( index=> index.filter(((_,index)=> index !==0)) )
+
+      setValorAdicional( index=> index.filter(((_,index)=> index !==1 )) )
     
+      
+
+     console.log(bebida)
+     console.log(valorAdicional)
    }
 
   
@@ -153,7 +194,7 @@ console.log(total)
 
             <div className='compraContent'>
 
-     
+    
        
         <div className='compraForm'>
 
@@ -259,8 +300,10 @@ console.log(total)
 
                   {total2>=dado.preco? <div id={dado.preco} className="plusAdd" onClick={(e)=>handleMenos2(e.target.id)}>-</div>:null}
 
-               
+                {total2>=dado.preco? <div>{countB}</div>:null}
                  <div className="plusAdd" title={dado.nome} id={dado.preco} onClick={(e)=>handlePlus2(e.target.id,e.target.title)}>+</div>
+
+                
                   </div>
                  
                   </div>
@@ -303,14 +346,14 @@ console.log(total)
 
              <div className="cardTextCompra">
              <input type="hidden" value={valor} onChange={(e)=>setValor(e.target.value)}/>
-                 <div className="texts">{dados.description}</div>
+                 <div className="texts">{dados.description.slice(0,40)+"..."}</div>
                 <div className="cardPrecoCompra">
                     <div className="precoCompra">R$ {Number(Number(total2)+ Number(dados.preco)+total).toFixed(2)}</div>
                    
                     <input type="hidden" value={valor===""? setValor( Number(dados.preco)):null} onChange={(e)=>setValor(e.target.value)}/>
 
                     {total>=dados.preco? <div className='plus' onClick={()=>handleMenos(dados.preco)}>-</div>:null}
-                   
+                   {total>=dados.preco? <div>{count}</div>:null}
                      <div className='plus' id={dados.preco} title={   (Number(Number(total2)+ Number(dados.preco*2)+total).toFixed(2)) } onClick={(e)=>handlePlus(e.target.id,e.target.title)}>+</div>
                 </div>
                

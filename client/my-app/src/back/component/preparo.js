@@ -1,6 +1,6 @@
 import React,{useEffect,useState} from "react";
 import axios from "axios"
-import Footer from "./footer";
+
 import HeaderPedido from "./headerPedido"
 import "../styles/links.css"
 import "../styles/ativos.css"
@@ -93,7 +93,7 @@ const handleTerminar=(idPedido)=>{
 </section>
 
 </div>
-<Footer/>
+
         </>
     )
 }

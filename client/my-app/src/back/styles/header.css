@@ -85,6 +85,7 @@ background: rgb(255, 0, 0);
 .navlistBack .ative:hover {
     background-color: red !important;
     color: white;
+    border-right: 1px solid white;
 }
 
 .navlistBack .ative:hover a{

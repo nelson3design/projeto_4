@@ -1,6 +1,4 @@
-
-
-.compraBase{
+.compraBase {
     width: 100%;
     background-color: #5F5F5F;
     display: grid;
@@ -9,46 +7,51 @@
     height: auto;
 }
 
-.compraContent{
+.compraContent {
     width: 80%;
     display: flex;
     justify-content: space-between;
     position: relative;
-   
+
 }
-.formabase1{
+
+.formabase1 {
     /* margin-bottom: 50px; */
 }
-.compraFormContent{
+
+.compraFormContent {
     display: flex;
     flex-direction: column;
     gap: 5px;
     width: 100%;
     margin: 20px 0;
 }
-.formInput{
+
+.formInput {
     width: 100%;
-    display: flex; 
-   gap: 50px;
+    display: flex;
+    gap: 50px;
 }
 
-.compraFormContent input{
-    
+.compraFormContent input {
+
     height: 30px;
 }
-.numerInput1 input{
+
+.numerInput1 input {
     width: 50px;
     height: 30px;
 }
-.numerInput2 input{
+
+.numerInput2 input {
     width: 190px;
     height: 30px;
 }
 
-.btnFormCompra{
-    
-   width: 100%;
-   color: rgb(255, 255, 255);
+.btnFormCompra {
+
+    width: 100%;
+    color: rgb(255, 255, 255);
     font-size: 22px;
     background-color: red;
     border: none;
@@ -58,100 +61,106 @@
 }
 
 
-.formdados{
+.formdados {
     width: 100%;
     background-color: rgb(255, 255, 255);
     padding: 10px 20px 30px 20px;
     border-top-left-radius: 10px;
     border-top-right-radius: 10px;
 }
-.dados2{
+
+.dados2 {
     border-top-left-radius: 0px;
     border-top-right-radius: 0px;
     border-bottom-left-radius: 10px;
     border-bottom-right-radius: 10px;
-    
+
 }
 
 /* pagamento */
-.pagamento{
+.pagamento {
     display: flex;
     flex-direction: column;
     gap: 40px;
     margin-top: 60px;
 }
 
-.titlePagamento{
+.titlePagamento {
     color: black;
     font-size: 22px;
     margin-bottom: -20px;
     text-transform: capitalize;
 }
 
-.aviso{
+.aviso {
     color: black;
     font-size: 12px;
     margin-bottom: -20px;
 }
-.pagamentoInput{
+
+.pagamentoInput {
     display: flex;
     flex-direction: column;
     gap: 5px;
 
 }
 
-.pagamentoInput input{
-   height: 30px;
+.pagamentoInput input {
+    height: 30px;
 }
-.pagamentoInput label{
+
+.pagamentoInput label {
     color: black;
     font-size: 15;
-    
- }
 
-.pagamentoInput2{
+}
+
+.pagamentoInput2 {
     display: flex;
     justify-content: space-between;
 }
 
-.pagamentoInput2 input{
+.pagamentoInput2 input {
     width: 300px;
- }
- 
-.plus,#plus{
+}
+
+.plus,
+#plus {
     font-size: 40px;
     cursor: pointer;
     color: white;
 }
-#hidePlus{
+
+#hidePlus {
     display: none;
 }
 
 
 /* card */
 
-:root{
-    --black:#14171f;
+:root {
+    --black: #14171f;
 }
 
-.cardBaseCompra{
+.cardBaseCompra {
     width: 270px;
     height: 300px;
     border-radius: 10px;
     overflow: hidden;
-    background-color:var(--black) ;
- 
+    background-color: var(--black);
+
 }
 
-.linkHover:hover{
+.linkHover:hover {
     opacity: 0.5;
 }
-.cardImgCompra{
+
+.cardImgCompra {
     width: 100%;
     height: 150px;
     overflow: hidden;
     position: relative;
-    
+
 }
 
 .cardImgCompra img {
@@ -159,6 +168,7 @@
     position: absolute;
     z-index: 1;
 }
+
 .cardImgCompra h3 {
     left: 20px;
     position: absolute;
@@ -168,8 +178,8 @@
     text-shadow: 3px 3px 5px rgb(0, 0, 0);
 }
 
-.cardTextCompra{
-  
+.cardTextCompra {
+
     color: white;
     height: auto;
     display: flex;
@@ -179,13 +189,13 @@
     padding: 20px;
 }
 
-.cardTextCompra .texts{
+.cardTextCompra .texts {
     font-size: 14px;
-align-items: start;
-text-align: start;
+    align-items: start;
+    text-align: start;
 }
 
-.cardPrecoCompra{
+.cardPrecoCompra {
     width: 100%;
     display: flex;
     justify-content: space-between;
@@ -193,25 +203,25 @@ text-align: start;
     height: 100px;
 }
 
-.precoCompra{
+.precoCompra {
     color: red;
     font-size: 20px;
 }
 
-.cardPrecoCompra .btn{
-   
+.cardPrecoCompra .btn {
+
     background-color: red;
-   width: 100px;
-    
+    width: 100px;
+
     border-radius: 5px;
     display: flex;
     justify-content: center;
     align-items: center;
-   padding-bottom: 4px;
-   cursor: pointer;
+    padding-bottom: 4px;
+    cursor: pointer;
 }
 
-.cardPrecoCompra .btn span{
+.cardPrecoCompra .btn span {
     font-size: 15px;
     text-align: center;
     width: 100%;
@@ -220,11 +230,11 @@ text-align: start;
 
 .cardPrecoCompra .precoCompra {
     font-size: 20px;
-   font-weight: 800;
+    font-weight: 800;
     text-transform: uppercase;
 }
 
-.infoCompra{
+.infoCompra {
     padding: 5px 20px;
     background-color: white;
     height: 380px;
@@ -233,15 +243,15 @@ text-align: start;
     border-radius: 10px;
 }
 
-.titleCompra{
+.titleCompra {
     color: #14171f;
     font-weight: 700;
     font-size: 17px;
 }
 
 
-.adicional{
-   
+.adicional {
+
     border-radius: 10px;
     position: absolute;
     bottom: 0;
@@ -249,41 +259,41 @@ text-align: start;
     width: 290px;
     height: auto;
     background-color: rgb(255, 255, 255);
-   
+
     padding: 0px 0 20px 20px;
 }
 
-.adicionalContent{
+.adicionalContent {
     width: 100%;
     overflow-y: scroll;
     height: 340px;
-   
+
 }
 
-.adicional input{
+.adicional input {
     width: 100%;
-  }
-  
- .adicionalTitle{
-  
+}
+
+.adicionalTitle {
+
     color: #14171f;
     font-weight: 700;
     font-size: 17px;
     text-align: center;
     margin: 20px 0;
     text-transform: uppercase;
- } 
+}
 
 
 
- .plusAdd{
+.plusAdd {
     font-size: 40px;
     cursor: pointer;
     color: rgb(0, 0, 0);
 }
 
 
-.adicinalCard{
+.adicinalCard {
     width: 230px;
     display: flex;
     flex-direction: column;
@@ -292,16 +302,185 @@ text-align: start;
     padding: 10px;
 }
 
-.btnPrecoAdicional{
+.btnPrecoAdicional {
     width: 100%;
     display: flex;
     justify-content: space-between;
     align-items: center;
 }
 
-.btnAdicional{
+.btnAdicional {
     display: flex;
     justify-content: space-between;
     align-items: center;
     gap: 20px;
+}
+
+@media (max-width:1025px) {
+    .compraForm{
+        order: 2;
+    }
+
+    .compraBase {
+        display: flex;
+        justify-content: center;
+    }
+
+    .formdados {
+        padding: 0;
+    }
+
+    .compraContent {
+        width: 100%;
+        display: flex;
+        justify-content: space-between;
+        position: relative;
+        flex-direction: column;
+        background-color: white;
+    }
+
+    .adicional {
+
+        border-radius: 10px;
+        position: relative;
+        bottom: 0;
+        right: 0;
+        width: 100%;
+        height: auto;
+        background-color: rgb(255, 255, 255);
+
+        padding: 0px;
+    }
+
+    .formInput {
+        width: 100%;
+        display: flex;
+        gap: 50px;
+        flex-direction: column;
+    }
+
+    .pagamentoInput2 {
+        display: flex;
+        justify-content: space-between;
+        flex-direction: column;
+    }
+
+    .adicinalCard {
+        width: 80%;
+        display: flex;
+        flex-direction: column;
+        border: 1px solid var(--black);
+        margin: 0px;
+        padding: 0px;
+    }
+
+    .adicionalContent {
+        width: 100%;
+        overflow-y: scroll;
+        height: 340px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        gap: 5px;
+    }
+
+    .formabase1 {
+       
+        background: white;
+    }
+
+        .infoCompra {
+            padding: 20px;
+            background-color: white;
+            height: auto;
+            display: grid;
+            place-items: center;
+            border-radius: 10px;
+            order: 1;
+        }
+                .titleCompra {
+                    color: #14171f;
+                    font-weight: 700;
+                    font-size: 17px;
+                    margin-bottom: 20px;
+                }
+
+                                .dados2 {
+                                    border-top-left-radius: 0px;
+                                    border-top-right-radius: 0px;
+                                    border-bottom-left-radius: 10px;
+                                    border-bottom-right-radius: 10px;
+                                    margin: 62px 0 30px 0;
+                                    width: 100%;
+                                    display: flex;
+                                    align-items: center;
+                                    justify-content: center;
+                                }
+
+.adicionalContent {
+    width: 100%;
+    overflow-y: scroll;
+    height: 400px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 5px;
+}
+.compraFormContent input {
+   
+    margin: 0 50px;
+}
+
+.compraFormContent label{
+    margin-left: 50px;
+}
+.pagamentoInput input {
+    margin: 0 50px;
+}
+
+.pagamentoInput label,.titlePagamento,.aviso {
+    margin-left: 50px;
+}
+.numerInput2 input {
+    width: auto;
+   
+}
+.numerInput1 input {
+    width: auto;
+   
+}
+.formInput{
+    gap: 5px;
+}
+.pagamentoInput2 input {
+    width: auto;
+}
+
+.pagamentoInput2 {
+    
+    gap: 40px;
+}
+.btnFormCompra{
+    width: 90%;
+ 
+ 
+}
+
+.adicionalContent {
+    width: 100%;
+    overflow-y: scroll;
+    height: 400px;
+    display: flex;
+    flex-direction: column;
+    justify-content: start;
+    align-items: center;
+    gap: 5px;
+    position: relative;
+}
+.compraBase {
+   
+    background: white;
+}
 }

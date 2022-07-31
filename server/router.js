@@ -348,19 +348,19 @@ router.get('/compra',(req, res)=>{
     res.render('compra')
 })
 
-router.post('/teste/:id',(req, res)=>{
-    const nome= req.body.nome
-console.log(req.body)
-console.log(req.params.id)
+// router.post('/teste/:id',(req, res)=>{
+//     const nome= req.body.nome
+// console.log(req.body)
+// console.log(req.params.id)
 
-conn.query('INSERT INTO tb_teste SET?',{ nome: nome },(error, result)=>{
-    if(error){
-        console.log(error)
-    }else{
-        res.json(result)
-    }
-})
-})
+// conn.query('INSERT INTO tb_teste SET?',{ nome: nome },(error, result)=>{
+//     if(error){
+//         console.log(error)
+//     }else{
+//         res.json(result)
+//     }
+// })
+// })
 
 
 router.post('/compra-action/:idProduto',(req, res)=>{
@@ -381,9 +381,9 @@ router.post('/compra-action/:idProduto',(req, res)=>{
     const valorTotal= req.body.valorTotal 
     const pago= "on"
     const idProduto=req.params.idProduto
-     
-    console.log(idProduto)
-    console.log(req.body)
+console.log(valor+valorAdicional)
+   console.log(valorAdicional)
+   console.log(valor)
 
     const min= new Date().getMinutes()
 
@@ -520,9 +520,6 @@ router.get('/verpedido',(req, res)=>{
     res.render('verpedido')
 })
 
-// router.get('/clientes',(req, res)=>{
-//     res.render('clientes')
-// })
 
 
 // consultar se o cliente tem pedidos
@@ -531,15 +528,14 @@ router.post('/clientes', function (req, res){
     const nome= req.body.nome
     const cpf=req.body.cpf
 
-    // cpf="70093359233"
+   
 
-    conn.query('SELECT * FROM tb_cliente JOIN tb_pedido ON tb_cliente.id=tb_pedido.id_cliente  JOIN tb_user ON tb_pedido.id_produto=tb_user.id WHERE cpf=?',[cpf],(error, result)=>{
+    conn.query('SELECT * FROM tb_cliente JOIN tb_pedido ON tb_cliente.id=tb_pedido.id_cliente  JOIN tb_user ON tb_pedido.id_produto=tb_user.id WHERE cpf=? ',[cpf],(error, result)=>{
         if(error){
             throw error;
         }else{
-        //    res.render('clientes', {resultado: result})
-
-           if(result.length>0){
+       
+         if(result.length>0){
             res.json(result)
            }else{
             res.status(400).send("usuario não tem pedido cadastrado")
@@ -557,16 +553,18 @@ router.get('/clientes/:id', function (req, res){
 
     console.log(cpf)
     console.log(nome)
-    conn.query('SELECT * FROM tb_cliente JOIN tb_pedido ON tb_cliente.id=tb_pedido.id_cliente  JOIN tb_user ON tb_pedido.id_produto=tb_user.id WHERE cpf=?',[cpf],(error, result)=>{
+    conn.query('SELECT * FROM tb_cliente JOIN tb_pedido ON tb_cliente.id=tb_pedido.id_cliente  JOIN tb_user ON tb_pedido.id_produto=tb_user.id WHERE cpf=? ORDER BY tb_pedido.idPedido DESC',[cpf],(error, result)=>{
         if(error){
             throw error;
+            
         }else{
-        //    res.render('clientes', {resultado: result})
-
+       
            
             res.json(result)
            
         }
+
+        
     })
 })
 

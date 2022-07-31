@@ -12,7 +12,7 @@ import "swiper/css/navigation";
 import "./style/carrossel.css";
 
 // import required modules
-import { Navigation, Pagination, Mousewheel, Keyboard,Autoplay } from "swiper";
+import { Navigation, Pagination, Mousewheel, Keyboard,Autoplay, FreeMode } from "swiper";
 
 export default function Carrossel() {
 
@@ -39,10 +39,12 @@ export default function Carrossel() {
   return (
     <>
       <Swiper
-        slidesPerView={5}
-        spaceBetween={5}
+        
+        // slidesPerView={4}
+        // spaceBetween={5}
         slidesPerGroup={1}
         loop={true}
+  
         loopFillGroupWithBlank={true}
         pagination={{
           clickable: true,
@@ -51,10 +53,32 @@ export default function Carrossel() {
           delay: 2500,
           disableOnInteraction: false,
         }}
+      breakpoints={{
+    
+    0: {
+       slidesPerView:1,
+       spaceBetween: 10,
+    },
+     480: {
+       slidesPerView:2,
+       spaceBetween: 10,
+    },
+     768: {
+       slidesPerView:3,
+       spaceBetween: 10,
+    },
+     1024: {
+       slidesPerView:4,
+       spaceBetween: 5,
+    }
+   
+  }}
         
         navigation={false}
          modules={[Navigation, Pagination, Mousewheel, Keyboard,Autoplay]}
         className="mySwiper"
+
+        
       >
        
 

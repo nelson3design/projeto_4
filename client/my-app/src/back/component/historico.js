@@ -1,7 +1,6 @@
 import React,{useEffect,useState} from "react";
 import axios from "axios"
 import HeaderPedido from "./headerPedido"
-import Footer from "./footer";
 import "../styles/links.css"
 
 
@@ -81,7 +80,7 @@ export default function Historico(){
 
 
       </div>
-      <Footer/>
+    
         </>
     )
 }
