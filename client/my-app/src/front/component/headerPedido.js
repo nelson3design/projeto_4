@@ -4,7 +4,7 @@ import { MdSearch, MdStarOutline,MdOutlineRestaurant } from "react-icons/md";
 import { FaClipboardCheck,FaTimes,FaBars } from "react-icons/fa";
 import axios from "axios";
 import { Link } from "react-router-dom";
-import {NavLink} from 'react-router-dom'
+
 
 
 function HeaderPedido(){

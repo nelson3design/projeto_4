@@ -52,7 +52,7 @@ router.get('/adicionar',(req, res)=>{
 // selecionar item
 
 router.get('/', function (req, res){
-    conn.query('SELECT * FROM tb_user', (error, result)=>{
+    conn.query('SELECT * FROM tb_user ORDER BY id DESC', (error, result)=>{
         if(error){
             throw error;
         }else{
@@ -213,8 +213,8 @@ router.delete('/delete-action/:id',(req,res)=>{
              conn.query('DELETE image FROM tb_user WHERE id=?',[id],(error, result)=>{
 
                 fs.unlink('upload/'+oldImage,(err)=>{
-                    if(err){
-                        console.log(err)
+                    if(error){
+                        throw error
                     }else{
                        conn.query('DELETE FROM tb_user WHERE id=?',[id],(error, result)=>{
         
@@ -251,7 +251,7 @@ router.post('/add-action', upload.single('upload'),(req, res)=>{
 
   conn.query('INSERT INTO tb_user SET?',{ image: file,nome: nome, description: description, preco: preco, categoria: categoria,destaque: destaque },(error, result)=>{
       if(error){
-          console.log(error)
+        throw error
       }else{
           res.redirect('/')
       }
@@ -297,7 +297,7 @@ router.post('/edit-action/:id', upload.single('upload'), (req, res)=>{
             const old = result[0].image     
         conn.query('UPDATE tb_user SET? WHERE id = ?',[{image: old,nome: nome, description: description, preco: preco, categoria: categoria,destaque: destaque}, id],(error, result)=>{
             if(error){
-                console.log(error)
+                throw error
           }else{
         //    res.redirect('/')
           res.send(result[0])
@@ -320,11 +320,11 @@ router.post('/edit-action/:id', upload.single('upload'), (req, res)=>{
                    }else{
                        conn.query('UPDATE tb_user SET? WHERE id = ?',[{image: file,nome: nome, description: description, preco: preco, categoria: categoria,destaque: destaque}, id],(error, result)=>{
                          if(error){
-                             console.log(error)
+                            throw error
                        }else{
                         // res.redirect('/')
                         res.send(result)
-                        console.log("ok")
+                       
                       }
                       })
                    }
@@ -348,19 +348,7 @@ router.get('/compra',(req, res)=>{
     res.render('compra')
 })
 
-// router.post('/teste/:id',(req, res)=>{
-//     const nome= req.body.nome
-// console.log(req.body)
-// console.log(req.params.id)
 
-// conn.query('INSERT INTO tb_teste SET?',{ nome: nome },(error, result)=>{
-//     if(error){
-//         console.log(error)
-//     }else{
-//         res.json(result)
-//     }
-// })
-// })
 
 
 router.post('/compra-action/:idProduto',(req, res)=>{
@@ -381,9 +369,7 @@ router.post('/compra-action/:idProduto',(req, res)=>{
     const valorTotal= req.body.valorTotal 
     const pago= "on"
     const idProduto=req.params.idProduto
-console.log(valor+valorAdicional)
-   console.log(valorAdicional)
-   console.log(valor)
+
 
     const min= new Date().getMinutes()
 
@@ -397,14 +383,14 @@ console.log(valor+valorAdicional)
             if(!result[0]){
                 conn.query('INSERT INTO tb_cliente SET?',{ nomeCliente: nomeCliente, cpf: cpf, cep:cep, rua:rua,cidade:cidade, numero:numero, complemento:complemento },(error, result)=>{
       if(error){
-          console.log(error)
+        throw error
       }else{
 
       const idCliente=result.insertId
       const data= new Date()
          conn.query('INSERT INTO tb_pedido SET?',{ valor: valor, bebida: bebida,valorAdicional: valorAdicional, valorTotal: valorTotal, pago: pago,  data: data, id_cliente: idCliente,id_produto:idProduto,pedido:pedido },(error, result)=>{
       if(error){
-          console.log(error)
+        throw error
       }else{
           res.redirect('/')
       }
@@ -418,7 +404,7 @@ console.log(valor+valorAdicional)
                  const data=new Date()
                    conn.query('INSERT INTO tb_pedido SET?',{ valor: valor, bebida: bebida,valorAdicional: valorAdicional, valorTotal: valorTotal, pago: pago, data:data,id_cliente: oldIdCliente, id_produto:idProduto, pedido:pedido },(error, result)=>{
       if(error){
-          console.log(error)
+        throw error
       }else{
           res.redirect('/')
       }
@@ -525,7 +511,7 @@ router.get('/verpedido',(req, res)=>{
 // consultar se o cliente tem pedidos
 
 router.post('/clientes', function (req, res){
-    const nome= req.body.nome
+   
     const cpf=req.body.cpf
 
    
@@ -587,7 +573,7 @@ router.post('/editconfim-action/:idPedido',(req, res)=>{
 
      conn.query('UPDATE tb_pedido SET? WHERE idPedido = ?',[{ pago: pago, confirmar:confirmar, data: data }, idPedido],(error, result)=>{
         if(error){
-            console.log(error)
+            throw error
       }else{
       res.json(result)
    
@@ -611,7 +597,7 @@ router.post('/editpreparar-action/:idPedido',(req, res)=>{
 
      conn.query('UPDATE tb_pedido SET? WHERE idPedido = ?',[{ pago: pago, preparar:preparar, data: data }, idPedido],(error, result)=>{
         if(error){
-            console.log(error)
+            throw error
       }else{
       res.json(result)
    
@@ -635,7 +621,7 @@ router.post('/editterminar-action/:idPedido',(req, res)=>{
 
      conn.query('UPDATE tb_pedido SET? WHERE idPedido = ?',[{ pago: pago, terminar:terminar, data: data }, idPedido],(error, result)=>{
         if(error){
-            console.log(error)
+            throw error
       }else{
       res.json(result)
    
@@ -659,7 +645,7 @@ router.post('/editsair-action/:idPedido',(req, res)=>{
 
      conn.query('UPDATE tb_pedido SET? WHERE idPedido = ?',[{ pago: pago, entregar:entregar, data: data }, idPedido],(error, result)=>{
         if(error){
-            console.log(error)
+            throw error
       }else{
       res.json(result)
    
@@ -682,7 +668,7 @@ router.post('/editfinalizar-action/:idPedido',(req, res)=>{
 
      conn.query('UPDATE tb_pedido SET? WHERE idPedido = ?',[{ pago: pago, finalizar:finalizar, data: data }, idPedido],(error, result)=>{
         if(error){
-            console.log(error)
+            throw error
       }else{
       res.json(result)
    
@@ -704,7 +690,7 @@ router.post('/editcancelar-action/:idPedido',(req, res)=>{
 
      conn.query('UPDATE tb_pedido SET? WHERE idPedido = ?',[{ pago: pago, cancelar:cancelar, data: data }, idPedido],(error, result)=>{
         if(error){
-            console.log(error)
+            throw error
       }else{
       res.json(result)
    

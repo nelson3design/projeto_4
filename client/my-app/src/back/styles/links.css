@@ -67,9 +67,9 @@
    
       .linkContent {
          width: 50%;
-         display: grid;
+         display: flex;
          background-color: #5F5F5F;
-         grid-template-columns: 1fr 1fr 1fr 1fr;
+        flex-direction: column;
          padding: 0;
       }
    
@@ -83,16 +83,17 @@
       }
    
       .linkContent li:nth-child(2) {
-         border-left: none;
+        
+         border-left: 1px solid white;
       }
    
       .linkContent li:nth-child(3) {
-         border-left: none;
+         border-left: 1px solid white;
       }
    
       .linkContent li:nth-child(3):hover {
          border-left: 1px solid white;
-         border-right: none;
+         border-right: 1px solid white;
       }
    
       .linkContent li:nth-child(2):hover {

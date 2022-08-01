@@ -33,3 +33,16 @@
 :root {
     --swiper-theme-color: white;
 }
+
+#bannerMobile{
+    display: none!important;
+}
+
+@media (max-width:1025px) {
+    #bannerDesktop{
+        display: none!important;
+    }
+    #bannerMobile{
+        display: block!important;
+    }
+}

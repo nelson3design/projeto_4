@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { useState,useEffect,useRef } from 'react';
+import { useState,useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useParams } from 'react-router-dom';
 
@@ -82,23 +82,13 @@ var valorTotal= Number(valor) + Number(soma)
     const url2="http://localhost:5000/"
 
 
-     const ref = useRef([]);
+     
     useEffect(()=>{
   
         listItem()
         listBebida()
 
 
-         const handleClick = event => {
-      console.log('Button clicked');
-    };
-
-  
-
-    // return () => {
-    //   element.removeEventListener('click', handleClick);
-    // };
-         
       },[])
 
       const listItem=()=>{

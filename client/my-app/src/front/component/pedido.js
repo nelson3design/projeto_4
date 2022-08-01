@@ -3,7 +3,7 @@ import axios from "axios";
 import HeaderPedido from "./headerPedido"
 import { MdDone } from "react-icons/md";
 import Footer from "./footer";
-import { ThreeDots,Circles } from  'react-loader-spinner'
+import { ThreeDots } from  'react-loader-spinner'
 import "./style/pedido.css"
 import { FaUserCircle,FaCaretDown } from "react-icons/fa";
 import {useNavigate} from 'react-router-dom';
@@ -54,14 +54,12 @@ const handlelogout =()=>{
     const url2="http://localhost:5000/"
 
     
-  const [isLoaded, setIsLoaded] = useState(false);
+  
   
  
     
      useEffect(()=>{
-         setTimeout(() => {
-      setIsLoaded(true);
-    }, 500);
+    
 
         listItem()
          
@@ -89,7 +87,7 @@ const handlelogout =()=>{
     return(
 
        <>
-       {isLoaded ? <>
+    
 
         <HeaderPedido/>
 
@@ -218,10 +216,7 @@ const handlelogout =()=>{
 
 
 <Footer/>
- </> 
- :
- <Circles color="red" height={500} width={1920}/>
-}
+
        </>
     )
 }

@@ -100,3 +100,14 @@ background: rgb(255, 0, 0);
      align-items: center;
     gap: 10px;
 }
+
+
+@media (max-width:1025px) {
+    .logoBack{
+        border: none;
+        padding: 0;
+    }
+    .navBackMobile{
+        display: none;
+    }
+}

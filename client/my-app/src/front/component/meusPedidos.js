@@ -5,7 +5,7 @@ import Footer from "./footer"
 import "./style/meusPedidos.css"
 
 import HeaderPedido from "./headerPedido"
-import axios from "axios";
+
 
 
 export default function MeusPedidos(){
@@ -13,9 +13,9 @@ export default function MeusPedidos(){
     const [nome, setNome]=useState("")
     const [cpf, setCpf]=useState("")
 
-    if(cpf===""){
-        localStorage.removeItem("cpf")
-      }
+    // if(cpf==""){
+    //     localStorage.removeItem("cpf")
+    //   }
 
     const navigate = useNavigate();
 
@@ -47,7 +47,7 @@ export default function MeusPedidos(){
             navigate('/pedido')
          
             console.log(result)
-            if(result==400){
+            if(result===400){
                 console.log(result)
             }
         

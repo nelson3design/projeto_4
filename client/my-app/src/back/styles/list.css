@@ -124,3 +124,71 @@ padding: 0 20px;
 .paginationBase button:hover{
   opacity: 0.3;
  }
+
+ @media (max-width:1025px) {
+    .btnBarPes {
+        width: 100%;
+        display: flex;
+        align-items: flex-start;
+        justify-content: space-between;
+        margin: 0px 0 20px 0;
+        flex-direction: column;
+        gap: 30px;
+    }
+    .tbody tr td {
+        padding: 10px 20px;
+        text-align: end;
+    }
+
+
+    table{
+        border: none;
+       margin-bottom: 30px;
+    }
+    table tr th{
+        display:none;
+        
+    }
+    
+     td{
+        display:block;
+    }
+    
+    tbody{
+      height: auto;
+      overflow: hidden;
+    }
+    
+    table td{
+       text-align: right;
+      padding: 10px;
+      
+    }
+    
+    
+    
+    thead{
+    display: none;
+    }
+    
+    
+    
+    tbody{
+    
+    height: auto;
+    
+    
+    }
+    
+    
+    table td::before{
+        content: attr(data-label);
+        position: absolute;
+        left: 0;
+         padding: 0 30px;
+         font-size: 18px;
+        font-weight: 700;
+    }
+    
+    
+ }

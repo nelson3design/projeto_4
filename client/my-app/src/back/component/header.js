@@ -1,7 +1,7 @@
-
+import { useState } from "react";
 import "../styles/header.css"
 import { MdOutlineRestaurant } from "react-icons/md";
-import { FaClipboardCheck } from "react-icons/fa";
+import { FaClipboardCheck,FaTimes,FaBars } from "react-icons/fa";
 
 
 
@@ -9,6 +9,17 @@ import { FaClipboardCheck } from "react-icons/fa";
 
 function Header(){
 
+  const [hamb, setHamb] = useState(true)
+  const [times, setTimes] = useState(false)
+
+  const handleHamb =()=>{
+    setTimes(!times)
+    setHamb(!hamb)
+  }
+  const handleTimes =()=>{
+    setHamb(!hamb)
+     setTimes(!times)
+  }
 
 
     return(
@@ -16,17 +27,24 @@ function Header(){
         <header className="headerBack">
             <nav className="nav container">
                 <a className="logoBack" href="http://localhost:3000/admin/dashboard">menu</a>
-                
-
-                <ul className="navlistBack">
+                <div className="iconMobile">
+                  {hamb? <FaBars onClick={handleHamb} className="iconM"/> : null}
+                 {times?  <FaTimes onClick={handleTimes} className="iconM"/> : null}
+                </div>
+                 
+                <ul className="navlistBack navBackMobile">
                    
                 <li className="ative"><a href="http://localhost:3000/admin/dashboard"><MdOutlineRestaurant/> <span>cardápio</span></a></li>
                 <li><a href="http://localhost:3000/admin/dashboard/andamento"><FaClipboardCheck/> <span>pedidos</span></a></li>
 
-                    
-
                 </ul>
             </nav>
+            {times?
+                <ul className="mobileLinks">
+                  <li className="ative"><a href="http://localhost:3000/admin/dashboard"><MdOutlineRestaurant/> <span>cardápio</span></a></li>
+                  <li><a href="http://localhost:3000/admin/dashboard/andamento"><FaClipboardCheck/> <span>pedidos</span></a></li>
+                </ul>
+             : null}
 
         </header>
        

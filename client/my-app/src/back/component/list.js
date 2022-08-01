@@ -103,10 +103,10 @@ function List(){
                     
                      <tr key={dados.id}>  
                     <td data-label="Imagem"><img src={url+dados.image} width="60px" alt=""/></td>
-                    <td className="nome" data-label="Nome">{dados.nome}</td>
-                    <td className="desc" data-label="Description">{dados.description.length < "30" ? dados.description: dados.description.slice(0,40)+"..." }</td>
+                    <td className="Nome" data-label="Nome">{dados.nome}</td>
+                    <td className="Description" data-label="Description">{dados.description.length < "30" ? dados.description: dados.description.slice(0,25)+"..." }</td>
                     <td data-label="Preço">{"R$ "+dados.preco}</td>
-                    <td className="cat" data-label="Categoria">{dados.categoria}</td>
+                    <td className="Categoria" data-label="Categoria">{dados.categoria}</td>
                     <td data-label="Destaque">{dados.destaque}</td>
 
                     <td data-label="Ações" className="action">
