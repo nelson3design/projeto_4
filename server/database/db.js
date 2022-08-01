@@ -7,6 +7,8 @@ const conn= sql.createConnection({
     database: 'db_user'
 })
 
+
+
 conn.connect((error)=>{
     if(error){
         console.error('erro da conexão: '+ error)
@@ -16,3 +18,5 @@ conn.connect((error)=>{
 })
 
 module.exports = conn;
+
+

@@ -1,7 +1,10 @@
 :root{
     --black:#14171f;
 }
-
+.cardCliente {
+    
+    height: 360px;
+}
 .cardBase{
     width: 270px;
     height: auto;
@@ -96,4 +99,16 @@ text-align: start;
             height: auto;
             
         }
+
+        .cardCliente {
+    
+            height: auto;
+        }
+        .cardBase{
+            width: 270px;
+            height: auto;
+            border-radius: 10px;
+            overflow: hidden;
+        }
+        
 }

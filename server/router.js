@@ -701,4 +701,20 @@ router.post('/editcancelar-action/:idPedido',(req, res)=>{
 
 })
 
+router.delete('/delete-pedido/:id',(req,res)=>{
+    const id= req.params.id
+
+    conn.query('DELETE FROM tb_pedido WHERE idPedido=?',[id],(error, result)=>{
+        
+        if(error){
+        throw error
+       }else{
+        res.send(result);
+     }
+     })
+   
+})
+
+
+
 module.exports= router;

@@ -56,7 +56,9 @@ const handleTerminar=(idPedido)=>{
         </ul>
       </div>
         
+      {item.length >1? <div>{item.length} Pedidos em preparo</div>:<div>{item.length} Pedido em preparo</div>}
 
+    
       <section className="baseItens">
 
 {
@@ -64,6 +66,7 @@ const handleTerminar=(idPedido)=>{
          item && item.map((dados)=>(
          
    <div className="caixa">
+   
        <div className="caixaImg">
            <img src={url2+dados.image} alt={dados.image}/>
        </div>

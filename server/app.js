@@ -14,6 +14,8 @@ app.use('/',express.static(path.resolve(__dirname,"uplaod")))
 var router = require('./router')
 
 
+const port= process.env.PORT || 5000
+
 app.set('view engine', 'ejs');
 
 
@@ -27,6 +29,6 @@ app.use(express.json())
 
 app.use('/', router);
 
-app.listen(5000,()=>{
-    console.log('servidor rodando na porta de 5000')
+app.listen(port,()=>{
+    console.log('servidor rodando na porta de '+port)
 })

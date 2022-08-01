@@ -344,7 +344,7 @@ a {
       text-decoration: none;
       display: flex;
         align-items: center;
-        justify-content: start;
+        justify-content: flex-start;
        gap: 10px;
      
        font-size: 15px;

@@ -24,6 +24,7 @@ export default function Ativos(){
       const listItem=()=>{
         axios.get(`${url}`).then((response) => {
             setItem(response.data);
+            console.log(response.data.length)
             
         });
       }
@@ -62,12 +63,13 @@ export default function Ativos(){
         </ul>
       </div>
        
+       {item.length >1? <div>{item.length} Pedidos em aberto</div>:<div>{item.length} Pedido em aberto</div>}
      <section className="baseItens">
 
      {
-              
               item && item.map((dados)=>(
-              
+                <>
+             
         <div className="caixa">
             <div className="caixaImg">
             <img src={url2+dados.image} alt={dados.image}/>
@@ -93,6 +95,8 @@ export default function Ativos(){
             </div>
 
         </div>
+
+        </>
             ))
               }
      </section>

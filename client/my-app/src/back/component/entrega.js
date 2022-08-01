@@ -60,7 +60,7 @@ const handleFinalizar=(idPedido)=>{
          
         </ul>
         </div>
-
+        {item.length >1? <div>{item.length} Pedidos em entrega</div>:<div>{item.length} Pedido em entrega</div>}
         <section className="baseItens">
 
 {

@@ -24,7 +24,16 @@ export default function Historico(){
           
       });
     }
-
+    const handleRemove=(idPedido)=>{
+      console.log(idPedido)
+      if(window.confirm('tem certeza de excluir esse pedido')){
+          axios.delete(`${url2}delete-pedido/${idPedido}`).then((response) => {
+             
+              listItem()
+             
+          });
+      }
+ }
 
 
 
@@ -47,7 +56,7 @@ export default function Historico(){
          
          item && item.map((dados)=>(
          
-   <div className="caixa">
+   <div className="caixa" key={dados.id}>
        <div className="caixaImg">
            <img src={url2+dados.image} alt={dados.image}/>
        </div>
@@ -66,8 +75,10 @@ export default function Historico(){
        </div>
 
        <div className="btns">
-        {dados.finalizar==="on"? <button className="entregado">entregado</button> : null}
+        {dados.finalizar==="on"? <button className="entregado">conluido</button> : null}
         {dados.cancelar==="on"? <button className="entregado">cancelado</button> : null}
+
+        <button className="terminar" onClick={()=>handleRemove(dados.idPedido)}>excluir</button> 
            
            
        </div>
