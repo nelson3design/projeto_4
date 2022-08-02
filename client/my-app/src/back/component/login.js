@@ -4,8 +4,8 @@ import {useNavigate} from 'react-router-dom';
 
 
 // import "./style/meusPedidos.css"
-
-
+import Header from "./header";
+import Footer from "./footer";
 
 export default function Login(){
 
@@ -63,11 +63,13 @@ export default function Login(){
 
     return(
         <>
+        <Header/>
 
       <div className="linksBackPedidos">
          <div className="links">
             <div className="formPedidos">
-                <div className="titlePedido">acesse o seu pedido</div>
+            <div style={{textAlign:"center", fontSize:"50px", fontWeight:"800", textTransform:"uppercase",color:"red",marginBottom:"10px"}}>Menu</div>
+                <div className="titlePedido">painel administrativo</div>
                 <form onSubmit={login}>
                 <div className="formItens">
                   <div>
@@ -81,12 +83,14 @@ export default function Login(){
                 </div>
              
 
-                <input className="btnPedido" type="submit" value="acessar"/>
+                <input className="btnPedido" type="submit" value="entrar"/>
                 </form>
             </div>
 
          </div>
          </div>
+
+         <Footer/>
         
         </>
     )
