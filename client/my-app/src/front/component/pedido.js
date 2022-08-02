@@ -81,6 +81,18 @@ const handlelogout =()=>{
           })
     }
 
+
+    const handleRemove=(idPedido)=>{
+      console.log(idPedido)
+      if(window.confirm('tem certeza de excluir esse pedido')){
+          axios.delete(`${url2}delete-pedido/${idPedido}`).then((response) => {
+             
+              listItem()
+             
+          });
+      }
+ }
+
      
 
 
@@ -138,7 +150,7 @@ const handlelogout =()=>{
 
                 <>
                
-             <div className="cardCliente">
+             <div className="cardCliente cardClienteMobile">
 
               <div className="dadoPedido">
 
@@ -177,7 +189,9 @@ const handlelogout =()=>{
                     {dados.confirmar==="on" || dados.cancelar==="on"? <button className="btnPedidoCancelar colorZinca">cancelar</button> : <button className="btnPedidoCancelar"  onClick={()=>handleCancel(dados.idPedido)}>cancelar</button> }
                     </>
                     :null}
+                 <button className="btnPedidoCancelar terminar" onClick={()=>handleRemove(dados.idPedido)}>excluir</button> 
                  </div>
+
 
                  {/* fim */}
 

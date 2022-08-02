@@ -8,8 +8,13 @@ export default function Historico(){
 
   
   const [item, setItem] = useState([])
-  const url="http://localhost:5000/pedidofinalizar"
+  const url="http://localhost:5000/pedidofinalizar/"
   const url2="http://localhost:5000/"
+
+  var cpfstring= localStorage.getItem("senha")
+
+  var senha= cpfstring.slice(1,-1)
+
 
   useEffect(()=>{
 
@@ -19,21 +24,21 @@ export default function Historico(){
     },[])
 
     const listItem=()=>{
-      axios.get(`${url}`).then((response) => {
+      axios.get(`${url}${senha}`).then((response) => {
           setItem(response.data);
           
       });
     }
-    const handleRemove=(idPedido)=>{
-      console.log(idPedido)
-      if(window.confirm('tem certeza de excluir esse pedido')){
-          axios.delete(`${url2}delete-pedido/${idPedido}`).then((response) => {
+//     const handleRemove=(idPedido)=>{
+//       console.log(idPedido)
+//       if(window.confirm('tem certeza de excluir esse pedido')){
+//           axios.delete(`${url2}delete-pedido/${idPedido}`).then((response) => {
              
-              listItem()
+//               listItem()
              
-          });
-      }
- }
+//           });
+//       }
+//  }
 
 
 
@@ -78,7 +83,7 @@ export default function Historico(){
         {dados.finalizar==="on"? <button className="entregado">conluido</button> : null}
         {dados.cancelar==="on"? <button className="entregado">cancelado</button> : null}
 
-        <button className="terminar" onClick={()=>handleRemove(dados.idPedido)}>excluir</button> 
+        {/* <button className="terminar" onClick={()=>handleRemove(dados.idPedido)}>excluir</button>  */}
            
            
        </div>

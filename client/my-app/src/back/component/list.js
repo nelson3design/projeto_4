@@ -4,13 +4,34 @@ import Footer from "./footer";
 import axios from 'axios'
 import "../styles/list.css"
 import {Link} from 'react-router-dom'
+import {useNavigate} from 'react-router-dom';
+import { FaUserCircle,FaCaretDown } from "react-icons/fa";
+
+
+
 
 function List(){
+    const navigate = useNavigate();
 
     const [item, setItem] = useState([])
     const [value, setValue] = useState([])
 
     const url="http://localhost:5000/"
+    const url2="http://localhost:5000/login/"
+
+    var cpfstring= localStorage.getItem("senha")
+
+  var senha= cpfstring.slice(1,-1)
+
+  useEffect(()=>{
+    if(localStorage.length < 0){
+        navigate('/admin/login')
+    }
+
+},[])
+
+  
+console.log(senha)
 
     useEffect(()=>{
 
@@ -19,7 +40,7 @@ function List(){
       },[])
 
       const listItem=()=>{
-        axios.get(`${url}`).then((response) => {
+        axios.get(`${url2}${senha}`).then((response) => {
             setItem(response.data);
             
         });
@@ -65,11 +86,72 @@ function List(){
        const endIndex= startIndex + itensPerPage
        const currentItens = item.slice(startIndex,endIndex)
 
+
+
+       const [logout, setLogout]= useState(false)
+
+if(senha===""){
+  localStorage.removeItem("senha")
+}
+
+if(logout){
+  localStorage.removeItem("senha")
+  navigate('/admin/login')
+}
+
+const handlelogout =()=>{
+  setLogout(true)
+}
+
+
+
+       const [profile , setProfile]= useState(false)
+
+       let className='profileContentUser'
+     
+       if(!profile){
+           className = "hideProfileContent"
+       }
+     
+     
+       const handleShow = ()=>{
+         setProfile(!profile)
+       }
+     
+
     return(
         <>
         <div className="listas">
 
         <div className="listasContent container">
+
+        <div className="infoCliente">
+     
+     {
+            
+            item && item.slice(-1).map((dados)=>(
+              <div>
+
+              <div className="profile profileUser">
+              <div className="avatar"><FaUserCircle className="iconProfile"/> <span>{dados.nomeUser}</span></div> <FaCaretDown onClick={handleShow} style={{cursor: "pointer"}}/>
+              </div>
+
+             
+            
+               
+               <div className={className}>
+         
+                <div className="profileItem"><div>Nome: </div><span>{dados.nomeUser}</span></div>
+                
+                 <div onClick={handlelogout} className="sair">Sair</div>
+               </div>
+            
+
+               </div>
+     
+          ))
+            }
+     </div>
 
         
         <div className="btnBarPes">

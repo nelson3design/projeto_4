@@ -5,9 +5,12 @@
     
     height: 360px;
 }
+.cardClienteMobile{
+    height: auto!important;
+   }
 .cardBase{
     width: 270px;
-    height: auto;
+    height: 300px;
     border-radius: 10px;
     overflow: hidden;
 }
@@ -45,6 +48,7 @@
     align-items: flex-start;
     flex-direction: column;
     padding: 20px;
+    
 }
 
 .cardText .texts{
@@ -94,21 +98,10 @@ text-align: start;
 
 
 @media (max-width:1025px) {
-    .cardText {
-           
-            height: auto;
-            
-        }
-
-        .cardCliente {
-    
-            height: auto;
-        }
-        .cardBase{
-            width: 270px;
-            height: auto;
-            border-radius: 10px;
-            overflow: hidden;
-        }
-        
+   .cardClienteMobile{
+    height: auto;
+   }
+   .cardCliente{
+    height: auto!important;
+   }   
 }

@@ -69,7 +69,12 @@ export default function Carrossel() {
     },
      1024: {
        slidesPerView:4,
-       spaceBetween: 5,
+       spaceBetween: 10,
+    }
+    ,
+     1600: {
+       slidesPerView:5,
+       spaceBetween: 10,
     }
    
   }}

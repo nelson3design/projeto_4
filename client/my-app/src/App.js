@@ -12,7 +12,7 @@ import MeusPedidos from "./front/component/meusPedidos";
 import Compra from "./front/component/compra";
 
 
-
+import Login from "./back/component/login";
 import Ativos from "./back/component/ativos";
 import Preparo from "./back/component/preparo";
 import Entrega from "./back/component/entrega";
@@ -50,7 +50,7 @@ function App() {
      
 
         {/* back-end */}
-        
+        <Route path="/admin/login" element={<Login/>}></Route> 
          <Route path="/admin/dashboard" element={<BackList/>}></Route> 
          <Route path="/admin/dashboard/create" element={<BackCreate/>}></Route>
          <Route path="/admin/dashboard/update/:id" element={<BackUpdate/>}></Route>  

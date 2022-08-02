@@ -11,11 +11,11 @@
 
 .baseItens{
     margin: 50px 0 60px 0;
-    width: 80%;
+    width: 90%;
     display: flex;
     gap: 20px;
     flex-wrap: wrap;
-   
+    justify-content: center;
 }
 
 

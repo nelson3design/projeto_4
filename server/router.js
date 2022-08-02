@@ -210,7 +210,7 @@ router.delete('/delete-action/:id',(req,res)=>{
     conn.query('SELECT image FROM tb_user WHERE id=?',[id],(error, result)=>{
              const oldImage = result[0].image
 
-             conn.query('DELETE image FROM tb_user WHERE id=?',[id],(error, result)=>{
+             conn.query('DELETE FROM tb_user WHERE id=?',[id],(error, result)=>{
 
                 fs.unlink('upload/'+oldImage,(err)=>{
                     if(error){
@@ -257,7 +257,7 @@ router.post('/add-action', upload.single('upload'),(req, res)=>{
       }
   })
 
-  console.log(req.body)
+  console.log(req.body.file)
 })
 
 
@@ -424,12 +424,14 @@ router.post('/compra-action/:idProduto',(req, res)=>{
 
 // lista dos pedidos ativos que não confirmados
 
-router.get('/pedidoandamento', function (req, res){
+router.get('/pedidoandamento/:id', function (req, res){
+
+const senha= req.params.id
 
     const confirmar='off'
     const cancelar='off'
 
-    conn.query('SELECT * FROM tb_cliente JOIN tb_pedido ON tb_cliente.id=tb_pedido.id_cliente JOIN tb_user ON tb_pedido.id_produto=tb_user.id WHERE tb_pedido.confirmar=? AND tb_pedido.cancelar=? ORDER BY tb_cliente.id DESC',[confirmar,cancelar],(error, result)=>{
+    conn.query('SELECT * FROM tb_cliente JOIN tb_pedido ON tb_cliente.id=tb_pedido.id_cliente JOIN tb_user ON tb_pedido.id_produto=tb_user.id JOIN tb_user_server ON tb_user.senha= tb_user_server.senha WHERE tb_pedido.confirmar=? AND tb_pedido.cancelar=? AND tb_user_server.senha=? ORDER BY tb_pedido.idPedido DESC',[confirmar,cancelar,senha],(error, result)=>{
         if(error){
             throw error;
         }else{
@@ -442,12 +444,12 @@ router.get('/pedidoandamento', function (req, res){
 
 // lista dos pedidos preparado que estão confirmados para preparar só tem pedido confirmados
 
-router.get('/pedidopreparo', function (req, res){
-
+router.get('/pedidopreparo/:id', function (req, res){
+    const senha= req.params.id
     const confirmar='on'
     const terminar='off'
 
-    conn.query('SELECT * FROM tb_cliente JOIN tb_pedido ON tb_cliente.id=tb_pedido.id_cliente JOIN tb_user ON tb_pedido.id_produto=tb_user.id WHERE tb_pedido.confirmar=? AND tb_pedido.terminar=?  ORDER BY tb_cliente.id DESC',[confirmar,terminar],(error, result)=>{
+    conn.query('SELECT * FROM tb_cliente JOIN tb_pedido ON tb_cliente.id=tb_pedido.id_cliente JOIN tb_user ON tb_pedido.id_produto=tb_user.id JOIN tb_user_server ON tb_user.senha= tb_user_server.senha WHERE tb_pedido.confirmar=? AND tb_pedido.terminar=? AND tb_user_server.senha=? ORDER BY tb_pedido.idPedido DESC',[confirmar,terminar,senha],(error, result)=>{
         if(error){
             throw error;
         }else{
@@ -462,11 +464,11 @@ router.get('/pedidopreparo', function (req, res){
 
 // lista dos pedidos entregado que estão confirmados como entregado só tem pedido preparados
 
-router.get('/pedidoterminar', function (req, res){
-
+router.get('/pedidoterminar/:id', function (req, res){
+    const senha= req.params.id
     const terminar='on'
     const finalizar='off'
-    conn.query('SELECT * FROM tb_cliente JOIN tb_pedido ON tb_cliente.id=tb_pedido.id_cliente JOIN tb_user ON tb_pedido.id_produto=tb_user.id WHERE tb_pedido.terminar=? AND tb_pedido.finalizar=? ORDER BY tb_cliente.id DESC',[terminar,finalizar],(error, result)=>{
+    conn.query('SELECT * FROM tb_cliente JOIN tb_pedido ON tb_cliente.id=tb_pedido.id_cliente JOIN tb_user ON tb_pedido.id_produto=tb_user.id JOIN tb_user_server ON tb_user.senha= tb_user_server.senha WHERE tb_pedido.terminar=? AND tb_pedido.finalizar=? AND tb_user_server.senha=? ORDER BY tb_pedido.idPedido DESC',[terminar,finalizar,senha],(error, result)=>{
         if(error){
             throw error;
         }else{
@@ -480,12 +482,12 @@ router.get('/pedidoterminar', function (req, res){
 
 // lista dos pedidos entregado 
 
-router.get('/pedidofinalizar', function (req, res){
-
+router.get('/pedidofinalizar/:id', function (req, res){
+    const senha= req.params.id
     const finalizar='on'
     const cancelar='on'
 
-    conn.query('SELECT * FROM tb_cliente JOIN tb_pedido ON tb_cliente.id=tb_pedido.id_cliente JOIN tb_user ON tb_pedido.id_produto=tb_user.id WHERE tb_pedido.finalizar=? OR tb_pedido.cancelar=? ORDER BY tb_cliente.id DESC',[finalizar,cancelar],(error, result)=>{
+    conn.query('SELECT * FROM tb_cliente JOIN tb_pedido ON tb_cliente.id=tb_pedido.id_cliente JOIN tb_user ON tb_pedido.id_produto=tb_user.id JOIN tb_user_server ON tb_user.senha= tb_user_server.senha WHERE tb_pedido.finalizar=? OR tb_pedido.cancelar=? AND tb_user_server.senha=? ORDER BY tb_pedido.idPedido DESC',[finalizar,cancelar,senha],(error, result)=>{
         if(error){
             throw error;
         }else{
@@ -521,24 +523,18 @@ router.post('/clientes', function (req, res){
             throw error;
         }else{
        
-         if(result.length>0){
             res.json(result)
-           }else{
-            res.status(400).send("usuario não tem pedido cadastrado")
-           }
+        
         }
     })
 })
 
 
 router.get('/clientes/:id', function (req, res){
-    const nome= req.body
+   
     const cpf=req.params.id
 
    
-
-    console.log(cpf)
-    console.log(nome)
     conn.query('SELECT * FROM tb_cliente JOIN tb_pedido ON tb_cliente.id=tb_pedido.id_cliente  JOIN tb_user ON tb_pedido.id_produto=tb_user.id WHERE cpf=? ORDER BY tb_pedido.idPedido DESC',[cpf],(error, result)=>{
         if(error){
             throw error;
@@ -554,6 +550,42 @@ router.get('/clientes/:id', function (req, res){
     })
 })
 
+
+// para entrar no painel administrativo
+
+router.post('/login', function (req, res){
+
+   
+   
+    const senha=req.body.senha
+
+
+   
+
+    conn.query('SELECT * FROM tb_user_server WHERE senha=? ',[senha],(error, result)=>{
+        if(error){
+            throw error;
+        }else{
+       
+            res.json(result)
+            // res.send(result[0])
+        }
+    })
+})
+
+router.get('/login/:id', function (req, res){
+    const senha=req.params.id
+    conn.query('SELECT * FROM tb_user JOIN tb_user_server ON tb_user.senha=tb_user_server.senha WHERE tb_user_server.senha=? ORDER BY tb_user.id DESC',[senha],(error, result)=>{
+        if(error){
+            throw error;
+        }else{
+   
+           res.send(result)
+
+
+        }
+    })
+})
 
 
 

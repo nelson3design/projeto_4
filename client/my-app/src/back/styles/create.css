@@ -99,3 +99,12 @@
     font-size: 17px;
     text-transform: capitalize;
 }
+
+@media (max-width:1025px) {
+    .formCreatebase{
+        background-color: white;
+       width: 100%;
+       margin: auto;
+       border-radius: 10px;
+    }
+}

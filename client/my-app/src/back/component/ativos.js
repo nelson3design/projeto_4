@@ -11,8 +11,13 @@ import "../styles/ativos.css"
 export default function Ativos(){
 
     const [item, setItem] = useState([])
-    const url="http://localhost:5000/pedidoandamento"
+    const url="http://localhost:5000/pedidoandamento/"
     const url2="http://localhost:5000/"
+
+    var cpfstring= localStorage.getItem("senha")
+
+  var senha= cpfstring.slice(1,-1)
+
 
     useEffect(()=>{
   
@@ -22,7 +27,7 @@ export default function Ativos(){
       },[])
 
       const listItem=()=>{
-        axios.get(`${url}`).then((response) => {
+        axios.get(`${url}${senha}`).then((response) => {
             setItem(response.data);
             console.log(response.data.length)
             
@@ -63,7 +68,7 @@ export default function Ativos(){
         </ul>
       </div>
        
-       {item.length >1? <div>{item.length} Pedidos em aberto</div>:<div>{item.length} Pedido em aberto</div>}
+      
      <section className="baseItens">
 
      {

@@ -8,8 +8,14 @@ import "../styles/ativos.css"
 export default function Preparo(){
 
   const [item, setItem] = useState([])
-  const url="http://localhost:5000/pedidopreparo"
+  const url="http://localhost:5000/pedidopreparo/"
   const url2="http://localhost:5000/"
+
+
+  var cpfstring= localStorage.getItem("senha")
+
+  var senha= cpfstring.slice(1,-1)
+
 
   useEffect(()=>{
 
@@ -19,7 +25,7 @@ export default function Preparo(){
     },[])
 
     const listItem=()=>{
-      axios.get(`${url}`).then((response) => {
+      axios.get(`${url}${senha}`).then((response) => {
           setItem(response.data);
           
       });
@@ -56,7 +62,7 @@ const handleTerminar=(idPedido)=>{
         </ul>
       </div>
         
-      {item.length >1? <div>{item.length} Pedidos em preparo</div>:<div>{item.length} Pedido em preparo</div>}
+    
 
     
       <section className="baseItens">

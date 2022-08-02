@@ -10,8 +10,13 @@ export default function Entrega(){
 
   
   const [item, setItem] = useState([])
-  const url="http://localhost:5000/pedidoterminar"
+  const url="http://localhost:5000/pedidoterminar/"
   const url2="http://localhost:5000/"
+
+  var cpfstring= localStorage.getItem("senha")
+
+  var senha= cpfstring.slice(1,-1)
+
 
   useEffect(()=>{
 
@@ -21,7 +26,7 @@ export default function Entrega(){
     },[])
 
     const listItem=()=>{
-      axios.get(`${url}`).then((response) => {
+      axios.get(`${url}${senha}`).then((response) => {
           setItem(response.data);
           
       });
@@ -60,13 +65,18 @@ const handleFinalizar=(idPedido)=>{
          
         </ul>
         </div>
-        {item.length >1? <div>{item.length} Pedidos em entrega</div>:<div>{item.length} Pedido em entrega</div>}
+
+     
+
         <section className="baseItens">
 
 {
          
          item && item.map((dados)=>(
+         <>
          
+
+
    <div className="caixa">
        <div className="caixaImg">
            <img src={url2+dados.image} alt={dados.image}/>
@@ -92,6 +102,7 @@ const handleFinalizar=(idPedido)=>{
        </div>
 
    </div>
+   </>
        ))
          }
 </section>
