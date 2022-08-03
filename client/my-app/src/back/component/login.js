@@ -4,8 +4,6 @@ import {useNavigate} from 'react-router-dom';
 
 
 // import "./style/meusPedidos.css"
-import Header from "./header";
-import Footer from "./footer";
 
 export default function Login(){
 
@@ -63,7 +61,7 @@ export default function Login(){
 
     return(
         <>
-        <Header/>
+     
 
       <div className="linksBackPedidos">
          <div className="links">
@@ -90,7 +88,7 @@ export default function Login(){
          </div>
          </div>
 
-         <Footer/>
+        
         
         </>
     )

@@ -165,7 +165,7 @@ text-transform: capitalize;
 .avatar{
     display: flex;
     align-items: center;
-    
+    gap: 10px;
 }
 
 .iconProfile{
@@ -468,4 +468,20 @@ text-transform: capitalize;
     .sair:hover {
         opacity: .3;
     }
+
+
+        .infoClienteMobile {
+            display: flex;
+            flex-direction: column;
+            width: 100%;
+            align-items: flex-start!important;
+            margin-bottom: 30px;
+        }
 }
+ .infoClienteMobile {
+     display: flex;
+     flex-direction: column;
+     width: 100%;
+     align-items: flex-end;
+     margin-bottom: 30px;
+ }

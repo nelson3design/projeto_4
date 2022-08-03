@@ -125,7 +125,7 @@ const handlelogout =()=>{
 
         <div className="listasContent container">
 
-        <div className="infoCliente">
+        <div className="infoClienteMobile">
      
      {
             
