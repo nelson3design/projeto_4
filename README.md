@@ -1,4 +1,4 @@
-# projeto_4
+# projeto_4 do curso full_stack da escola Toti
 # Cardápio digital
 # Esse projeto foi criado com nodejs, express, mysql, react
 
