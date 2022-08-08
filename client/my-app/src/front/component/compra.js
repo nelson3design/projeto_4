@@ -33,14 +33,14 @@ export default function Compra(){
     var valorAddTotal=JSON.parse("[" + valorAdicional + "]")
     
    
-    console.log(valorAddTotal)
+   
   
 
   var soma = 0;    
 for(var i = 0; i < valorAddTotal.length; i++) {
     soma += valorAddTotal[i];
 }
-console.log(soma);
+
 
 var valorTotal= Number(valor) + Number(soma)
 
@@ -58,7 +58,7 @@ var valorTotal= Number(valor) + Number(soma)
         valorTotal:valorTotal
       
     }
-    console.log(data)
+   
     
     const {id} =useParams()
    
@@ -72,7 +72,7 @@ var valorTotal= Number(valor) + Number(soma)
                }
            
           });
-        console.log(data)
+       
        
     })
 
@@ -114,8 +114,10 @@ var valorTotal= Number(valor) + Number(soma)
               
           });
         }
+
+
   const [count, setCount]=useState(1)
-  const [countB, setCountB]=useState(0)
+  
 
     const [total, setTotal]=useState("")
 
@@ -145,31 +147,30 @@ var valorTotal= Number(valor) + Number(soma)
 
 
    
-   const handlePlus2 =(id,title)=>{
+   const handlePlus2 =(dado)=>{
+
+  
     
-     setTotal2((Number(total2))+(Number(id)))
-     setBebida(index=>[ ...index,title])
-    //  setValorAdicional(id)
-      setValorAdicional(index=>[ ...index,id])
-   setCountB(countB + 1)
-
-   
-   }
-
-   
-  const handleMenos2 =(id,title)=>{
- 
-      setTotal2((Number(total2))-(Number(id)))
-     setCountB(countB - 1)
+     setCount(dado.quantItem++)
+     setTotal2((Number(total2))+(Number(dado.preco)))
+     setBebida(index=>[ ...index,dado.quantItem,dado.nome])
+     setValorAdicional(index=>[ ...index,dado.preco])
      
+     console.log(dado.quantItem)
+    
+   }
+   console.log(bebida)
+   console.log(valorAdicional)
+   
+  const handleMenos2 =(dado)=>{
+ 
+      setTotal2((Number(total2))-(Number(dado.preco)))
       setBebida( index=> index.filter(((_,index)=> index !==0)) )
 
       setValorAdicional( index=> index.filter(((_,index)=> index !==1 )) )
-    
-      
 
+     setCount(dado.quantItem--)
      console.log(bebida)
-     console.log(valorAdicional)
    }
 
   
@@ -278,7 +279,7 @@ var valorTotal= Number(valor) + Number(soma)
               
               beb && beb.map((dado)=>(
                  <>
-                <div className='adicinalCard'>
+                <div className='adicinalCard' key={dado.id}>
 
                   <div>{dado.nome}</div>
                   
@@ -288,10 +289,11 @@ var valorTotal= Number(valor) + Number(soma)
                   <div className='preco'>R$ {dado.preco}</div>
                   <div className='btnAdicional'>
 
-                  {total2>=dado.preco? <div id={dado.preco} className="plusAdd" onClick={(e)=>handleMenos2(e.target.id)}>-</div>:null}
+                  {dado.quantItem>0? <div id={dado.preco}  title={dado.nome} className="plusAdd" onClick={(e)=>handleMenos2(dado)}>-</div>:null}
 
-                {total2>=dado.preco? <div>{countB}</div>:null}
-                 <div className="plusAdd" title={dado.nome} id={dado.preco} onClick={(e)=>handlePlus2(e.target.id,e.target.title)}>+</div>
+              
+               {dado.quantItem>0? <div>{dado.quantItem}</div>: null}
+                 <div className="plusAdd" title={dado.nome} id={dado.preco} onClick={(e)=>handlePlus2(dado)}> +</div>
 
                 
                   </div>
@@ -328,7 +330,7 @@ var valorTotal= Number(valor) + Number(soma)
               item && item.map((dados)=>(
                      
         <div className="cardBaseCompra">
-            <div className="cardImgCompra">
+            <div className="cardImgCompra"  key={dados.idPedido}>
                 <img src={url2+dados.image} alt={url2+dados.image}/>
                 <h3>{dados.nome}</h3>
 
