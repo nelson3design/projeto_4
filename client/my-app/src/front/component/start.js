@@ -3,7 +3,7 @@ import "./style/start.css"
 import Header from "./header"
 import Footer from "./footer"
 import Slide from "./slide"
-
+import Cart from "./cart"
 import Carrossel from "./carrossel"
 
 
@@ -21,7 +21,9 @@ export default function Start(){
             </div>
            
         </div>
+          <Cart />
          <Footer/>
+        
         </>
     )
 }

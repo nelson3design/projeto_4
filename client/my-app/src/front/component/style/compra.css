@@ -60,6 +60,9 @@
     border-radius: 5px;
 }
 
+.por{
+    font-size: 14px;
+}
 
 .formdados {
     width: 100%;
@@ -235,12 +238,22 @@
 }
 
 .infoCompra {
-    padding: 5px 20px;
     background-color: white;
-    height: 380px;
-    display: grid;
-    place-items: center;
+    height: 450px;
     border-radius: 10px;
+    padding: 20px 0 20px 20px;
+}
+
+.infoCompraItems{
+       
+    margin-bottom: 10px;
+        height: 415px;
+        display: grid;
+        place-items: center;
+      
+        gap: 20px;
+        overflow: hidden;
+        overflow-y: scroll;
 }
 
 .titleCompra {
@@ -259,14 +272,14 @@
     width: 290px;
     height: auto;
     background-color: rgb(255, 255, 255);
-
+   height: 300px;
     padding: 0px 0 20px 20px;
 }
 
 .adicionalContent {
     width: 100%;
     overflow-y: scroll;
-    height: 340px;
+    height: 220px;
 
 }
 

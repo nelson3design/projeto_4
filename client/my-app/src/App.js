@@ -7,12 +7,13 @@ import BackList from "./back/list";
 import BackCreate from "./back/create";
 import BackUpdate from "./back/update"
 
-import MeusPedidos from "./front/component/meusPedidos";
+import MeusPedidos from "./front/component/login";
 
 import Compra from "./front/component/compra";
 
 
-import Login from "./back/component/login";
+import Login from "./front/component/login";
+import LoginBack from "./back/component/login";
 import Ativos from "./back/component/ativos";
 import Preparo from "./back/component/preparo";
 import Entrega from "./back/component/entrega";
@@ -25,7 +26,7 @@ import Bebidas from "./front/component/bebidas";
 import Obrigado from "./front/component/abrigado";
 import Pedido from "./front/component/pedido";
 
-import Header from "./front/component/header";
+
 
 function App() {
 
@@ -43,14 +44,14 @@ function App() {
         <Route path="/cardapio" element={<Cardapio/>}></Route> 
          <Route path="/pizza" element={<Pizza/>}></Route> 
           <Route path="/bebidas" element={<Bebidas/>}></Route> 
-        <Route path="/meus-pedidos" element={<MeusPedidos/>}></Route> 
-         <Route path="/comprar/:id" element={<Compra/>}></Route>  
+        <Route path="/login" element={<Login/>}></Route> 
+         <Route path="/comprar/" element={<Compra/>}></Route>  
          <Route path="/obrigado" element={<Obrigado/>}></Route>
          <Route path="/pedido" element={<Pedido/>}></Route>
      
 
         {/* back-end */}
-        <Route path="/admin/login" element={<Login/>}></Route> 
+          <Route path="/admin/login" element={<LoginBack />}></Route> 
          <Route path="/admin/dashboard" element={<BackList/>}></Route> 
          <Route path="/admin/dashboard/create" element={<BackCreate/>}></Route>
          <Route path="/admin/dashboard/update/:id" element={<BackUpdate/>}></Route>  

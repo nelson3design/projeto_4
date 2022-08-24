@@ -4,7 +4,7 @@
     place-items: center;
     /* margin-top: 30px; */
     background-color: #5F5F5F;
-    height: 100vh;
+    height: auto;
 }
 
 .formPedidos{
@@ -45,6 +45,15 @@
     font-size: 17px;
     text-transform: uppercase;
     margin-bottom: 10px;
+}
+
+.linksLogin {
+    width: 100%;
+    display: grid;
+    place-items: center;
+  
+    margin: 20px 0;
+    gap: 30px;
 }
 
 .btnPedido{

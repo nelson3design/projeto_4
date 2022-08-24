@@ -1,12 +1,17 @@
-import { useState } from "react";
+import { useState, useContext } from "react";
 import "./style/header.css"
 import { MdSearch, MdStarOutline,MdOutlineRestaurant } from "react-icons/md";
-import { FaClipboardCheck,FaTimes,FaBars } from "react-icons/fa";
+import { FaClipboardCheck, FaTimes, FaBars, FaUserAlt, FaShoppingCart } from "react-icons/fa";
 import axios from "axios";
 import { Link } from "react-router-dom";
-
+import { CartContext } from "../context/context"
 
 function Header(){
+
+  const { handleCart, carts } = useContext(CartContext)
+
+
+
 const url="http://localhost:5000/"
     const [showBarra, setShowBarra] = useState(false)
 
@@ -93,10 +98,12 @@ const url="http://localhost:5000/"
 
                     <li className="ative"><a href="http://localhost:3000/"><MdStarOutline className="star"/> <span>destaques</span></a></li>
                     <li><a href="http://localhost:3000/cardapio"><MdOutlineRestaurant/> <span>cardápio</span></a></li>
-                    <li><a href="http://localhost:3000/meus-pedidos"><FaClipboardCheck/> <span>meus pedidos</span></a></li>
-
+                  
+              <li><a href="http://localhost:3000/login"><FaUserAlt /> <small>Entrar</small></a></li>
+                    <li><a><div className="baseCart" onClick={handleCart}><FaShoppingCart /> <small className="cartCount">{carts.length}</small></div></a></li>
+                   
                     
-
+             
                 </ul>
             </nav>
 
@@ -104,9 +111,14 @@ const url="http://localhost:5000/"
                 <ul className="mobileLinks">
                   <li className="ative"><a href="http://localhost:3000/"><MdStarOutline className="star"/> <span>destaques</span></a></li>
                     <li><a href="http://localhost:3000/cardapio"><MdOutlineRestaurant/> <span>cardápio</span></a></li>
-                    <li><a href="http://localhost:3000/meus-pedidos"><FaClipboardCheck/> <span>meus pedidos</span></a></li>
+                  
+                 <li><a href="http://localhost:3000/login"><FaUserAlt /> <small>Entrar</small></a></li>
+                 <li><a><div className="baseCart" onClick={handleCart}><FaShoppingCart /> <small className="cartCount">{carts.length}</small></div></a></li>
+
                 </ul>
              : null}
+
+           
         </header>
         <div className="formSearch">
             <div className="formSearchContent">

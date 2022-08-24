@@ -234,6 +234,22 @@ a {
 .mobileLinks{
     display: none;
 }
+
+
+.baseCart{
+    position:relative;
+}
+
+.cartCount {
+    position: absolute;
+    top: -8px;
+    right: -8px;
+    background-color: #333;
+    width:15px;
+    height:15px;
+    text-align: center;
+    border-radius: 100%;
+}
 @media (max-width:1025px) {
     header {
         background: red !important;

@@ -1,16 +1,17 @@
 import axios from 'axios';
-import { useState,useEffect } from 'react';
+import { useState, useEffect, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useParams } from 'react-router-dom';
-
+import { CartContext } from "../context/context"
 import HeaderCardapio from "./headerCardapio"
 
 import "./style/compra.css"
 import Footer from './footer';
-
+import { MdDownloadDone } from 'react-icons/md';
+import Cart from "./cart";
 export default function Compra(){
 
-
+  const { carts, handleDelete, handleAdd, total } = useContext(CartContext)
  
   const navigate = useNavigate();
    
@@ -26,25 +27,42 @@ export default function Compra(){
  
 
     const [valor, setValor] = useState("")
-    const [bebida, setBebida] = useState([])
-    const [valorAdicional, setValorAdicional] = useState([])
- 
+    const [bebidas, setBebidas] = useState([])
+   
+  
 
-    var valorAddTotal=JSON.parse("[" + valorAdicional + "]")
+  
     
+  const [count, setCount] = useState(0)
+  const [count2, setCount2] = useState(0)
+
+  const [total2, setTotal2] = useState("")
    
    
   
 
-  var soma = 0;    
-for(var i = 0; i < valorAddTotal.length; i++) {
-    soma += valorAddTotal[i];
-}
 
 
-var valorTotal= Number(valor) + Number(soma)
+  const valorTotal = Number(total + total2).toFixed(2)
+
+
+  const quantAdd = bebidas.reduce((a, b) => a + b.qty, 0)
+  const bebidasData = bebidas.reduce((a, b) => a + ", " + `${b.qty} ` + b.nome, quantAdd)
+
+
+  const cartQuant = carts.reduce((a, b) => a + b.qty, 0)
+  const cart = carts.reduce((a, b) => a + ", " + `${b.qty} ` + b.nome, cartQuant)
+
+
+
+  console.log(bebidasData)
+  
 
     const data={
+        cart:cart,
+        bebida: bebidasData,
+        valorTotal: valorTotal,
+
         nomeCliente: nomeCliente,
         cpf: cpf,
         cep: cep,
@@ -52,27 +70,25 @@ var valorTotal= Number(valor) + Number(soma)
         cidade: cidade,
         numero: numero,
         complemento: complemento,
-        valor: Number(valor),
-        bebida: bebida.join(" / "),
-        valorAdicional: soma,
-        valorTotal:valorTotal
+
+        
       
     }
-   
+  
     
     const {id} =useParams()
    
 
     const handleSubmit=((e)=>{
         e.preventDefault()
-        axios.post("http://localhost:5000/compra-action/"+id, data).then((res) => {
+        axios.post("http://localhost:5000/compra-action/", data).then((res) => {
          
                if(res.status === 200){
                 navigate('/obrigado')
                }
            
           });
-       
+      console.log(data)
        
     })
 
@@ -93,12 +109,13 @@ var valorTotal= Number(valor) + Number(soma)
 
       const listItem=()=>{
         axios.get(`${url}${id}`).then((response) => {
-            setItem(response.data);
+            // setItem(response.data);
             
         });
+
       }
 
-     
+ 
       
       
       const [beb, setBeb] = useState([])
@@ -116,67 +133,45 @@ var valorTotal= Number(valor) + Number(soma)
         }
 
 
-  const [count, setCount]=useState(1)
-  
-
-    const [total, setTotal]=useState("")
-
-     const [total2, setTotal2]=useState("")
-
-
-      
-
-
-
-   const handlePlus =(id,title)=>{
-     
-     setTotal((Number(total))+(Number(id)))
-     setValor(title)
-
-    setCount(count + 1)
-   
-   
-   }
-  const handleMenos =(preco)=>{
  
-     setTotal((Number(total))-(Number(preco)))
-    setCount(count - 1)
-    
-   }
 
-
-
-   
+ 
+ 
    const handlePlus2 =(dado)=>{
-
-  
+     setCount2(dado.quantItem++)
+     setCount(count+1)
     
-     setCount(dado.quantItem++)
-     setTotal2((Number(total2))+(Number(dado.preco)))
-     setBebida(index=>[ ...index,dado.quantItem,dado.nome])
-     setValorAdicional(index=>[ ...index,dado.preco])
+     setTotal2( Number(total2) + (Number(dado.preco)))
+    
+     const exist = bebidas.find((x) => x.id === dado.id)
+     if (exist) {
+
+       setBebidas(
+         bebidas.map((x) =>
+           x.id === dado.id ? { ...exist, qty: exist.qty + 1 } : x
+         )
+       )
+
+     } else {
+       setBebidas([...bebidas, { ...dado, qty: 1 }])
+     }
      
-     console.log(dado.quantItem)
     
    }
-   console.log(bebida)
-   console.log(valorAdicional)
-   
-  const handleMenos2 =(dado)=>{
+
  
-      setTotal2((Number(total2))-(Number(dado.preco)))
-      setBebida( index=> index.filter(((_,index)=> index !==0)) )
 
-      setValorAdicional( index=> index.filter(((_,index)=> index !==1 )) )
-
-     setCount(dado.quantItem--)
-     console.log(bebida)
+ 
+  const handleMenos2 =(dado)=>{
+    setCount(count - 1)
+    setCount2(dado.quantItem--)
+    setTotal2(total2-(Number(dado.preco)))
+    
    }
 
   
 
-   
-
+ 
     return(
         <>
         <HeaderCardapio/>
@@ -277,30 +272,36 @@ var valorTotal= Number(valor) + Number(soma)
           
            {
               
-              beb && beb.map((dado)=>(
-                 <>
+                      beb.map((dado)=>(
+                 
                 <div className='adicinalCard' key={dado.id}>
-
-                  <div>{dado.nome}</div>
+                 <div>{dado.nome}</div>
                   
-                   <input type="hidden" value={bebida} onChange={(e)=>setBebida(e.target.value)}/>
-                   <input type="hidden" value={valorAdicional} onChange={(e)=>setValorAdicional(e.target.value)}/>
+                  
                   <div className='btnPrecoAdicional'>
                   <div className='preco'>R$ {dado.preco}</div>
                   <div className='btnAdicional'>
 
-                  {dado.quantItem>0? <div id={dado.preco}  title={dado.nome} className="plusAdd" onClick={(e)=>handleMenos2(dado)}>-</div>:null}
+               
 
-              
-               {dado.quantItem>0? <div>{dado.quantItem}</div>: null}
-                 <div className="plusAdd" title={dado.nome} id={dado.preco} onClick={(e)=>handlePlus2(dado)}> +</div>
+                
+
+                     {dado.quantItem-1 > 0 && <div id={dado.preco-1} className="plusAdd" onClick={(e) => handleMenos2(dado)}> - </div>}
+                     
+                       {dado.quantItem-1 > 0 ? <div>{dado.quantItem-1}</div> : null}
+
+                   <div className="plusAdd" onClick={(e)=>handlePlus2(dado)}> + </div>
 
                 
                   </div>
                  
-                  </div>
+                  </div> 
+
+                 
+
+                  
                 </div>
-                  </>
+                 
               ))
               
               }
@@ -320,54 +321,59 @@ var valorTotal= Number(valor) + Number(soma)
 
     </div>
 
-    <div className='infoCompra'>
+    <div className=''>
 
       <div className='titleCompra'>RESUMO DO PEDIDO</div>
 
-    {
-              
+    <div className="infoCompra">
+                <div className='infoCompraItems'>
+                  {
 
-              item && item.map((dados)=>(
-                     
-        <div className="cardBaseCompra">
-            <div className="cardImgCompra"  key={dados.idPedido}>
-                <img src={url2+dados.image} alt={url2+dados.image}/>
-                <h3>{dados.nome}</h3>
 
-            </div>
+                    carts && carts.map((dados) => (
 
-             <div className="cardTextCompra">
-             <input type="hidden" value={valor} onChange={(e)=>setValor(e.target.value)}/>
-                 <div className="texts">{dados.description.slice(0,40)+"..."}</div>
-                <div className="cardPrecoCompra">
-                    <div className="precoCompra">R$ {Number(Number(total2)+ Number(dados.preco)+total).toFixed(2)}</div>
-                   
-                    <input type="hidden" value={valor===""? setValor( Number(dados.preco)):null} onChange={(e)=>setValor(e.target.value)}/>
+                      <div className="cardBaseCompra">
+                        <div className="cardImgCompra" key={dados.idPedido}>
+                          <img src={url2 + dados.image} alt={url2 + dados.image} />
+                          <h3>{dados.nome}</h3>
 
-                    {total>=dados.preco? <div className='plus' onClick={()=>handleMenos(dados.preco)}>-</div>:null}
-                   {total>=dados.preco? <div>{count}</div>:null}
-                     <div className='plus' id={dados.preco} title={   (Number(Number(total2)+ Number(dados.preco*2)+total).toFixed(2)) } onClick={(e)=>handlePlus(e.target.id,e.target.title)}>+</div>
+                        </div>
+
+                        <div className="cardTextCompra">
+                          <input type="hidden" value={valor} onChange={(e) => setValor(e.target.value)} />
+                          <div className="texts">{dados.description.slice(0, 40) + "..."}</div>
+                          <div className="cardPrecoCompra">
+                          
+
+                            <input type="hidden" value={valor === "" ? setValor(Number(dados.preco)) : null} onChange={(e) => setValor(e.target.value)} />
+
+                            <div className="precoCompra">{dados.qty} <span className="por"> x </span> R$ {dados.preco}</div>
+                            <div><button onClick={(e) => handleDelete(dados)}>-</button> <button onClick={(e) => handleAdd(dados)}>+</button></div>
+                          </div>
+
+
+
+
+                        
+
+                        </div>
+
+
+
+                      
+                      </div>
+
+                    ))
+                  }
                 </div>
-               
-             
-             
-            
+                {carts.length > 0 ? <div className="precoCompra">Subtotal: R$ {Number(total + total2).toFixed(2)}</div> : null}
 
-           
-            </div>
-
-           
-
-           
-        </div>
-             
-             ))
-            }
+    </div>
             </div>
 
     </div>
     </section>
-
+        <Cart />
     <Footer/>
        
         </>

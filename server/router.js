@@ -363,12 +363,11 @@ router.post('/compra-action/:idProduto',(req, res)=>{
      const complemento= req.body.complemento
 
       //dados do pedido
-    const valor= req.body.valor
-    const bebida= req.body.bebida 
-    const valorAdicional= req.body.valorAdicional 
+    const cart= req.body.cart
+    const bebida = req.body.bebida 
     const valorTotal= req.body.valorTotal 
     const pago= "on"
-    const idProduto=req.params.idProduto
+   
 
 
     const min= new Date().getMinutes()
@@ -388,7 +387,7 @@ router.post('/compra-action/:idProduto',(req, res)=>{
 
       const idCliente=result.insertId
       const data= new Date()
-         conn.query('INSERT INTO tb_pedido SET?',{ valor: valor, bebida: bebida,valorAdicional: valorAdicional, valorTotal: valorTotal, pago: pago,  data: data, id_cliente: idCliente,id_produto:idProduto,pedido:pedido },(error, result)=>{
+         conn.query('INSERT INTO tb_pedido SET?',{ cart: cart, bebida: bebida, valorTotal: valorTotal, pago: pago,  data: data, idCliente: idCliente },(error, result)=>{
       if(error){
         throw error
       }else{
@@ -402,7 +401,7 @@ router.post('/compra-action/:idProduto',(req, res)=>{
             }else{
                  const oldIdCliente = result[0].id
                  const data=new Date()
-                   conn.query('INSERT INTO tb_pedido SET?',{ valor: valor, bebida: bebida,valorAdicional: valorAdicional, valorTotal: valorTotal, pago: pago, data:data,id_cliente: oldIdCliente, id_produto:idProduto, pedido:pedido },(error, result)=>{
+                conn.query('INSERT INTO tb_pedido SET?', { cart: cart, bebida: bebida, valorTotal: valorTotal, pago: pago, data: data, idCliente: oldIdCliente },(error, result)=>{
       if(error){
         throw error
       }else{
@@ -518,7 +517,7 @@ router.post('/clientes', function (req, res){
 
    
 
-    conn.query('SELECT * FROM tb_cliente JOIN tb_pedido ON tb_cliente.id=tb_pedido.id_cliente  JOIN tb_user ON tb_pedido.id_produto=tb_user.id WHERE cpf=? ',[cpf],(error, result)=>{
+    conn.query('SELECT * FROM tb_cliente WHERE cpf=? ',[cpf],(error, result)=>{
         if(error){
             throw error;
         }else{
@@ -749,4 +748,49 @@ router.delete('/delete-pedido/:id',(req,res)=>{
 
 
 
+
+
+
+router.post('/register', (req, res) => {
+
+    //dados do cliente
+    const nomeCliente = req.body.nomeCliente
+    const cpf = req.body.cpf
+    const cep = req.body.cep
+    const rua = req.body.rua
+    const cidade = req.body.cidade
+    const numero = req.body.numero
+    const complemento = req.body.complemento
+
+  
+        
+     
+
+    conn.query('SELECT * FROM tb_cliente WHERE cpf=?', [cpf], (error, result) => {
+
+        if (result[0]){
+            res.send({msg: "client já tem cadastro"});
+
+        }else{
+            conn.query('INSERT INTO tb_cliente SET?', { nomeCliente: nomeCliente, cpf: cpf, cep: cep, rua: rua, cidade: cidade, numero: numero, complemento: complemento }, (error, result) => {
+                if (error) {
+                    throw error
+                } else {
+                    res.send(result);
+                }
+            })
+
+        }
+
+    })
+
+
+   
+
+
+})
+
+
+
 module.exports= router;
+

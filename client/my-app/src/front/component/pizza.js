@@ -1,11 +1,18 @@
-import React,{useEffect,useState} from "react";
+import React, { useEffect, useState, useContext } from "react";
 import axios from "axios";
 import HeaderCardapio from "./headerCardapio"
 import "./style/cardapio.css"
 import { Link } from "react-router-dom";
 import Footer from "./footer";
+import { CartContext } from "../context/context"
+
+
+import Cart from "./cart";
 
 export default function Pizza(){
+
+  const { carts, handleAdd, handleCart } = useContext(CartContext)
+
      const [item, setItem] = useState([])
     const url="http://localhost:5000/pizza"
     const url2="http://localhost:5000/"
@@ -44,7 +51,7 @@ export default function Pizza(){
               
               item && item.map((dados)=>(
                
-                      <Link to={`/comprar/${dados.id}`} style={{textDecoration: "none"}} className="linkHover">
+                    
               <div className="cardBase">
             <div className="cardImg">
                 <img src={url2+dados.image} alt={url2+dados.image}/>
@@ -58,19 +65,19 @@ export default function Pizza(){
                 <div className="cardPreco">
                     <div className="preco">R$ {dados.preco}</div>
                    
-                    <div className="btn"><span>comprar</span></div>
+                      <div className="btn" onClick={(e) => handleAdd(dados)}><span>comprar</span></div>
                 </div>
                 
             </div>
 
         </div>
-                </Link>
+                
        
             ))
               }
               </section>
               </div>
-
+        <Cart />
               <Footer/>
         </>
     )

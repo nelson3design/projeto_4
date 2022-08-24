@@ -1,4 +1,4 @@
-import React,{useEffect,useState} from "react";
+import React, { useEffect, useState, useContext } from "react";
 import axios from "axios";
 import { Swiper, SwiperSlide } from "swiper/react";
 import "./style/card.css"
@@ -12,10 +12,14 @@ import "swiper/css/navigation";
 import "./style/carrossel.css";
 
 // import required modules
+
+import {CartContext} from "../context/context"
+
 import { Navigation, Pagination, Mousewheel, Keyboard,Autoplay, FreeMode } from "swiper";
 
 export default function Carrossel() {
 
+  const { carts, handleAdd, handleCart } = useContext(CartContext)
 
   const [item, setItem] = useState([])
     const url="http://localhost:5000/destaque"
@@ -91,7 +95,7 @@ export default function Carrossel() {
               
               item && item.map((dados)=>(
                 <SwiperSlide>
-                      <Link to={`/comprar/${dados.id}`} style={{textDecoration: "none"}} className="linkHover">
+                      {/* <Link to={`/comprar/${dados.id}`} style={{textDecoration: "none"}} className="linkHover"> */}
               <div className="cardBase">
             <div className="cardImg">
                 <img src={url2+dados.image} alt={url2+dados.image}/>
@@ -105,13 +109,13 @@ export default function Carrossel() {
                 <div className="cardPreco">
                     <div className="preco">R$ {dados.preco}</div>
                    
-                    <div className="btn"><span>comprar</span></div>
+                      <div className="btn" onClick={(e) => handleAdd(dados)}><span>comprar</span></div>
                 </div>
                 
             </div>
 
         </div>
-                </Link>
+                {/* </Link> */}
         </SwiperSlide>
             ))
               }

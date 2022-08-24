@@ -7,7 +7,7 @@ import { ThreeDots } from  'react-loader-spinner'
 import "./style/pedido.css"
 import { FaUserCircle,FaCaretDown } from "react-icons/fa";
 import {useNavigate} from 'react-router-dom';
-
+import Cart from "./cart";
 export default function Pedido(){
 
 
@@ -228,7 +228,7 @@ const handlelogout =()=>{
 </div>
 </div>
 
-
+        <Cart />
 <Footer/>
 
        </>
