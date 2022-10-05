@@ -12,8 +12,8 @@ export default function Cardapio(){
 
 
      const [item, setItem] = useState([])
-    const url="http://localhost:5000/hamburguer"
-    const url2="http://localhost:5000/"
+    const url="http://localhost:4000/hamburguer"
+    const url2="http://localhost:4000/"
 
      useEffect(()=>{
   
@@ -52,7 +52,7 @@ export default function Cardapio(){
                     
               <div className="cardBase">
             <div className="cardImg">
-                <img src={url2+dados.image} alt={url2+dados.image}/>
+                <img src={url2+dados.file} alt={url2+dados.file}/>
                 <h3>{dados.nome}</h3>
 
             </div>

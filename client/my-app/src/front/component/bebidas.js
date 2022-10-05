@@ -13,8 +13,8 @@ export default function Bebidas(){
 
   
      const [item, setItem] = useState([])
-    const url="http://localhost:5000/bebidas"
-    const url2="http://localhost:5000/"
+    const url="http://localhost:4000/bebidas"
+    const url2="http://localhost:4000/"
 
      useEffect(()=>{
   
@@ -53,7 +53,7 @@ export default function Bebidas(){
                       
               <div className="cardBase">
             <div className="cardImg">
-                <img src={url2+dados.image} alt={url2+dados.image}/>
+                <img src={url2+dados.file} alt={url2+dados.file}/>
                 <h3>{dados.nome}</h3>
 
             </div>
