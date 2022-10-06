@@ -34,7 +34,7 @@ module.exports = {
         }
 
     },
-
+// lista todos os producto
     async allProduct(req, res) {
         try {
             const products = await Product.find()
@@ -46,18 +46,21 @@ module.exports = {
     },
 
 
-    // lista 1 item
+    // lista 1 producto
     async oneProduct(req, res) {
         try {
             const { id } = req.params
-            const products = await Product.findById(id)
-            //    return  res.status(200).json(contact)
-            res.render('index', { products })
+            const product = await Product.findById(id)
+            return res.status(200).json(product)
+            // res.render('index', { products })
 
         } catch (error) {
             console.log(error)
         }
     },
+
+// lista categoria hamburguer
+
     async hamburguer(req, res) {
         try {
            
@@ -71,6 +74,7 @@ module.exports = {
        
     },
 
+    // lista categoria bebida
     async bebidas(req, res) {
         try {
 
@@ -83,6 +87,7 @@ module.exports = {
         }
 
     },
+    // lista categoria pizza
     async pizza(req, res) {
         try {
 
@@ -95,9 +100,22 @@ module.exports = {
         }
 
     },
+    // lista categoria destaque
+    async destaque(req, res) {
+        try {
+
+            const products = await Product.find({ destaque: { $in: ['sim'] } })
+
+            res.status(200).json(products)
+
+        } catch (error) {
+            console.log(error)
+        }
+
+    },
 
 
-    // edit
+    // edit produto
     async edit(req, res) {
         try {
             const { id } = req.params
@@ -161,7 +179,7 @@ module.exports = {
     },
 
     
-// delete
+// excluir produto
     async deleteProduct(req, res) {
         try {
             const { id } = req.params

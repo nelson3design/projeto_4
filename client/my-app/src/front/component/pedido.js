@@ -8,8 +8,10 @@ import "./style/pedido.css"
 import { FaUserCircle,FaCaretDown } from "react-icons/fa";
 import {useNavigate} from 'react-router-dom';
 import Cart from "./cart";
-export default function Pedido(){
 
+
+
+export default function Pedido(){
 
   const navigate = useNavigate();
 
@@ -50,7 +52,7 @@ const handlelogout =()=>{
 
 
     const [item, setItem] = useState([])
-    const url="http://localhost:5000/clientes/"
+    const url="http://localhost:5000/user/"
     const url2="http://localhost:5000/"
 
     
@@ -198,7 +200,7 @@ const handlelogout =()=>{
                   <div className="cardBase">
                
             <div className="cardImg">
-                <img src={url2+dados.image} alt={url2+dados.image}/>
+                <img src={url2+dados.file} alt={url2+dados.file}/>
                 <h3>{dados.nome}</h3>
 
             </div>

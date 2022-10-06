@@ -26,6 +26,8 @@ import Bebidas from "./front/component/bebidas";
 import Obrigado from "./front/component/abrigado";
 import Pedido from "./front/component/pedido";
 
+import User from "./front/component/user";
+
 
 
 function App() {
@@ -48,6 +50,8 @@ function App() {
          <Route path="/comprar/" element={<Compra/>}></Route>  
          <Route path="/obrigado" element={<Obrigado/>}></Route>
          <Route path="/pedido" element={<Pedido/>}></Route>
+
+          <Route path="/user/:id" element={<User />}></Route>
      
 
         {/* back-end */}

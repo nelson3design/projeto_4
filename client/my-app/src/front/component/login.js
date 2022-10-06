@@ -11,42 +11,46 @@ import axios from 'axios';
 export default function Login(){
 
     const { handleCart, carts } = useContext(CartContext)
+
+    const [senha, setSenha] = useState("")
+    const [email, setEmail]=useState("")
+
+    const [nome, setNome] = useState("")
     const [cpf, setCpf] = useState("")
-
-    const [nome, setNome]=useState("")
-
-    const [nomeCliente, setNomeCliente] = useState("")
-    const [cpfRegister, setCpfRegister] = useState("")
     const [cep, setCep] = useState("")
     const [rua, setRua] = useState("")
-    const [cidade, setCidade] = useState("")
+    const [telefone, setTelefone] = useState("")
     const [numero, setNumero] = useState("")
     const [complemento, setComplemento] = useState("")
+    const [bairro, setBairro] = useState("")
+    const [cidade, setCidade] = useState("")
+    const [estado, setEstado] = useState("")
+    const [password, setPassword] = useState("")
+    const [confirmPassword, setConfirmPassword] = useState("")
 
     const [error, setError]=useState(false)
 
-    const data = {
-       
-
-        nomeCliente: nomeCliente,
-        cpf: cpfRegister,
+    const data = { 
+        email:email,
+        nome: nome,
+        cpf: cpf,
         cep: cep,
         rua: rua,
-        cidade: cidade,
         numero: numero,
         complemento: complemento,
-
-
+        telefone: telefone,
+        bairro: bairro,
+        cidade: cidade,
+        estado: estado,
+        password: password,
+        confirmPassword: confirmPassword
 
     }
-
-
-  
-
+console.log(data)
 
     const handleSubmit = ((e) => {
         e.preventDefault()
-        axios.post("http://localhost:5000/register", data).then((res) => {
+        axios.post("http://localhost:4000/register", data).then((res) => {
 
            try {
             console.log(res.data.msg)
@@ -118,12 +122,12 @@ export default function Login(){
                 <form onSubmit={login}>
                 <div className="formItens">
                   <div>
-                    <label>nome</label>
-                    <input type="text" value={nome} onChange={(e)=>setNome(e.target.value)}/>
+                    <label>Email</label>
+                    <input type="text" value={email} onChange={(e)=>setEmail(e.target.value)}/>
                    </div>
                 <div>
-                    <label>cpf</label>               
-                    <input type="number" value={cpf} onChange={(e)=>setCpf(e.target.value)}/>
+                    <label>Senha</label>               
+                    <input type="text" value={senha} onChange={(e)=>setSenha(e.target.value)}/>
                 </div>
                 </div>
              
@@ -138,14 +142,29 @@ export default function Login(){
                         {error && <div style={{ color: "red" }}>cliente já tem cadastro</div> }
                         <form onSubmit={handleSubmit}>
                             <div className="formItens">
-                                <div>
-                                    <label>nome</label>
-                                    <input value={nomeCliente} onChange={(e) => setNomeCliente(e.target.value)} placeholder="nome" required />
+
+                                <div className="formItens">
+                                    <div>
+                                        <label>nome</label>
+                                        <input value={nome} onChange={(e) => setNome(e.target.value)} placeholder="nome" required />
+                                    </div>
+                                    <div>
+                                        <label>email</label>
+                                        <input type="email" value={email} onChange={(e) => setEmail(e.target.value)} placeholder="email" />
+                                    </div>
                                 </div>
+                           
+                            </div>
+                            <div className="formItens">
                                 <div>
                                     <label>cpf</label>
-                                    <input type="number" value={cpfRegister} onChange={(e) => setCpfRegister(e.target.value)} />
+                                    <input type="number" value={cpf} onChange={(e) => setCpf(e.target.value)} placeholder="cpf" />
                                 </div>
+                                <div>
+                                    <label>telefone</label>
+                                    <input type="number" value={telefone} onChange={(e) => setTelefone(e.target.value)} placeholder="telefone" required />
+                                </div>
+                                
                             </div>
 
                             <div className='formInput'>
@@ -162,8 +181,8 @@ export default function Login(){
 
                             <div className='formInput'>
                                 <div className='compraFormContent'>
-                                    <label>Cidade</label>
-                                    <input value={cidade} onChange={(e) => setCidade(e.target.value)} placeholder="palhoça" required />
+                                    <label>Bairro</label>
+                                    <input value={bairro} onChange={(e) => setBairro(e.target.value)} placeholder="bela vista" required />
                                 </div>
 
 
@@ -178,6 +197,63 @@ export default function Login(){
                                         <input value={complemento} onChange={(e) => setComplemento(e.target.value)} placeholder="apto 2" required />
                                     </div>
                                 </div>
+                            </div>
+                            <div className='formInput'>
+                                <div className='compraFormContent'>
+                                    <label>cidade</label>
+                                    <input value={cidade} onChange={(e) => setCidade(e.target.value)} placeholder="palhoça" required />
+                                </div>
+
+
+                                <div className='formInput'>
+                                    <div className='compraFormContent numerInput1'>
+                                        <label>Estado</label>
+                                        <select value={estado} onChange={(e) => setEstado(e.target.value)}>
+                                            <option value="">Escolhe um estado</option>
+                                            <option value="Acre">Acre</option>
+                                            <option value="Alagoas">Alagoas</option>
+                                            <option value="Amapá">Amapá</option>
+                                            <option value="Amazonas">Amazonas</option>
+                                            <option value="Bahia">Bahia</option>
+                                            <option value="Ceará">Ceará</option>
+                                            <option value="Espírito Santo">Espírito Santo</option>
+                                            <option value="Goiás">Goiás</option>
+                                            <option value="Maranhão">Maranhão</option>
+                                            <option value="Mato Grosso">Mato Grosso</option>
+                                            <option value="Mato Grosso do Sul">Mato Grosso do Sul</option>
+                                            <option value="Minas Gerais">Minas Gerais</option>
+                                            <option value="Pará">Pará</option>
+                                            <option value="Paraíba">Paraíba</option>
+                                            <option value="Paraná">Paraná</option>
+                                            <option value="Pernambuco">Pernambuco</option>
+                                            <option value="Piauí">Piauí</option>
+                                            <option value="Rio de Janeiro">Rio de Janeiro</option>
+                                            <option value="Rio Grande do Norte">Rio Grande do Norte</option>
+                                            <option value="Rio Grande do Sul">Rio Grande do Sul</option>
+                                            <option value="Rondônia">Rondônia</option>
+                                            <option value="Roraima">Roraima</option>
+                                            <option value="Santa Catarina">Santa Catarina</option>
+                                            <option value="São Paulo">São Paulo</option>
+                                            <option value="Sergipe">Sergipe</option>
+                                            <option value="Tocantins">Tocantins</option>
+                                            <option value="Distrito Federal">Distrito Federal</option>
+                                           
+                                        </select>
+                                    </div>
+
+                                   
+                                </div>
+                            </div>
+                            <div className="formItens">
+                                <div>
+                                    <label>Crie sua Senha de acesso</label>
+                                    <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} required />
+                                </div>
+                                <div>
+                                    <label>Digite novamente</label>
+                                    <input type="password" value={confirmPassword} onChange={(e) => setConfirmPassword(e.target.value)} required />
+                                </div>
+                                
                             </div>
 
 

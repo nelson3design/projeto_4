@@ -7,7 +7,7 @@ import { CartContext } from "../context/context"
 export default function Cart(props) {
 
     const { carts, total, handleRemove, show, handleClose, showCart, handleAdd, handleDelete,showBase } = useContext(CartContext)
-    const url2 = "http://localhost:5000/"
+    const url2 = "http://localhost:4000/"
 
 
     const listCart = new Map()
@@ -41,7 +41,7 @@ export default function Cart(props) {
 
 
                                     <div className="sideItem" key={data.id}>
-                                        <img className="img" src={url2 + data.image} />
+                                        <img className="img" src={url2 + data.file} />
                                         <div className="name">{data.nome}</div>
                                         <div className="preco">{data.qty} x {data.preco}</div>
                                         <div><button onClick={(e) => handleDelete(data)}>-</button> <button onClick={(e) => handleAdd(data)}>+</button></div>

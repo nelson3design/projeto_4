@@ -64,12 +64,12 @@ export const CartProvider = ({ children }) => {
 
     function handleAdd(dados) {
 
-        const exist = carts.find((x) => x.id === dados.id)
+        const exist = carts.find((x) => x._id === dados._id)
         if (exist) {
 
             setCarts(
                 carts.map((x) =>
-                    x.id === dados.id ? { ...exist, qty: exist.qty + 1 } : x
+                    x._id === dados._id ? { ...exist, qty: exist.qty + 1 } : x
                 )
             )
 
@@ -81,15 +81,15 @@ export const CartProvider = ({ children }) => {
     }
 
     function handleDelete(dados) {
-        const exist = carts.find((x) => x.id === dados.id)
+        const exist = carts.find((x) => x._id === dados._id)
         if (exist.qty === 1) {
 
-            setCarts(carts.filter((x) => x.id !== dados.id))
+            setCarts(carts.filter((x) => x._id !== dados._id))
 
         } else {
             setCarts(
                 carts.map((x) =>
-                    x.id === dados.id ? { ...exist, qty: exist.qty - 1 } : x
+                    x._id === dados._id ? { ...exist, qty: exist.qty - 1 } : x
                 )
             )
         }
