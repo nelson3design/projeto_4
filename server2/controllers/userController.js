@@ -1,8 +1,17 @@
 const User = require('../models/userModel')
+require('dotenv').config()
 const express = require('express')
 const Pedido = require('../models/pedidoModel')
 const bcrypt = require('bcrypt')
 const jwt = require('jsonwebtoken')
+
+const maxAge = 3 * 24 * 60 * 60;
+const secret = process.env.secret
+const createToken = (id) => {
+    return jwt.sign({ id }, secret, {
+        expiresIn: maxAge,
+    });
+};
 
 
 module.exports = {
@@ -10,14 +19,17 @@ module.exports = {
     async privateLogin(req, res){
         const id = req.params.id
 
+        console.log(req.cookies.jwt)
+
         const user = await User.findById(id, '-password') // excluir a senha ('-password')
 
 
         if (!user) {
             return res.status(404).json({ msg: 'Usuário não encontrado!' })
         }
-
-        res.status(200).json({ user })
+        
+       // res.redirect('/user/'+id)
+       res.status(200).json({ user })
     },
     // criar os usuarios add-user
     async userRegister(req, res) {
@@ -80,6 +92,14 @@ module.exports = {
 
             await user.save()
 
+            const token = createToken(user._id);
+
+            res.cookie("jwt", token, {
+                withCredentials: true,
+                httpOnly: false,
+                maxAge: maxAge * 1000,
+            });
+
             res.status(201).json({ msg: 'Usuário criado com sucesso!' })
 
         } catch (error) {
@@ -119,20 +139,14 @@ module.exports = {
 
         try {
 
-            const secret = process.env.secret
+            // const secret = process.env.secret
 
-            const token = jwt.sign(
-                {
-                    id: user._id
-                },
-                secret
-            )
-
-            const id=user._id
-
-
-            res.status(200).json({ msg: 'Autenticação realizado com sucesso!', token, id })
-
+            const token = createToken(user._id);
+            res.cookie("jwt", token, { httpOnly: false, maxAge: maxAge * 1000 });
+            // res.status(200).json({ user: user._id, status: true });
+           
+            res.redirect('/user')
+           
         } catch (error) {
             res.status(500).json({ msg: 'Aconteceu um erro no servidor, tente novamente mais tarde!' })
 

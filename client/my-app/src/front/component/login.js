@@ -7,8 +7,20 @@ import Cart from "./cart";
 import HeaderPedido from "./headerPedido"
 import { CartContext } from "../context/context"
 import axios from 'axios';
+import useCookie from 'react-use-cookie';
+import { useCookies } from 'react-cookie';
+
 
 export default function Login(){
+
+    const [cookies] = useCookies([]);
+    const navigate = useNavigate();
+    useEffect(() => {
+        if (cookies.jwt) {
+            navigate("/");
+        }
+    }, [cookies, navigate]);
+     
 
     const { handleCart, carts } = useContext(CartContext)
 
@@ -70,7 +82,7 @@ console.log(data)
     //     localStorage.removeItem("cpf")
     //   }
 
-    const navigate = useNavigate();
+ 
 
   
     useEffect(()=>{
@@ -83,8 +95,8 @@ console.log(data)
 
     function login(e){
     e.preventDefault()
-    let item ={nome, cpf}
-   fetch("http://localhost:5000/clientes",{
+        let item = { email, password }
+   fetch("http://localhost:4000/login",{
     method:"post",
     headers:{
         "Content-type":"application/json",
@@ -94,15 +106,7 @@ console.log(data)
    }).then(result=> result.json())
 
     .then(result=>{
-     
-            
-            localStorage.setItem("cpf",JSON.stringify(result[0].cpf))
-            navigate('/pedido')
-         
-            console.log(result)
-            if(result===400){
-                console.log(result)
-            }
+       console.log(result)
         
     })  
    
@@ -127,7 +131,7 @@ console.log(data)
                    </div>
                 <div>
                     <label>Senha</label>               
-                    <input type="text" value={senha} onChange={(e)=>setSenha(e.target.value)}/>
+                    <input type="text" value={password} onChange={(e)=>setPassword(e.target.value)}/>
                 </div>
                 </div>
              

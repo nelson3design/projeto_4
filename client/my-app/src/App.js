@@ -51,7 +51,7 @@ function App() {
          <Route path="/obrigado" element={<Obrigado/>}></Route>
          <Route path="/pedido" element={<Pedido/>}></Route>
 
-          <Route path="/user/:id" element={<User />}></Route>
+          <Route path="/login/user" element={<User/>}></Route>
      
 
         {/* back-end */}

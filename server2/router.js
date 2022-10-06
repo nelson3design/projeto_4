@@ -3,8 +3,9 @@ require('dotenv').config()
 const router = express.Router()
 const productController = require('./controllers/productController')
 const userController = require('./controllers/userController')
-
+const User = require('./models/userModel')
 const path = require('path')
+const { checkUser } = require("./middlewares/authMiddleware");
 
 const multer = require('multer')
 const bcrypt = require('bcrypt')
@@ -53,6 +54,18 @@ router.get('/edit', (req, res) => {
     res.render('edit')
 })
 
+router.get('/login', (req, res) => {
+    const token = req.cookies.jwt;
+    if (token){
+
+        res.redirect('/user')
+    }else{
+       
+        res.render('login')
+    }
+   
+})
+
 router.post('/add-action', upload.single('upload'), productController.createProduct)
 router.get('/', productController.allProduct)
 router.get('/product/:id', productController.oneProduct)
@@ -69,32 +82,10 @@ router.get('/destaque', productController.destaque)
 // cadastrar usuário
 router.post('/register', userController.userRegister)
 
-router.get('/user/:id', checkToken, userController.privateLogin)
-
-function checkToken(req, res, next) {
-
-    const authHeader = req.headers['authorization']
-
-    const token = authHeader && authHeader.split(" ")[1]
-
-    if (!token) {
-        return res.status(401).json({ msg: 'Acesso negado!' })
-    }
-
-    try {
-
-        const secret = process.env.secret
-        jwt.verify(token, secret)
-
-        next()
-
-    } catch (error) {
-        res.status(400).json({ msg: 'token inválido!' })
-
-    }
-}
 
 router.post('/login', userController.userLogin)
+
+router.get("/user", checkUser);
 
 
 module.exports = router
