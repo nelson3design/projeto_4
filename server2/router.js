@@ -3,6 +3,7 @@ require('dotenv').config()
 const router = express.Router()
 const productController = require('./controllers/productController')
 const userController = require('./controllers/userController')
+const orderController = require('./controllers/orderController')
 const User = require('./models/userModel')
 const path = require('path')
 const { checkUser } = require("./middlewares/authMiddleware");
@@ -87,5 +88,9 @@ router.post('/login', userController.userLogin)
 
 router.get("/user", checkUser);
 
+router.get("/costumer/:id", userController.user);
+
+router.post("/order", orderController.order);
+router.get("/email", userController.userEmail);
 
 module.exports = router

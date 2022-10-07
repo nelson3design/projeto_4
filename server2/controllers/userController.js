@@ -1,7 +1,7 @@
 const User = require('../models/userModel')
 require('dotenv').config()
 const express = require('express')
-const Pedido = require('../models/pedidoModel')
+const Pedido = require('../models/orderModel')
 const bcrypt = require('bcrypt')
 const jwt = require('jsonwebtoken')
 
@@ -19,8 +19,6 @@ module.exports = {
     async privateLogin(req, res){
         const id = req.params.id
 
-        console.log(req.cookies.jwt)
-
         const user = await User.findById(id, '-password') // excluir a senha ('-password')
 
 
@@ -30,6 +28,35 @@ module.exports = {
         
        // res.redirect('/user/'+id)
        res.status(200).json({ user })
+    },
+
+    async user(req, res) {
+        const id = req.params.id
+
+        const user = await User.findById(id) 
+
+
+        if (!user) {
+            return res.status(404).json({ msg: 'Usuário não encontrado!' })
+        }
+
+       
+        res.status(200).json({ user })
+    },
+
+    async userEmail(req, res) {
+        const email = req.body.email
+        console.log(email)
+
+        const user = await User.findOne({email:email})
+
+
+        if (!user) {
+            return res.status(404).json({ msg: 'Usuário não encontrado!' })
+        }
+
+
+        res.status(200).json({ user })
     },
     // criar os usuarios add-user
     async userRegister(req, res) {
@@ -143,9 +170,9 @@ module.exports = {
 
             const token = createToken(user._id);
             res.cookie("jwt", token, { httpOnly: false, maxAge: maxAge * 1000 });
-            // res.status(200).json({ user: user._id, status: true });
+            res.status(200).json({ id: user._id, status: true, token });
            
-            res.redirect('/user')
+            // res.redirect('/user')
            
         } catch (error) {
             res.status(500).json({ msg: 'Aconteceu um erro no servidor, tente novamente mais tarde!' })
