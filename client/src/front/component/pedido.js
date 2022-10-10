@@ -33,8 +33,10 @@ export default function Pedido(){
 
   
 const handlelogout =()=>{
-  const token = localStorage.removeItem("token")
-  const id = localStorage.removeItem("id")
+  localStorage.removeItem("token")
+ localStorage.removeItem("id")
+  localStorage.removeItem("emailCliente")
+ localStorage.removeItem("idCliente")
  // window.location.reload();
   navigate('/login')
 }
@@ -57,7 +59,7 @@ const handlelogout =()=>{
 const [item, setItem] = useState([])
 const [item2, setItem2] = useState("")
 
-const url="http://localhost:4000/costumer/"
+const url="http://localhost:4000/costumer"
 const url2="http://localhost:4000/"
 
 
@@ -65,26 +67,53 @@ useEffect(()=>{
 
 
    listItem()
- 
+  orders()
     
  },[])
 
+ const data={
+  id:id
+ }
+
  
   const listItem=()=>{
- 
-     axios.get(`${url}${id}`).then((response) => {
-       try {
-         setItem(response.data.user);
-         setItem2(response.data.user.endereco[0]);
-       } catch (error) {
-         navigate('/login')
-       }
-       
-       
-     });
+  
+
+    axios.post("http://localhost:4000/costumer",data).then((response) => {
+        try {
+          setItem(response.data.user);
+          setItem2(response.data.user.endereco[0]);
+          navigate('/pedido')
+        } catch (error) {
+          navigate('/login')
+        }
+        
+        
+      });
+    
   
   }
  
+
+  
+// lista pedidos
+  const [order, setorder] = useState([])
+  const [order2, setorder2] = useState([])
+
+  const orders = () => {
+  
+    axios.get("http://localhost:4000/costumer/order/" + id).then((response) => {
+      try {
+        setorder(response.data.order);
+         console.log(response.data.order)
+       
+      } catch (error) {
+        
+      }
+    });
+
+  }
+//console.log(order)
 
 
 
@@ -108,7 +137,11 @@ const handleRemove=(idPedido)=>{
     });
 }
 }
-
+  const employees = [
+    { id: 1, name: 'Alice', tasks: ['dev', 'test', 'ship'] },
+    { id: 2, name: 'Bob', tasks: ['design', 'test'] },
+    { id: 3, name: 'Carl', tasks: ['test'] },
+  ];
      
 
 
@@ -158,6 +191,48 @@ const handleRemove=(idPedido)=>{
        
           
        </div>
+
+
+
+            <div>
+              {order.map((order, index) => (
+               
+                  order.pedido.map((pedido, index) => (
+                      pedido.carts.map((cart) => (
+                        <div>{cart.nome}</div>
+                      ))
+                    
+                  ))
+
+              ))}
+            </div>
+
+            <div>
+              {order.map((order, index) => (
+
+                order.pedido.map((pedido, index) => (
+                  pedido.bebidas.map((cart) => (
+                    <div>{cart.nome}</div>
+                  ))
+
+                ))
+
+              ))}
+            </div>
+
+            <div>
+              {order.map((order, index) => (
+
+                order.entrega.map((adress, index) => (
+                 
+                  <div>{adress.rua}</div>
+                 
+                ))
+
+              ))}
+            </div>
+         
+
 
 
      

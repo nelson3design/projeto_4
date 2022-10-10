@@ -101,7 +101,7 @@ export default function Login(){
                     
                     localStorage.setItem("token", JSON.stringify(res.data.token));
                     localStorage.setItem("id", JSON.stringify(res.data.id));
-                //  navigate('/pedido')
+                  navigate('/pedido')
                     //window.location.reload();
     
                    

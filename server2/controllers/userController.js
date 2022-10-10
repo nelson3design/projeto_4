@@ -31,22 +31,20 @@ module.exports = {
     },
 
     async user(req, res) {
-        const id = req.params.id
+        const id = req.body.id
 
         const user = await User.findById(id) 
-
 
         if (!user) {
             return res.status(404).json({ msg: 'Usuário não encontrado!' })
         }
 
-       
         res.status(200).json({ user })
     },
 
     async userEmail(req, res) {
-        const email = req.body.email
-        console.log(email)
+        const email = req.params.email
+       
 
         const user = await User.findOne({email:email})
 

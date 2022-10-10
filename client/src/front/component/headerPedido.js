@@ -14,7 +14,7 @@ function HeaderPedido(){
   var idString = localStorage.getItem("id")
 
   var id = JSON.parse(idString)
-  const url3 = "http://localhost:4000/costumer/"
+  const url3 = "http://localhost:4000/costumer"
   const url4 = "http://localhost:4000/"
 
 
@@ -38,10 +38,13 @@ function HeaderPedido(){
 
   }, [])
 
+  const data = {
+    id: id
+  }
 
   const listItem = () => {
 
-    axios.get(`${url3}${id}`).then((response) => {
+    axios.post("http://localhost:4000/costumer",data).then((response) => {
       try {
 
         setItem2(response.data.user);

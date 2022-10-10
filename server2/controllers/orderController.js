@@ -1,6 +1,7 @@
 
 
-const Product = require('../models/orderModel')
+const Order = require('../models/orderModel')
+
 
 
 module.exports = {
@@ -11,12 +12,12 @@ module.exports = {
     async order(req, res) {
        
 
-       
+      
 
         const { idCliente, status, itemComprado, rua, cep,numero,bairro,cidade,estado,complemento } = req.body
 
         const pedido = itemComprado
-        var entrega = {
+        const entrega = {
             "rua": rua,
             "cep": cep,
             "numero": numero,
@@ -25,13 +26,14 @@ module.exports = {
             "cidade": cidade,
             "estado": estado
         }
+      
         try {
            
    
-            await Product.create({ idCliente, status, pedido, entrega })
+            await Order.create({ idCliente, status, pedido, entrega })
             res.status(200).json({ msg: 'Product registrado com sucesso' })
 
-            res.redirect('/')
+         
 
         } catch (error) {
             res.status(400).send(error);
@@ -39,6 +41,22 @@ module.exports = {
         }
 
     },
+    async customerOrder(req, res) {
+        const idCliente = req.params.idCliente
+
+
+     
+
+        const order = await Order.find({ idCliente: idCliente })
+
+
+        if (!order) {
+            return res.status(404).json({ msg: 'Usuário não encontrado!' })
+        }
+
+
+        res.status(200).json({ order })
+    }
     
 }
 

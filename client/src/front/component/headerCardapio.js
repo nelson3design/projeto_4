@@ -38,10 +38,13 @@ function HeaderCardapio(){
 
   }, [])
 
+  const data = {
+    id: id
+  }
 
   const listItem = () => {
 
-    axios.get(`${url3}${id}`).then((response) => {
+    axios.post("http://localhost:4000/costumer/",data).then((response) => {
       try {
 
         setItem2(response.data.user);

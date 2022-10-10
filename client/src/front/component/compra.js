@@ -18,15 +18,15 @@ export default function Compra(){
   
     // verificar login
 
-  var idString = localStorage.getItem("idCliente")
+  var idString = localStorage.getItem("emailCliente")
 
-  var idCliente = JSON.parse(idString)
+  var emailCliente = JSON.parse(idString)
   //var id = "633ee6e683ddc91e8ec44184"
 
   var userOrder = ''
   var userLogin = ''
 
-  if (localStorage.getItem("idCliente")) {
+  if (localStorage.getItem("emailCliente")) {
     userOrder = 'showUserOrder'
     userLogin = 'hideUserOrder'
   } else {
@@ -75,8 +75,9 @@ export default function Compra(){
     axios.post("http://localhost:4000/register", userInfos).then((res) => {
 
       try {
-   
-        localStorage.setItem("idCliente", JSON.stringify(userInfos.email));
+        localStorage.setItem("token", JSON.stringify(res.data.token));
+        localStorage.setItem("id", JSON.stringify(res.data.id));
+        localStorage.setItem("emailCliente", JSON.stringify(userInfos.email));
         window.location.reload();
        
       } catch (error) {
@@ -103,8 +104,9 @@ export default function Compra(){
       axios.post("http://localhost:4000/login", item).then((res) => {
 
         try {
-         
-          localStorage.setItem("idCliente", JSON.stringify(item.email));
+          localStorage.setItem("token", JSON.stringify(res.data.token));
+          localStorage.setItem("id", JSON.stringify(res.data.id));
+          localStorage.setItem("emailCliente", JSON.stringify(item.email));
          
           window.location.reload();
          
@@ -142,17 +144,16 @@ export default function Compra(){
   const [count2, setCount2] = useState(0)
 
   const [total2, setTotal2] = useState("")
-   
-   
-  
 
-
-
-  const valorTotal = Number(total + total2).toFixed(2)
-
-const itemComprado=
  
-{
+   
+useEffect(()=>{
+  getId()
+},[])
+
+const valorTotal = Number(total + total2).toFixed(2)
+
+const itemComprado={
     valorTotal: valorTotal,
     carts,
     bebidas
@@ -160,49 +161,71 @@ const itemComprado=
 
 
  
+const [customer, setCustomer ] = useState("")
+  
+
+const getId=(()=>{
+  axios.get("http://localhost:4000/email/" + emailCliente).then((res) => {
+
+    try {
+     
+     
+      localStorage.setItem("idCliente", JSON.stringify(res.data.user._id));
+      setCustomer(res.data.user.nome)
+
+     // window.location.reload();
+
+    } catch (error) {
+
+
+    }
+
+  });
+})
+
+ 
    
   
     
     const {id} =useParams()
+
+  var idClienteString= localStorage.getItem("idCliente")
+
+  var idCliente = JSON.parse(idClienteString)
    
+
+  const data = {
+    idCliente: idCliente,
+    status: "pago",
+    itemComprado: itemComprado,
+    cep: cepIn,
+    rua: ruaIn,
+    numero: numeroIn,
+    complemento: complementoIn,
+    bairro: bairroIn,
+    cidade: cidadeIn,
+    estado: estadoIn,
+
+  }
+
 
     const handleSubmit=((e)=>{
         e.preventDefault()
 
-        axios.get("http://localhost:4000/",).then((res) => {
-          const data = {
-            idCliente: res.data.user._id,
-            status: "pago",
-            itemComprado: itemComprado,
-            cep: cepIn,
-            rua: ruaIn,
-            numero: numeroIn,
-            complemento: complementoIn,
-            bairro: bairroIn,
-            cidade: cidadeIn,
-            estado: estadoIn,
-
-
-          }
-
-      try {
         axios.post("http://localhost:4000/order", data).then((res) => {
 
           if (res.status === 200) {
+            localStorage.removeItem("cart")
             navigate('/obrigado')
           }
 
         });
-       
-       
-      } catch (error) {
-      }
-
+        
+      
     });
        
-     
-       
-    })
+  
+  
 
 
     const [item, setItem] = useState([])
@@ -286,6 +309,10 @@ const itemComprado=
     return(
         <>
         <HeaderCardapio/>
+
+       {
+          customer!=="" ? <small>Olá {customer}</small>:null
+       }
         {/* section login  */}
         <section id={userLogin}>
 

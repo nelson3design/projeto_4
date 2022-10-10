@@ -88,9 +88,12 @@ router.post('/login', userController.userLogin)
 
 router.get("/user", checkUser);
 
-router.get("/costumer/:id", userController.user);
+ router.post("/costumer", userController.user);
 
 router.post("/order", orderController.order);
-router.get("/email", userController.userEmail);
+
+router.get("/email/:email", userController.userEmail);
+
+router.get("/costumer/order/:idCliente", orderController.customerOrder);
 
 module.exports = router

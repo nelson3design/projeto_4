@@ -3,8 +3,8 @@ import HeaderCardapio from "./headerCardapio"
 import Footer from "./footer"
 import "./style/obrigado.css"
 import { MdCheckCircle } from "react-icons/md";
-
-
+import Cart from "./cart";
+import { CartContext } from "../context/context"
 
 
 export default function Obrigado(){
@@ -30,7 +30,7 @@ export default function Obrigado(){
 
               </div>
           </div>
-
+        <Cart />
           <Footer/>
         </>
     )
