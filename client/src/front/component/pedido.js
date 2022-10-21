@@ -18,7 +18,7 @@ export default function Pedido(){
   var idString= localStorage.getItem("id")
 
   var id = JSON.parse(idString)
-  //var id = "633ee6e683ddc91e8ec44184"
+  
 
   useEffect(() => {
 
@@ -88,10 +88,8 @@ useEffect(()=>{
           navigate('/login')
         }
         
-        
       });
     
-  
   }
  
 
@@ -121,7 +119,7 @@ const handleCancel=(idPedido)=>{
 
  axios.post(url2+"editcancelar-action/"+idPedido).then((response)=>{
     
-    console.log(idPedido)
+  
     listItem()
   })
 }
@@ -137,12 +135,7 @@ const handleRemove=(idPedido)=>{
     });
 }
 }
-  const employees = [
-    { id: 1, name: 'Alice', tasks: ['dev', 'test', 'ship'] },
-    { id: 2, name: 'Bob', tasks: ['design', 'test'] },
-    { id: 3, name: 'Carl', tasks: ['test'] },
-  ];
-     
+  
 
 
     return(
@@ -196,41 +189,64 @@ const handleRemove=(idPedido)=>{
 
             <div>
               {order.map((order, index) => (
-               
-                  order.pedido.map((pedido, index) => (
-                      pedido.carts.map((cart) => (
-                        <div>{cart.nome}</div>
-                      ))
-                    
+                <>
+                 
+                  { order.pedido.map((pedido, index) => (
+                      pedido.itemComprado.map((cart) => (
+                  <>
+                    <img src={url2 + cart.file} alt={url2 + cart.file} />
+                    <div>Nome: {cart.nome}</div>
+                    <div>Categoria: {cart.categoria}</div>
+                    <div>Description: {cart.description}</div>
+                    <div>Quantidade: {cart.qty}</div>
+                    <div>Preço: {cart.preco}</div>
+                  </>
                   ))
 
+                  ))} 
+
+                  {order.pedido.map((pedido, index) => (
+                    pedido.bebidas.map((cart) => (
+                      <>
+                        <img src={url2 + cart.file} alt={url2 + cart.file} />
+                        <div>Nome: {cart.nome}</div>
+                        <div>Categoria: {cart.categoria}</div>
+                        <div>Description: {cart.description}</div>
+                        <div>Quantidade: {cart.qty}</div>
+                        <div>Preço: {cart.preco}</div>
+
+                      </>
+                    ))
+
+                  ))} 
+
+                  {order.pedido.map((pedido, index) => (
+                    pedido.entrega.map((cart) => (
+                      <>
+                        <div>Rua: {cart.rua}</div>
+                        <div>CEP: {cart.cep}</div>
+                        <div>Numero: {cart.numero}</div>
+                        <div>Complemento: {cart.complemento}</div>
+                        <div>Bairro: {cart.bairro}</div>
+                        <div>Cidade: {cart.cidade}</div>
+                        <div>Estado: {cart.estado}</div>
+
+                      </>
+                    ))
+
+                  ))} 
+
+                  {order.pedido.map((pedido, index) => (
+                       
+                  <div>Valor Total: {pedido.valorTotal}</div>
+                  ))} 
+                </>
+
               ))}
             </div>
 
-            <div>
-              {order.map((order, index) => (
+            
 
-                order.pedido.map((pedido, index) => (
-                  pedido.bebidas.map((cart) => (
-                    <div>{cart.nome}</div>
-                  ))
-
-                ))
-
-              ))}
-            </div>
-
-            <div>
-              {order.map((order, index) => (
-
-                order.entrega.map((adress, index) => (
-                 
-                  <div>{adress.rua}</div>
-                 
-                ))
-
-              ))}
-            </div>
          
 
 

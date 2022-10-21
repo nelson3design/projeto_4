@@ -14,10 +14,10 @@ module.exports = {
 
       
 
-        const { idCliente, status, itemComprado, rua, cep,numero,bairro,cidade,estado,complemento } = req.body
+        const { idCliente, status, itemComprado,bebidas,valorTotal, rua, cep,numero,bairro,cidade,estado,complemento } = req.body
 
-        const pedido = itemComprado
-        const entrega = {
+       
+        const entrega = [{
             "rua": rua,
             "cep": cep,
             "numero": numero,
@@ -25,12 +25,13 @@ module.exports = {
             "bairro": bairro,
             "cidade": cidade,
             "estado": estado
-        }
+        }]
+        const pedido = { itemComprado, entrega, bebidas, valorTotal }
       
         try {
            
    
-            await Order.create({ idCliente, status, pedido, entrega })
+            await Order.create({ idCliente, status, pedido })
             res.status(200).json({ msg: 'Product registrado com sucesso' })
 
          

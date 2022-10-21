@@ -153,11 +153,8 @@ useEffect(()=>{
 
 const valorTotal = Number(total + total2).toFixed(2)
 
-const itemComprado={
-    valorTotal: valorTotal,
-    carts,
-    bebidas
-}
+  const itemComprado = carts
+   
 
 
  
@@ -198,6 +195,8 @@ const getId=(()=>{
     idCliente: idCliente,
     status: "pago",
     itemComprado: itemComprado,
+    bebidas: bebidas,
+    valorTotal: valorTotal,
     cep: cepIn,
     rua: ruaIn,
     numero: numeroIn,

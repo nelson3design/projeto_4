@@ -12,11 +12,7 @@ const Pedido = mongoose.model('Pedido', {
     pedido: {
         type: Array,
         default: []
-    },
-    entrega: {
-    type: Array,
-    default: []
-}
+    }
 
 })
 
