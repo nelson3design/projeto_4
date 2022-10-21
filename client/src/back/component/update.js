@@ -7,7 +7,7 @@ import { useParams } from 'react-router-dom';
 
 
 function Update() {
-    const url="http://localhost:5000/"
+    const url="http://localhost:4000/"
    const navigate = useNavigate();
   const [upload, setUpload] = useState("")
   const [nome, setNome] = useState("")
@@ -21,29 +21,28 @@ function Update() {
 
 
   useEffect(()=>{
-    loadName()
+     loadName()
  
  },[])
 
    
 
-
+console.log(id)
 
 const loadName=()=>{
 
-    fetch("http://localhost:5000/edit-action/"+id)
+    fetch("http://localhost:4000/edit/"+id)
     .then(response=> response.json())
     .then(res=>{
        
-         console.log(res[0].image)
-        setUpload(res[0].image)
-        setNome(res[0].nome)
-        setDescription(res[0].description)
-        setPreco(res[0].preco)
-        setCategoria(res[0].categoria)
-        setDestaque(res[0].destaque)
+         console.log(res.file)
+        setUpload(res.file)
+        setNome(res.nome)
+        setDescription(res.description)
+        setPreco(res.preco)
+        setCategoria(res.categoria)
+        setDestaque(res.destaque)
 
-        
     })
             
 }
@@ -61,10 +60,11 @@ const loadName=()=>{
     formdata.append('preco', preco);
     formdata.append('categoria', categoria);
     formdata.append('destaque', destaque);
+    formdata.append('id', id);
 
 
 
-axios.post("http://localhost:5000/edit-action/"+id, formdata,{   
+axios.post("http://localhost:4000/edit-action", formdata,{   
         headers: { "Content-Type": "multipart/form-data" } 
 })
 .then(res => { 

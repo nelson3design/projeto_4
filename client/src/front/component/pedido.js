@@ -190,6 +190,13 @@ const handleRemove=(idPedido)=>{
             <div>
               {order.map((order, index) => (
                 <>
+                  <div>Status: {order.status}</div>
+                  <div>Confirmado: {order.confirmar}</div>
+                  <div>Cancelado: {order.cancelar}</div>
+                  <div>Preparado: {order.preparar}</div>
+                  <div>Terminado: {order.terminar}</div>
+                  <div>Entregado: {order.entregar}</div>
+                  <div>Finalizado: {order.finalizar}</div>
                  
                   { order.pedido.map((pedido, index) => (
                       pedido.itemComprado.map((cart) => (
@@ -244,12 +251,6 @@ const handleRemove=(idPedido)=>{
 
               ))}
             </div>
-
-            
-
-         
-
-
 
      
 </div>

@@ -2,61 +2,59 @@
 import React,{useEffect,useState} from "react"
 import {useNavigate} from 'react-router-dom';
 
-
+import axios from 'axios';
 // import "./style/meusPedidos.css"
 
 export default function Login(){
 
     
     const [nome, setNome]=useState("")
-    const [senha, setSenha]=useState("")
-
-    // if(cpf==""){
-    //     localStorage.removeItem("cpf")
-    //   }
+    const [password, setPassword]=useState("")
 
     const navigate = useNavigate();
 
   
     useEffect(()=>{
-        if(localStorage.getItem('senha')){
+        if (localStorage.getItem('idAdmin')){
             navigate('/admin/dashboard')
         }
 
     },[])
 
 
-    function login(e){
-    e.preventDefault()
-    let item ={nome, senha}
+    function login(e) {
+        e.preventDefault()
+        let item = { nome, password }
 
-    console.log(item)
-   fetch("http://localhost:5000/login",{
-    method:"post",
-    headers:{
-        "Content-type":"application/json",
-        "Accept":"application/jason"
-    },
-    body: JSON.stringify(item)
-   }).then(result=> result.json())
+        if (item.nome === "") {
+            console.log('user é obrigatorio')
 
-    .then(result=>{
-     
-            
-            localStorage.setItem("senha",JSON.stringify(result[0].senha))
-            navigate('/admin/dashboard')
-         
-            console.log(result)
-            if(result===400){
-                console.log(result)
-            }
-            console.log(result)
-            
-        
-    })  
-   
+        } else if (item.password === "") {
+            console.log('password é obrigatorio')
 
-   }
+        }
+        else {
+
+            axios.post("http://localhost:4000/admin/login", item).then((res) => {
+
+
+                try {
+
+                    localStorage.setItem("tokenAdmin", JSON.stringify(res.data.token));
+                    localStorage.setItem("idAdmin", JSON.stringify(res.data.id));
+                    navigate('/admin/dashboard')
+                
+                    console.log(item)
+                } catch (error) {
+                    console.log(error)
+
+                }
+
+            });
+        }
+
+
+    }
 
 
     return(
@@ -71,12 +69,12 @@ export default function Login(){
                 <form onSubmit={login}>
                 <div className="formItens">
                   <div>
-                    <label>nome</label>
+                    <label>usuário</label>
                     <input type="text" value={nome} onChange={(e)=>setNome(e.target.value)}/>
                    </div>
                 <div>
                     <label>senha</label>               
-                    <input type="password" value={senha} onChange={(e)=>setSenha(e.target.value)}/>
+                     <input type="password" value={password} onChange={(e) => setPassword(e.target.value)}/>
                 </div>
                 </div>
              

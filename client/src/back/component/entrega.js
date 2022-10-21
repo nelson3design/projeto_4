@@ -1,116 +1,169 @@
-
-import React,{useEffect,useState} from "react";
+import React, { useEffect, useState } from "react";
 import axios from "axios"
 import HeaderPedido from "./headerPedido"
-
+import { useNavigate } from 'react-router-dom';
 import "../styles/links.css"
 
-import Footer from "./footer";
-export default function Entrega(){
-
-  
-  const [item, setItem] = useState([])
-  const url="http://localhost:5000/pedidoterminar/"
-  const url2="http://localhost:5000/"
-
-  var cpfstring= localStorage.getItem("senha")
-
-  var senha= cpfstring.slice(1,-1)
+import "../styles/ativos.css"
 
 
-  useEffect(()=>{
 
+export default function Entrega() {
+  const navigate = useNavigate();
 
-      listItem()
-       
-    },[])
+  const [order, setIOrder] = useState([])
 
-    const listItem=()=>{
-      axios.get(`${url}${senha}`).then((response) => {
-          setItem(response.data);
-          
-      });
+  const url2 = "http://localhost:4000/"
+
+  useEffect(() => {
+    if (localStorage.getItem("idAdmin")) {
+      //navigate('/admin/andamento')
+    } else {
+      navigate('/admin/login')
     }
+    listItem()
 
-const handleEntregar=(idPedido)=>{
-      
+  }, [])
 
-  axios.post(url2+"editsair-action/"+idPedido).then((response)=>{
-        console.log(response)
+
+
+  const listItem = () => {
+    axios.get("http://localhost:4000/order/entregado").then((response) => {
+      setIOrder(response.data);
+      console.log(response.data)
+
+    });
+  }
+
+  //   console.log(item[0].idPedido)
+
+
+
+  const handleEntregar = (_id) => {
+    var id = {
+      id: _id
+    }
+    axios.post(url2+"entregar/",id).then((response)=>{
+     
+      listItem()
+    })
+  }
+  const handleFinalizar = (_id) => {
+    var id = {
+      id: _id
+    }
+    axios.post(url2+"finalizar/",id).then((response)=>{
+       
         listItem()
       })
-}
+  }
 
 
-const handleFinalizar=(idPedido)=>{
-  axios.post(url2+"editfinalizar-action/"+idPedido).then((response)=>{
-    console.log("nelson")
-    listItem()
-  })
-}
+  return (
+    <>
+      <HeaderPedido />
 
+      <div className="baseContent">
 
-
-    return(
-        <>
-        <HeaderPedido/>
-
-        <div className="baseContent">
         <div className="links">
-        <ul className="linkContent">
-          <li><a href="/admin/dashboard/andamento">em aberto</a></li>
-          <li><a href="/admin/dashboard/preparo">em preparo</a></li>
-          <li className="ativo"><a href="/admin/dashboard/entrega">em entrega</a></li>
-          <li><a href="/admin/dashboard/historico">históricos</a></li>
-         
-        </ul>
+          <ul className="linkContent">
+            <li><a href="/admin/dashboard/andamento">em aberto</a></li>
+            <li><a href="/admin/dashboard/preparo">em preparo</a></li>
+            <li className="ativo"><a href="/admin/dashboard/entrega">em entrega</a></li>
+            <li><a href="/admin/dashboard/historico">históricos</a></li>
+
+          </ul>
         </div>
 
-     
 
         <section className="baseItens">
 
-{
-         
-         item && item.map((dados)=>(
-         <>
-         
 
+          <>
 
-   <div className="caixa">
-       <div className="caixaImg">
-           <img src={url2+dados.image} alt={dados.image}/>
-       </div>
-       <div className="descrip">{dados.description.slice(0,40)+"..."}</div>
-       <div className="info">
-                <div><span>Pedido:</span> <span>{dados.pedido}</span></div>
-                <div><span>Nome:</span> <span>{dados.nome}</span></div>
-                <div><span>Valor:</span> <span>R$ {dados.valorTotal}</span></div>
-                <div><span>Bebida:</span> <span>{dados.bebida}</span></div>
-                <div><span>Cliente:</span> <span>{dados.nomeCliente}</span></div>
-           <div>
-               <span>Endereço:</span> 
-           </div>
-           <p className="endereco">{dados.rua.slice(0,15)+"..."}, {dados.cidade}, {dados.numero}, {dados.cep}</p>
+            <div className="caixa">
 
-       </div>
+              <div>
+                {order.map((order, index) => (
+                  <>
+                    <div>Status: {order.status}</div>
+                    <div>Confirmado: {order.confirmar}</div>
+                    <div>Cancelado: {order.cancelar}</div>
+                    <div>Preparado: {order.preparar}</div>
+                    <div>Terminado: {order.terminar}</div>
+                    <div>Entregado: {order.entregar}</div>
+                    <div>Finalizado: {order.finalizar}</div>
 
-       <div className="btns">
-        {dados.entregar==="off"? <button className="preparar" onClick={()=>handleEntregar(dados.idPedido)}>entregar</button> : <button className="terminar" onClick={()=>handleFinalizar(dados.idPedido)}>finalizar</button>}
-           
-           
-       </div>
+                    {order.pedido.map((pedido, index) => (
+                      pedido.itemComprado.map((cart) => (
+                        <>
+                          <img src={url2 + cart.file} alt={url2 + cart.file} />
+                          <div>Nome: {cart.nome}</div>
+                          <div>Categoria: {cart.categoria}</div>
+                          <div>Description: {cart.description}</div>
+                          <div>Quantidade: {cart.qty}</div>
+                          <div>Preço: {cart.preco}</div>
+                        </>
+                      ))
 
-   </div>
-   </>
-       ))
-         }
-</section>
+                    ))}
 
+                    {order.pedido.map((pedido, index) => (
+                      pedido.bebidas.map((cart) => (
+                        <>
+                          <img src={url2 + cart.file} alt={url2 + cart.file} />
+                          <div>Nome: {cart.nome}</div>
+                          <div>Categoria: {cart.categoria}</div>
+                          <div>Description: {cart.description}</div>
+                          <div>Quantidade: {cart.qty}</div>
+                          <div>Preço: {cart.preco}</div>
+
+                        </>
+                      ))
+
+                    ))}
+
+                    {order.pedido.map((pedido, index) => (
+                      pedido.entrega.map((cart) => (
+                        <>
+                          <div>Rua: {cart.rua}</div>
+                          <div>CEP: {cart.cep}</div>
+                          <div>Numero: {cart.numero}</div>
+                          <div>Complemento: {cart.complemento}</div>
+                          <div>Bairro: {cart.bairro}</div>
+                          <div>Cidade: {cart.cidade}</div>
+                          <div>Estado: {cart.estado}</div>
+
+                        </>
+                      ))
+
+                    ))}
+
+                    {order.pedido.map((pedido, index) => (
+
+                      <div>Valor Total: {pedido.valorTotal}</div>
+                    ))}
+
+                    <div className="btns">
+                      <button className="confirmar" onClick={() => handleEntregar(order._id)}>entregar</button>
+                      <button className="cancelar" onClick={() => handleFinalizar(order._id)}>finalizar</button>
+                    </div>
+                  </>
+
+                ))}
+              </div>
+
+             
+
+            </div>
+
+          </>
+
+        </section>
 
       </div>
-        
-      {/* <Footer/> */}
-        </>
-    )
+
+    </>
+  )
 }
+

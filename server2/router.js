@@ -3,10 +3,12 @@ require('dotenv').config()
 const router = express.Router()
 const productController = require('./controllers/productController')
 const userController = require('./controllers/userController')
+const userAdminController = require('./controllers/userAdminController')
 const orderController = require('./controllers/orderController')
 const User = require('./models/userModel')
 const path = require('path')
 const { checkUser } = require("./middlewares/authMiddleware");
+const { checkUserAdmin } = require("./middlewares/authAdminMiddleware");
 
 const multer = require('multer')
 const bcrypt = require('bcrypt')
@@ -73,6 +75,7 @@ router.get('/product/:id', productController.oneProduct)
 router.get('/edit/:id', productController.edit)
 router.post('/edit-action', upload.single('upload'), productController.editAction)
 router.get('/delete/:id', productController.deleteProduct)
+router.get('/item/:q', productController.searchProduct)
 
 
 router.get('/hamburguer', productController.hamburguer)
@@ -80,20 +83,38 @@ router.get('/pizza', productController.pizza)
 router.get('/bebidas', productController.bebidas)
 router.get('/destaque', productController.destaque)
 
+
+
 // cadastrar usuário
 router.post('/register', userController.userRegister)
-
-
 router.post('/login', userController.userLogin)
-
 router.get("/user", checkUser);
+// cadastrar usuário admin
+router.post('/admin/register', userAdminController.userAdminRegister)
+router.post('/admin/login', userAdminController.userAdminLogin)
+//router.post("/admin/user", checkUserAdmin);
 
- router.post("/costumer", userController.user);
+router.post("/admin/user", userAdminController.userAdmin);
 
+
+router.post("/costumer", userController.user);
 router.post("/order", orderController.order);
-
 router.get("/email/:email", userController.userEmail);
 
 router.get("/costumer/order/:idCliente", orderController.customerOrder);
+
+router.get('/orders', orderController.allOrder)
+router.post('/confirmar', orderController.confirmar)
+router.post('/cancelar', orderController.cancelar)
+router.post('/preparar', orderController.preparar)
+router.post('/terminar', orderController.terminar)
+router.post('/entregar', orderController.entregar)
+router.post('/finalizar', orderController.finalizar)
+
+
+router.get('/order/ativo', orderController.orderActive)
+router.get('/order/preparado', orderController.orderPreparar)
+router.get('/order/entregado', orderController.orderEntregar)
+router.get('/order/finalizado', orderController.orderFinalizar)
 
 module.exports = router

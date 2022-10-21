@@ -15,87 +15,104 @@ function List(){
 
     const [item, setItem] = useState([])
     const [value, setValue] = useState([])
+     const [user, setUser] = useState([])
 
-    const url="http://localhost:5000/"
-    const url2="http://localhost:5000/login/"
+    const url="http://localhost:4000/"
+ 
 
-    var cpfstring= localStorage.getItem("senha")
+    var idstring= localStorage.getItem("idAdmin")
 
-  var senha= cpfstring.slice(1,-1)
+  var idAdmin = JSON.parse(idstring)
 
   useEffect(()=>{
-    if(localStorage.length < 0){
-        navigate('/admin/login')
+    if(localStorage.getItem("idAdmin")){
+       navigate('/admin/dashboard')
+    }else{
+      navigate('/admin/login')
     }
 
 },[])
 
   
-console.log(senha)
+
+  var idUser={
+    id: idAdmin
+  }
 
     useEffect(()=>{
 
         listItem()
+      userAdmin()
          
       },[])
 
-      const listItem=()=>{
-        axios.get(`${url2}${senha}`).then((response) => {
-            setItem(response.data);
+      const userAdmin=()=>{
+        axios.post("http://localhost:4000/admin/user", idUser).then((res) => {
+            setUser(res.data.user);
+            console.log(res.data)
             
         });
       }
 
+      const listItem = () => {
+        axios.get("http://localhost:4000/").then((res) => {
+          setItem(res.data);
+          console.log(res.data)
 
-      const handleSearch= async (e)=>{
-        e.preventDefault()
-         return await axios 
-         .get(`http://localhost:5000/item/?q=${value}`)
-         .then((response)=>{
-          setItem(response.data)
-      
-            setValue("")
-      
-         })
-        
-    }
+        });
+      }
 
 
+const handleSearch= async (e)=>{
+  e.preventDefault()
+    return await axios 
+    .get(`http://localhost:4000/item/${value}`)
+    .then((response)=>{
+      console.log(response.data)
+    setItem(response.data)
+
+      setValue("")
+
+
+
+    })
   
-
-       const handleRemove=(id)=>{
-        if(window.confirm('tem certeza de excluir esse usuáorio')){
-            axios.delete(`${url}delete-action/${id}`).then((response) => {
-               
-                listItem()
-               
-            });
-        }
-   }
-
-
-       // paginação
-
-       const [itensPerPage, setItensPerPage]=useState(8)
-
-       const [currentPage, setCurrentPage]=useState(0)
-
-
-       const pages= Math.ceil(item.length / itensPerPage)
-       const startIndex= currentPage * itensPerPage
-       const endIndex= startIndex + itensPerPage
-       const currentItens = item.slice(startIndex,endIndex)
-
-
-
-       const [logout, setLogout]= useState(false)
-
-if(senha===""){
-  localStorage.removeItem("senha")
 }
 
+
+const handleRemove=(id)=>{
+  console.log(id)
+if(window.confirm('tem certeza de excluir esse usuáorio')){
+  axios.get("http://localhost:4000/delete/"+id).then((response) => {
+        
+        listItem()
+        
+    });
+}
+}
+
+
+// paginação
+
+const [itensPerPage, setItensPerPage]=useState(8)
+
+const [currentPage, setCurrentPage]=useState(0)
+
+
+const pages= Math.ceil(item.length / itensPerPage)
+const startIndex= currentPage * itensPerPage
+const endIndex= startIndex + itensPerPage
+const currentItens = item.slice(startIndex,endIndex)
+
+
+
+const [logout, setLogout]= useState(false)
+
+
+
+
 if(logout){
-  localStorage.removeItem("senha")
+  localStorage.removeItem("idAdmin")
   navigate('/admin/login')
 }
 
@@ -105,19 +122,19 @@ const handlelogout =()=>{
 
 
 
-       const [profile , setProfile]= useState(false)
+  const [profile , setProfile]= useState(false)
 
-       let className='profileContentUser'
-     
-       if(!profile){
-           className = "hideProfileContent"
-       }
-     
-     
-       const handleShow = ()=>{
-         setProfile(!profile)
-       }
-     
+  let className='profileContentUser'
+
+  if(!profile){
+      className = "hideProfileContent"
+  }
+
+
+  const handleShow = ()=>{
+    setProfile(!profile)
+  }
+
 
     return(
         <>
@@ -127,21 +144,19 @@ const handlelogout =()=>{
 
         <div className="infoClienteMobile">
      
-     {
+     
             
-            item && item.slice(-1).map((dados)=>(
+            
               <div>
 
               <div className="profile profileUser">
-              <div className="avatar"><FaUserCircle className="iconProfile"/> <span>{dados.nomeUser}</span></div> <FaCaretDown onClick={handleShow} style={{cursor: "pointer"}}/>
+              <div className="avatar"><FaUserCircle className="iconProfile"/> <span>{user.nome}</span></div> <FaCaretDown onClick={handleShow} style={{cursor: "pointer"}}/>
               </div>
 
-             
-            
                
                <div className={className}>
          
-                <div className="profileItem"><div>Nome: </div><span>{dados.nomeUser}</span></div>
+                <div className="profileItem"><div>Nome: </div><span>{user.nome}</span></div>
                 
                  <div onClick={handlelogout} className="sair">Sair</div>
                </div>
@@ -149,8 +164,8 @@ const handlelogout =()=>{
 
                </div>
      
-          ))
-            }
+          
+            
      </div>
 
         
@@ -184,20 +199,20 @@ const handlelogout =()=>{
               currentItens && currentItens.map((dados)=>(
                     
                      <tr key={dados.id}>  
-                    <td data-label="Imagem"><img src={url+dados.image} width="60px" alt=""/></td>
+                    <td data-label="Imagem"><img src={url+dados.file} width="60px" alt=""/></td>
                     <td className="Nome" data-label="Nome">{dados.nome}</td>
-                    <td className="Description" data-label="Description">{dados.description.length < "30" ? dados.description: dados.description.slice(0,25)+"..." }</td>
+                    <td className="Description" data-label="Description">{dados.description.length < "30" ? dados.description: dados.description.slice(0,30)+"..."}</td>
                     <td data-label="Preço">{"R$ "+dados.preco}</td>
                     <td className="Categoria" data-label="Categoria">{dados.categoria}</td>
                     <td data-label="Destaque">{dados.destaque}</td>
 
                     <td data-label="Ações" className="action">
-                        <Link to={`/admin/dashboard/update/${dados.id}`}>
+                        <Link to={`/admin/dashboard/update/${dados._id}`}>
                            <button className="btnAtion1 btnAtion">Editar</button>
                         </Link>
                 
                        
-                        <button onClick={()=>handleRemove(dados.id)} className="btnAtion2 btnAtion">Excluir</button>
+                        <button onClick={()=>handleRemove(dados._id)} className="btnAtion2 btnAtion">Excluir</button>
                     </td>
                 </tr>
             ))

@@ -1,7 +1,7 @@
 import React,{useEffect,useState} from "react";
 import axios from "axios"
 import HeaderPedido from "./headerPedido"
-
+import { useNavigate } from 'react-router-dom';
 import "../styles/links.css"
 
 import "../styles/ativos.css"
@@ -9,46 +9,56 @@ import "../styles/ativos.css"
 
 
 export default function Ativos(){
+    const navigate = useNavigate();
 
-    const [item, setItem] = useState([])
-    const url="http://localhost:5000/pedidoandamento/"
-    const url2="http://localhost:5000/"
+  const [order, setIOrder] = useState([])
+    const url="http://localhost:4000/active"
+    const url2="http://localhost:4000/"
 
-    var cpfstring= localStorage.getItem("senha")
+  useEffect(() => {
+    if (localStorage.getItem("idAdmin")) {
+      //navigate('/admin/andamento')
+    } else {
+      navigate('/admin/login')
+    }
+    listItem()
 
-  var senha= cpfstring.slice(1,-1)
+  }, [])
 
 
-    useEffect(()=>{
+
+  const listItem=()=>{
+    axios.get("http://localhost:4000/order/ativo").then((response) => {
+      setIOrder(response.data);
+        console.log(response.data)
+        
+    });
+  }
+
+
+
+
+
+const handleConfirm=(_id)=>{
+var id={
+  id:_id
+}
   
-
-        listItem()
-         
-      },[])
-
-      const listItem=()=>{
-        axios.get(`${url}${senha}`).then((response) => {
-            setItem(response.data);
-            console.log(response.data.length)
-            
-        });
-      }
-    //   console.log(item[0].idPedido)
-
-   const handleConfirm=(idPedido)=>{
-      
-
-          axios.post(url2+"editconfim-action/"+idPedido).then((response)=>{
-            console.log(response)
-            listItem()
-          })
-   }
-   const handleCancel=(idPedido)=>{
+axios.post(url2+"confirmar/",id).then((response)=>{
+  
+  listItem()
+})
+}
    
-    axios.post(url2+"editcancelar-action/"+idPedido).then((response)=>{
-        console.log(response)
-        listItem()
-      })
+const handleCancel=(_id)=>{
+  var id = {
+    id: _id
+  }
+
+axios.post(url2+"cancelar/",id).then((response)=>{
+    
+    listItem()
+  })
 }
 
 
@@ -69,42 +79,93 @@ export default function Ativos(){
       </div>
        
       
-     <section className="baseItens">
+      <section className="baseItens">
 
-     {
-              item && item.map((dados)=>(
+    
                 <>
              
         <div className="caixa">
-            <div className="caixaImg">
-            <img src={url2+dados.image} alt={dados.image}/>
-            </div>
-            <div className="descrip">{dados.description.slice(0,40)+"..."}</div>
-            <div className="info">
-                <div><span>Pedido:</span> <span>{dados.pedido}</span></div>
-                <div><span>Nome:</span> <span>{dados.nome}</span></div>
-                <div><span>Valor:</span> <span>R$ {dados.valorTotal}</span></div>
-                <div><span>Bebida:</span> <span>{dados.bebida}</span></div>
-                <div><span>Cliente:</span> <span>{dados.nomeCliente}</span></div>
-                <div>
-                    <span>Endereço:</span> 
-                </div>
-                <p className="endereco">{dados.rua.slice(0,15)+"..."}, {dados.cidade}, {dados.numero}, {dados.cep}</p>
-
-            </div>
-             
             
-            <div className="btns">
-                <button className="confirmar" onClick={()=>handleConfirm(dados.idPedido)}>confirmar</button>
-                <button className="cancelar" onClick={()=>handleCancel(dados.idPedido)}>cancelar</button>
-            </div>
+                <div>
+                  {order.map((order, index) => (
+                    <>
+                      <div>Id: {order._id}</div>
+                      <div>Status: {order.status}</div>
+                      <div>Confirmado: {order.confirmar}</div>
+                      <div>Cancelado: {order.cancelar}</div>
+                      <div>Preparado: {order.preparar}</div>
+                      <div>Terminado: {order.terminar}</div>
+                      <div>Entregado: {order.entregar}</div>
+                      <div>Finalizado: {order.finalizar}</div>
+
+                      {order.pedido.map((pedido, index) => (
+                        pedido.itemComprado.map((cart) => (
+                          <>
+                            <img src={url2 + cart.file} alt={url2 + cart.file} />
+                            <div>Nome: {cart.nome}</div>
+                            <div>Categoria: {cart.categoria}</div>
+                            <div>Description: {cart.description}</div>
+                            <div>Quantidade: {cart.qty}</div>
+                            <div>Preço: {cart.preco}</div>
+                          </>
+                        ))
+
+                      ))}
+
+                      {order.pedido.map((pedido, index) => (
+                        pedido.bebidas.map((cart) => (
+                          <>
+                            <img src={url2 + cart.file} alt={url2 + cart.file} />
+                            <div>Nome: {cart.nome}</div>
+                            <div>Categoria: {cart.categoria}</div>
+                            <div>Description: {cart.description}</div>
+                            <div>Quantidade: {cart.qty}</div>
+                            <div>Preço: {cart.preco}</div>
+
+                          </>
+                        ))
+
+                      ))}
+
+                      {order.pedido.map((pedido, index) => (
+                        pedido.entrega.map((cart) => (
+                          <>
+                            <div>Rua: {cart.rua}</div>
+                            <div>CEP: {cart.cep}</div>
+                            <div>Numero: {cart.numero}</div>
+                            <div>Complemento: {cart.complemento}</div>
+                            <div>Bairro: {cart.bairro}</div>
+                            <div>Cidade: {cart.cidade}</div>
+                            <div>Estado: {cart.estado}</div>
+
+                          </>
+                        ))
+
+                      ))}
+
+                      {order.pedido.map((pedido, index) => (
+
+                        <div>Valor Total: {pedido.valorTotal}</div>
+                      ))}
+
+
+                    <div className="btns">
+                        <button className="confirmar" onClick={()=>handleConfirm(order._id)}>confirmar</button>
+                        <button className="cancelar" onClick={()=>handleCancel(order._d)}>cancelar</button>
+                    </div>
+                    </>
+
+                  ))}
+
+
+                </div>
+            
 
         </div>
 
         </>
-            ))
-              }
-     </section>
+            
+     </section> 
 
         </div>
       

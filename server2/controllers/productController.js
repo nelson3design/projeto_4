@@ -9,10 +9,11 @@ module.exports = {
 
 
     async createProduct(req, res) {
+        console.log(req.body)
        
         try {
             const { nome, description, preco, categoria, destaque } = req.body
-            const file = req.file.filename       
+             const file = req.file.filename       
           
             if (!nome) {
                 res.status(422).json({ msg: 'o nome é obrigatorio' })
@@ -24,9 +25,9 @@ module.exports = {
                 res.status(422).json({ msg: 'Produto já existe, por favor use um outro Produto' })
             }
             const product = await Product.create({ file, nome, description, preco, categoria,destaque })
-           // res.status(200).json({ msg: 'Product registrado com sucesso' })
+            res.status(200).json({ msg: 'Product registrado com sucesso' })
 
-            res.redirect('/')
+           // res.redirect('/')
 
         } catch (error) {
             res.status(400).send(error);
@@ -38,8 +39,8 @@ module.exports = {
     async allProduct(req, res) {
         try {
             const products = await Product.find()
-            //return res.status(200).json(products)
-           res.render('index', { products })
+            return res.status(200).json(products)
+           //res.render('index', { products })
         } catch (error) {
             console.log(error)
         }
@@ -51,6 +52,19 @@ module.exports = {
         try {
             const { id } = req.params
             const product = await Product.findById(id)
+            return res.status(200).json(product)
+            // res.render('index', { products })
+
+        } catch (error) {
+            console.log(error)
+        }
+    },
+
+    // lista 1 producto
+    async searchProduct(req, res) {
+        try {
+            const { q } = req.params
+            const product = await Product.find({ nome: { $regex: q, $options: 'i' } });
             return res.status(200).json(product)
             // res.render('index', { products })
 
@@ -120,8 +134,8 @@ module.exports = {
         try {
             const { id } = req.params
             const product = await Product.findById(id)
-            // return res.render(product)
-              res.render('edit', { product })
+            res.status(200).json(product)
+              //res.render('edit', { product })
 
         } catch (error) {
             console.log(error)
@@ -129,11 +143,12 @@ module.exports = {
     },
 
     async editAction(req, res) {
+       
         try {
             //    const { id } = req.params
             const { id, nome, description, preco, categoria, destaque } = req.body
 
-
+      
             const product = await Product.findById(id)
             if (!product) {
                 res.status(400).json({ msg: "Produto não esta resgistrado no nosso banco de dados" })
@@ -146,8 +161,8 @@ module.exports = {
 
 
                 await product.updateOne({ oldImage, nome, description, preco, categoria, destaque })
-               // return res.status(200).json({ msg: 'Produto editado com sucesso!' })
-              res.redirect('/')
+               return res.status(200).json({ msg: 'Produto editado com sucesso!' })
+              //res.redirect('/')
             } else {
 
 
@@ -159,17 +174,15 @@ module.exports = {
                         const file = req.file.filename
 
                         Promise.resolve(product.updateOne({ file, nome, description, preco, categoria, destaque }))
-                        res.redirect('/')
+                        return res.status(200).json({ msg: 'Produto editado com sucesso!' })
+                       // res.redirect('/')
 
                     }
                 })
 
             }
 
-            // await contact.updateOne({name,email})
-            //    return res.status(200).json({msg:'contato editado com sucesso!'})
-
-            //  res.redirect('/')
+           
 
             return res.status(200).json({ msg: 'Produto editado com sucesso!' })
 
@@ -212,6 +225,9 @@ module.exports = {
         }
     },
 
+    // lista categoria hamburguer
+
+   
     
 }
 

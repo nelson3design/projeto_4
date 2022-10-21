@@ -59,7 +59,8 @@ function App() {
           <Route path="/admin/login" element={<LoginBack />}></Route> 
          <Route path="/admin/dashboard" element={<BackList/>}></Route> 
          <Route path="/admin/dashboard/create" element={<BackCreate/>}></Route>
-         <Route path="/admin/dashboard/update/:id" element={<BackUpdate/>}></Route>  
+         <Route path="/admin/dashboard/update/:id" element={<BackUpdate/>}></Route>
+           
          <Route path="/admin/dashboard/andamento" element={<Ativos/>}></Route>  
          <Route path="/admin/dashboard/preparo" element={<Preparo/>}></Route>  
          <Route path="/admin/dashboard/entrega" element={<Entrega/>}></Route>  

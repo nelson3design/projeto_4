@@ -9,6 +9,34 @@ const Pedido = mongoose.model('Pedido', {
         type: String,
         require: true
     },
+    confirmar: {
+    type: String,
+    default: "off"
+    },
+    cancelar: {
+    type: String,
+    default: "off"
+    },
+    preparar: {
+        type: String,
+        default: "off"
+    },
+    terminar: {
+        type: String,
+        default: "off"
+    },
+    entregar: {
+        type: String,
+        default:"off"
+    },
+    finalizar: {
+        type: String,
+        default: "off"
+    },
+    data: {
+        type: Date,
+        default: Date.now()
+    },
     pedido: {
         type: Array,
         default: []
