@@ -141,10 +141,10 @@ const handleRemove=(idPedido)=>{
     return(
 
        <>
-    
+        
 
         <HeaderPedido/>
-
+       
        <div className="baseContent">
 
         <div className="links pedidoBase1">
@@ -184,19 +184,20 @@ const handleRemove=(idPedido)=>{
        
           
        </div>
-
-
-
+            
+         
             <div>
               {order.map((order, index) => (
                 <>
-                  <div>Status: {order.status}</div>
-                  <div>Confirmado: {order.confirmar}</div>
-                  <div>Cancelado: {order.cancelar}</div>
-                  <div>Preparado: {order.preparar}</div>
-                  <div>Terminado: {order.terminar}</div>
-                  <div>Entregado: {order.entregar}</div>
-                  <div>Finalizado: {order.finalizar}</div>
+                  {order.confirmar === "off" ? <div className="entregado">Pedido precessando: <span><ThreeDots color="#00BFFF" height={30} width={30} /></span></div> : null}
+                  {order.confirmar === "on" ? <div className="entregado">Confirmado: <MdDone /></div> : null}
+                  {order.confirmar === "off" && order.cancelar === "on" ? <div className="entregado">Cancelado: <MdDone /></div> : null}
+                  {order.preparar === "on" && order.terminar === "off" ? <div className="entregado">Preparando: <span><ThreeDots color="#00BFFF" height={30} width={30} /></span></div> : null}
+                  {order.preparar === "on" && order.terminar === "on" && order.entregar === "off" ? <div className="entregado">Preparado: <span><MdDone /></span></div> : null}
+                  {order.terminar === "on" && order.entregar === "on" && order.finalizar === "off" ? <div className="entregado">Pedido a caminho: <span><ThreeDots color="#00BFFF" height={30} width={30} /></span></div> : null}
+                  {order.terminar === "on" && order.entregar === "on" && order.finalizar === "on" ? <div className="entregado">Pedido concluido: <MdDone /></div> : null}
+                 
+                  
                  
                   { order.pedido.map((pedido, index) => (
                       pedido.itemComprado.map((cart) => (
