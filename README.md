@@ -1,9 +1,10 @@
 # projeto_4 do curso full_stack da escola Toti
 # Cardápio digital
-# Esse projeto foi criado com nodejs, express, mysql, react
+# Esse projeto foi criado com nodejs, express, mysql,mongpDb react,
+# o projeto tem 2 servidor, um usando Mysql e o outro usando MongoDb, mas o Projeto front esta usando o server2 
 
 # a parte de front foi criado com react, tem uma parte administrativo onde o administrador conseguir ver os pedidos feitos lá no site, pode confirmar, marcar como  preparado, como entregado e como finalizado.
-# para acessar a parte administrativo /admin/login, precisar colocar esses dados nos campos, nome:menu , senha: projeto4
+# para acessar a parte administrativo /admin/login, precisar colocar esses dados nos campos, user:nelson , password: 123456
 
 
 ![img-1](https://user-images.githubusercontent.com/79728556/183070403-311859a6-5499-4c34-91d2-4cc231c48998.png)
