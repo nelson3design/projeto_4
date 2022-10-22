@@ -45,7 +45,7 @@ export default function Cart(props) {
                                         <div className="name">{data.nome}</div>
                                         <div className="preco">{data.qty} x {data.preco}</div>
                                         <div><button onClick={(e) => handleDelete(data)}>-</button> <button onClick={(e) => handleAdd(data)}>+</button></div>
-                                        <button onClick={(e) => handleRemove(data.id)}>Remover item</button>
+                                        <button onClick={(e) => handleRemove(data._id)}>Remover item</button>
 
                                     </div>
 

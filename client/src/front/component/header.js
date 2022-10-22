@@ -150,7 +150,7 @@ const url="http://localhost:5000/"
                     <li className="ative"><a href="http://localhost:3000/"><MdStarOutline className="star"/> <span>destaques</span></a></li>
                     <li><a href="http://localhost:3000/cardapio"><MdOutlineRestaurant/> <span>cardápio</span></a></li>
                   
-              <li><a href="http://localhost:3000/login"><FaUserAlt /> <small className={user}>Entrar</small><small className={userName} id="username">{item2.nome}</small></a></li>
+                     <li><a href="http://localhost:3000/login"><FaUserAlt /> <small className={user}>Entrar</small><small className={userName} id="username">{item2.nome}</small></a></li>
                     <li><a><div className="baseCart" onClick={handleCart}><FaShoppingCart /> <small className="cartCount">{carts.length}</small></div></a></li>
                    
                     

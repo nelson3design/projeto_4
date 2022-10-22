@@ -5,7 +5,7 @@ import "./style/cardapio.css"
 import { Link } from "react-router-dom";
 import Footer from "./footer";
 import { CartContext } from "../context/context"
-
+import { FaShoppingCart } from "react-icons/fa";
 
 import Cart from "./cart";
 
@@ -78,7 +78,16 @@ export default function Pizza(){
               </section>
               </div>
         <Cart />
-              <Footer/>
+        <Footer/>
+
+        <div className="cartFloat">
+          <div className="baseCartFloat" onClick={handleCart}>
+            <div className="base_cart">
+              <div className="cart_float"><FaShoppingCart className="cart_icon" /></div>
+              <small className="count_float"><div className="cartLength">{carts.length}</div></small>
+            </div>
+          </div>
+        </div>
         </>
     )
 }

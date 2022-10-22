@@ -96,25 +96,21 @@ export default function Carrossel() {
               item && item.map((dados)=>(
                 <SwiperSlide>
                       {/* <Link to={`/comprar/${dados.id}`} style={{textDecoration: "none"}} className="linkHover"> */}
-              <div className="cardBase">
-            <div className="cardImg">
-                <img src={url2+dados.file} alt={url2+dados.file}/>
-                <h3>{dados.nome}</h3>
+            <div className="cardBase">
+                <div className="cardImg">
+                    <img src={url2+dados.file} alt={url2+dados.file}/>
+                    <h3>{dados.nome}</h3>
 
-            </div>
-
-             <div className="cardText">
-                {/* <div className="texts">{dados.description.slice(0,50)+"..."}</div> */}
-                 <div className="texts">{dados.description.length < "30" ? dados.description: dados.description.slice(0,60)+"..." }</div>
-                <div className="cardPreco">
-                    <div className="preco">R$ {dados.preco}</div>
-                   
-                      <div className="btn" onClick={(e) => handleAdd(dados)}><span>adicione ao carrinho</span></div>
                 </div>
-                
-            </div>
 
-        </div>
+                <div className="cardText">               
+                    <div className="texts">{dados.description.length < "30" ? dados.description: dados.description.slice(0,60)+"..." }</div>
+                    <div className="cardPreco">
+                      <div className="preco">R$ {dados.preco}</div>
+                      <div className="btn" onClick={(e) => handleAdd(dados)}><span>comprar</span></div>
+                    </div>               
+                </div>
+             </div>
                 {/* </Link> */}
         </SwiperSlide>
             ))

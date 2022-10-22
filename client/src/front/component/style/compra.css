@@ -1,6 +1,8 @@
 
 #showUserOrder{
     display: grid!important;
+    place-items: center;
+    margin: 50px 0;
 }
 #hideUserOrder {
     display: none!important;
@@ -37,7 +39,7 @@
 .formInput {
     width: 100%;
     display: flex;
-    gap: 50px;
+    gap: 10%;
 }
 
 .compraFormContent input {
@@ -264,9 +266,11 @@
 }
 
 .titleCompra {
-    color: #14171f;
+    color: white;
     font-weight: 700;
     font-size: 17px;
+    text-align: start;
+    margin-bottom: 10px;
 }
 
 

@@ -48,10 +48,10 @@ export const CartProvider = ({ children }) => {
 
 
 
-    function handleRemove(id) {
+    function handleRemove(_id) {
 
 
-        const filterItem = carts.filter(index => index.id !== id)
+        const filterItem = carts.filter(index => index._id !== _id)
         setCarts(filterItem)
 
 

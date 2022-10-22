@@ -23,7 +23,7 @@ import Cardapio from "./front/component/cardapio";
 import Pizza  from "./front/component/pizza";
 import Bebidas from "./front/component/bebidas";
 
-import Obrigado from "./front/component/abrigado";
+import Obrigado from "./front/component/obrigado";
 import Pedido from "./front/component/pedido";
 
 import User from "./front/component/user";

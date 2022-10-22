@@ -8,7 +8,7 @@ import "./style/pedido.css"
 import { FaUserCircle,FaCaretDown } from "react-icons/fa";
 import {useNavigate} from 'react-router-dom';
 import Cart from "./cart";
-
+import "./style/order.css"
 
 
 export default function Pedido(){
@@ -186,28 +186,71 @@ const handleRemove=(idPedido)=>{
        </div>
             
          
-            <div>
+            <div className="orders">
               {order.map((order, index) => (
                 <>
-                  {order.confirmar === "off" ? <div className="entregado">Pedido precessando: <span><ThreeDots color="#00BFFF" height={30} width={30} /></span></div> : null}
-                  {order.confirmar === "on" ? <div className="entregado">Confirmado: <MdDone /></div> : null}
-                  {order.confirmar === "off" && order.cancelar === "on" ? <div className="entregado">Cancelado: <MdDone /></div> : null}
-                  {order.preparar === "on" && order.terminar === "off" ? <div className="entregado">Preparando: <span><ThreeDots color="#00BFFF" height={30} width={30} /></span></div> : null}
-                  {order.preparar === "on" && order.terminar === "on" && order.entregar === "off" ? <div className="entregado">Preparado: <span><MdDone /></span></div> : null}
-                  {order.terminar === "on" && order.entregar === "on" && order.finalizar === "off" ? <div className="entregado">Pedido a caminho: <span><ThreeDots color="#00BFFF" height={30} width={30} /></span></div> : null}
-                  {order.terminar === "on" && order.entregar === "on" && order.finalizar === "on" ? <div className="entregado">Pedido concluido: <MdDone /></div> : null}
-                 
-                  
-                 
+                <div className="order_info">
+                    <div className="order_title"> Numero do pedido: <span>#{order._id.slice(15, -1)}</span></div>
+                    <div className="bar"></div>
+                    <div>
+                      {order.confirmar === "off" ? <div className="order_title">Pedido precessando: <span><ThreeDots color="green" height={30} width={30} /></span></div> : null}
+                      {order.confirmar === "on" ? <div className="order_title">Confirmado: <MdDone /></div> : null}
+                      {order.confirmar === "off" && order.cancelar === "on" ? <div className="order_title">Cancelado: <MdDone /></div> : null}
+                      {order.preparar === "on" && order.terminar === "off" ? <div className="order_title">Preparando: <span><ThreeDots color="green" height={30} width={30} /></span></div> : null}
+                      {order.preparar === "on" && order.terminar === "on" && order.entregar === "off" ? <div className="order_title">Preparado: <span><MdDone /></span></div> : null}
+                      {order.terminar === "on" && order.entregar === "on" && order.finalizar === "off" ? <div className="order_title">Pedido a caminho: <span><ThreeDots color="green" height={30} width={30} /></span></div> : null}
+                      {order.terminar === "on" && order.entregar === "on" && order.finalizar === "on" ? <div className="order_title">Pedido concluido: <MdDone /></div> : null}
+                     
+                      <div className="order_title">Data: <span> {order.data.slice(0, 10)}</span></div>
+                          {order.pedido.map((pedido, index) => (
+
+                            <div className="order_title">Valor Total: <span>R${pedido.valorTotal}</span></div>
+                          ))}
+                    </div>
+                    <div className="order_title">Endereço de entregar <span></span></div>
+                    <div className="order_adress">
+                      {order.pedido.map((pedido, index) => (
+                        pedido.entrega.map((cart) => (
+                          <>
+                            <div>Rua: {cart.rua}</div>
+                            <div>CEP: {cart.cep}</div>
+                            <div>Numero: {cart.numero}</div>
+                            <div>Complemento: {cart.complemento}</div>
+                            <div>Bairro: {cart.bairro}</div>
+                            <div>Cidade: {cart.cidade}</div>
+                            <div>Estado: {cart.estado}</div>
+
+                          </>
+                        ))
+
+                      ))} 
+                    </div>
+                    <div className="btns btn_order">                  
+                      <button className="cancelar" onClick={() => handleCancel(order._d)}>cancelar</button>
+                    </div>
+                </div>
+
+                <div className="order_item">
                   { order.pedido.map((pedido, index) => (
                       pedido.itemComprado.map((cart) => (
                   <>
-                    <img src={url2 + cart.file} alt={url2 + cart.file} />
-                    <div>Nome: {cart.nome}</div>
-                    <div>Categoria: {cart.categoria}</div>
-                    <div>Description: {cart.description}</div>
-                    <div>Quantidade: {cart.qty}</div>
-                    <div>Preço: {cart.preco}</div>
+                    
+                          <div className="cardBase">
+                            <div className="cardImg">
+                              <img src={url2 + cart.file} alt={url2 + cart.file} />
+                              <h3>{cart.nome}</h3>
+
+                            </div>
+
+                            <div className="cardText">
+                              <div className="texts">{cart.description.length < "30" ? cart.description : cart.description.slice(0, 60) + "..."}</div>
+                              <div>Quantidade: {cart.qty}</div>
+                              <div className="cardPreco">
+                                <div className="preco">R$ {cart.preco}</div>
+                      
+                              </div>
+                            </div>
+                          </div>
                   </>
                   ))
 
@@ -216,41 +259,33 @@ const handleRemove=(idPedido)=>{
                   {order.pedido.map((pedido, index) => (
                     pedido.bebidas.map((cart) => (
                       <>
-                        <img src={url2 + cart.file} alt={url2 + cart.file} />
-                        <div>Nome: {cart.nome}</div>
-                        <div>Categoria: {cart.categoria}</div>
-                        <div>Description: {cart.description}</div>
-                        <div>Quantidade: {cart.qty}</div>
-                        <div>Preço: {cart.preco}</div>
+                        <div className="cardBase">
+                          <div className="cardImg">
+                            <img src={url2 + cart.file} alt={url2 + cart.file} />
+                            <h3>{cart.nome}</h3>
+
+                          </div>
+
+                          <div className="cardText">
+                            <div className="texts">{cart.description.length < "30" ? cart.description : cart.description.slice(0, 60) + "..."}</div>
+                            <div>Quantidade: {cart.qty}</div>
+                            <div className="cardPreco">
+                              <div className="preco">R$ {cart.preco}</div>
+
+                            </div>
+                          </div>
+                        </div>
 
                       </>
                     ))
 
                   ))} 
+                </div>
 
-                  {order.pedido.map((pedido, index) => (
-                    pedido.entrega.map((cart) => (
-                      <>
-                        <div>Rua: {cart.rua}</div>
-                        <div>CEP: {cart.cep}</div>
-                        <div>Numero: {cart.numero}</div>
-                        <div>Complemento: {cart.complemento}</div>
-                        <div>Bairro: {cart.bairro}</div>
-                        <div>Cidade: {cart.cidade}</div>
-                        <div>Estado: {cart.estado}</div>
-
-                      </>
-                    ))
-
-                  ))} 
-
-                  {order.pedido.map((pedido, index) => (
-                       
-                  <div>Valor Total: {pedido.valorTotal}</div>
-                  ))} 
                 </>
 
               ))}
+
             </div>
 
      

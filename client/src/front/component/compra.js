@@ -14,14 +14,25 @@ export default function Compra(){
   const { carts, handleDelete, handleAdd, total } = useContext(CartContext)
  
   const navigate = useNavigate();
-   
+
+  const [logIn, setLogIn] = useState(true)
+  const [logOut, setLogOut] = useState(false)
+
+  function handleLogin() {
+    setLogIn(false)
+    setLogOut(true)
+  }
+  function handleLogout() {
+    setLogIn(true)
+    setLogOut(false)
+  }
   
     // verificar login
 
   var idString = localStorage.getItem("emailCliente")
 
   var emailCliente = JSON.parse(idString)
-  //var id = "633ee6e683ddc91e8ec44184"
+  
 
   var userOrder = ''
   var userLogin = ''
@@ -53,6 +64,8 @@ export default function Compra(){
 
   const [error, setError] = useState(false)
 
+
+  // register customer
   const userInfos = {
     email: email,
     nome: nome,
@@ -73,51 +86,30 @@ export default function Compra(){
   const handleSubmit2 = ((e) => {
     e.preventDefault()
     axios.post("http://localhost:4000/register", userInfos).then((res) => {
-
       try {
-        localStorage.setItem("token", JSON.stringify(res.data.token));
-        localStorage.setItem("id", JSON.stringify(res.data.id));
         localStorage.setItem("emailCliente", JSON.stringify(userInfos.email));
-        window.location.reload();
-       
+        window.location.reload(); 
       } catch (error) {
       }
-
     });
-
   })
 
-
+// customer login
   function btnLogin(e) {
     e.preventDefault()
     let item = { email, password }
-
-    if (item.email === "") {
-      console.log('email é obrigatorio')
-
-    } else if (item.password === "") {
-      console.log('password é obrigatorio')
-
-    }
-    else {
-
       axios.post("http://localhost:4000/login", item).then((res) => {
-
         try {
           localStorage.setItem("token", JSON.stringify(res.data.token));
           localStorage.setItem("id", JSON.stringify(res.data.id));
           localStorage.setItem("emailCliente", JSON.stringify(item.email));
-         
           window.location.reload();
          
         } catch (error) {
           
-
         }
 
       });
-    }
-
   }
 
     
@@ -142,7 +134,6 @@ export default function Compra(){
     
   const [count, setCount] = useState(0)
   const [count2, setCount2] = useState(0)
-
   const [total2, setTotal2] = useState("")
 
  
@@ -153,30 +144,20 @@ useEffect(()=>{
 
 const valorTotal = Number(total + total2).toFixed(2)
 
-  const itemComprado = carts
-   
-
-
+const itemComprado = carts
  
+
+// data customer login
 const [customer, setCustomer ] = useState("")
   
-
 const getId=(()=>{
   axios.get("http://localhost:4000/email/" + emailCliente).then((res) => {
-
     try {
-     
-     
       localStorage.setItem("idCliente", JSON.stringify(res.data.user._id));
       setCustomer(res.data.user.nome)
-
      // window.location.reload();
-
     } catch (error) {
-
-
     }
-
   });
 })
 
@@ -184,13 +165,13 @@ const getId=(()=>{
    
   
     
-    const {id} =useParams()
+const {id} =useParams()
 
-  var idClienteString= localStorage.getItem("idCliente")
+var idClienteString= localStorage.getItem("idCliente")
 
-  var idCliente = JSON.parse(idClienteString)
+var idCliente = JSON.parse(idClienteString)
    
-
+ // fazer comprar
   const data = {
     idCliente: idCliente,
     status: "pago",
@@ -207,22 +188,20 @@ const getId=(()=>{
 
   }
 
+const handleSubmit=((e)=>{
+    e.preventDefault()
 
-    const handleSubmit=((e)=>{
-        e.preventDefault()
+    axios.post("http://localhost:4000/order", data).then((res) => {
 
-        axios.post("http://localhost:4000/order", data).then((res) => {
+      if (res.status === 200) {
+        localStorage.removeItem("cart")
+        navigate('/obrigado')
+      }
 
-          if (res.status === 200) {
-            localStorage.removeItem("cart")
-            navigate('/obrigado')
-          }
-
-        });
-        
-      
     });
-       
+    
+});
+    
   
   
 
@@ -309,16 +288,18 @@ const getId=(()=>{
         <>
         <HeaderCardapio/>
 
-       {
-          customer!=="" ? <small>Olá {customer}</small>:null
-       }
+       
         {/* section login  */}
+
+        
         <section id={userLogin}>
 
           <div className="linksBackPedidos">
             <div className="linksLogin">
+              {
+                logIn ?
               <div className="formPedidos">
-                <div className="titlePedido">Já sou cadastrado</div>
+                <div className="titlePedido">Entrar com e-mail e senha</div>
                 <form onSubmit={btnLogin}>
                   <div className="formItens">
                     <div>
@@ -334,22 +315,27 @@ const getId=(()=>{
 
                   <input className="btnPedido" type="submit" value="login" />
                 </form>
+                <span className="login_info" onClick={handleLogin}>Não tem uma conta? Cadastre-se</span>
               </div>
+                  : null
+              }
 
+              {
+                logOut ?
 
               <div className="formPedidos">
-                <div className="titlePedido">Esta é minha primeira compra</div>
+                <div className="titlePedido">QUERO ME CADASTRAR</div>
                 {error && <div style={{ color: "red" }}>cliente já tem cadastro</div>}
                 <form onSubmit={handleSubmit2}>
                   <div className="formItens">
 
                     <div className="formItens">
                       <div>
-                        <label>nome</label>
+                        <label>Nome</label>
                         <input value={nome} onChange={(e) => setNome(e.target.value)} placeholder="nome" required />
                       </div>
                       <div>
-                        <label>email</label>
+                        <label>E-mail</label>
                         <input type="email" value={email} onChange={(e) => setEmail(e.target.value)} placeholder="email" />
                       </div>
                     </div>
@@ -357,11 +343,11 @@ const getId=(()=>{
                   </div>
                   <div className="formItens">
                     <div>
-                      <label>cpf</label>
+                      <label>Cpf</label>
                       <input type="number" value={cpf} onChange={(e) => setCpf(e.target.value)} placeholder="cpf" />
                     </div>
                     <div>
-                      <label>telefone</label>
+                      <label>Telefone</label>
                       <input type="number" value={telefone} onChange={(e) => setTelefone(e.target.value)} placeholder="telefone" required />
                     </div>
 
@@ -400,7 +386,7 @@ const getId=(()=>{
                   </div>
                   <div className='formInput'>
                     <div className='compraFormContent'>
-                      <label>cidade</label>
+                      <label>Cidade</label>
                       <input value={cidade} onChange={(e) => setCidade(e.target.value)} placeholder="palhoça" required />
                     </div>
 
@@ -408,7 +394,7 @@ const getId=(()=>{
                     <div className='formInput'>
                       <div className='compraFormContent numerInput1'>
                         <label>Estado</label>
-                        <select value={estado} onChange={(e) => setEstado(e.target.value)}>
+                            <select value={estado} onChange={(e) => setEstado(e.target.value)} className="select">
                           <option value="">Escolhe um estado</option>
                           <option value="Acre">Acre</option>
                           <option value="Alagoas">Alagoas</option>
@@ -459,27 +445,28 @@ const getId=(()=>{
 
                   <input className="btnPedido" type="submit" value="cadastre-se" />
                 </form>
+                <span className="login_info" onClick={handleLogout}>Entrar com e-mail e senha</span>
               </div>
+                  : null
+              }
 
             </div>
-
-
           </div>
-
-
         </section>
-
+        
         {/* section checkout  */}
 
-<section className='compraBase' id={userOrder}>
-
+<section className='compraBases' id={userOrder}>
+          {
+            customer !== "" ? <small className='username'>Olá {customer}</small> : null
+          }
       <div className='compraContent'>
 
       <div className='compraForm'>
 
          <form onSubmit={handleSubmit} className="formabase1">
           <div className='formdados'>
-                  <h2>ENDEREÇO DE ENTREGA</h2>
+          <h2>ENDEREÇO DE ENTREGA</h2>
       <div className='formInput'>
       <div className='compraFormContent'>
         <label>Rua</label>   
@@ -508,7 +495,7 @@ const getId=(()=>{
      <div className='formInput'>
      <div className='compraFormContent'>
                       <label>Estado</label>
-                      <select value={estadoIn} onChange={(e) => setEstadoIn(e.target.value)}>
+                      <select value={estadoIn} onChange={(e) => setEstadoIn(e.target.value)} className="select">
                         <option value="">Escolhe um estado</option>
                         <option value="Acre">Acre</option>
                         <option value="Alagoas">Alagoas</option>
@@ -699,8 +686,8 @@ const getId=(()=>{
             </div>
 
     </div>
-    </section>
-        <Cart />
+</section>
+     <Cart />
     <Footer/>
        
         </>
