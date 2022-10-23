@@ -1,6 +1,24 @@
 
-
+.order_base{
+    display: grid;
+    width: 100%;
+    margin: 40px 0;
+}
+.order_content{
+    margin: auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+}
 .orders{
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+   gap: 5%;
+   
+}
+.order_itens {
     width: 50%;
     background-color: white;
     display: flex;
@@ -8,16 +26,16 @@
     border-radius: 6px;
     overflow: hidden;
     box-shadow: 2px 2px 10px rgb(70, 70, 70);
+
 }
 .order_info{
     width: 45%;
-   
     padding: 20px;
 }
 .order_item{
     width: 55%;
    background-color: rgb(184, 184, 184);
-    height: 200px;
+    
     overflow-y: scroll;
     padding: 20px 0;
     display: grid;
@@ -25,8 +43,15 @@
     gap: 20px;
 }
 
+#showAdress{
+height: 400px!important;
+}
+#hideAdress {
+    height: 220px;
+}
+
 .order_adress{
-    display: none;
+    /* display: none; */
 }
 
 .order_title{
@@ -40,6 +65,8 @@
 .order_title span{
     font-size: 15px!important;
     font-weight: 400!important;
+    display: flex;
+    cursor: pointer;
 }
 
 .bar{
@@ -53,4 +80,40 @@
 }
 .btn_order button{
     margin: 0!important;
+}
+
+@media (max-width:1025px) {
+.orders {
+        width: 100%;
+      gap: 30px;
+       flex-direction: column;
+    }
+
+        .order_itens {
+            width: 100%;
+            background-color: white;
+            display: flex;
+            justify-content: space-between;
+            border-radius: 6px;
+            overflow: hidden;
+            box-shadow: 2px 2px 10px rgb(70, 70, 70);
+           gap: 20px;
+           flex-direction: column;
+    
+        }
+        .order_info {
+            width: 100%;
+
+        }
+    
+        .order_item {
+            width: 100%;
+            background-color: rgb(184, 184, 184);
+    
+            overflow-y: scroll;
+            padding: 20px 0;
+            display: grid;
+            place-items: center;
+            gap: 20px;
+        }
 }
