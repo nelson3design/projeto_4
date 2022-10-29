@@ -1,4 +1,4 @@
-import React,{useEffect,useState} from "react";
+import React,{useEffect,useState,useRef} from "react";
 import axios from "axios";
 import HeaderPedido from "./headerPedido"
 import { MdDone } from "react-icons/md";
@@ -37,6 +37,7 @@ const handlelogout =()=>{
  localStorage.removeItem("id")
   localStorage.removeItem("emailCliente")
  localStorage.removeItem("idCliente")
+  localStorage.removeItem("costumer")
  // window.location.reload();
   navigate('/login')
 }
@@ -61,14 +62,15 @@ const [item2, setItem2] = useState("")
 
 const url="http://localhost:4000/costumer"
 const url2="http://localhost:4000/"
-
+  const ref = useRef(null);
 
 useEffect(()=>{
 
 
    listItem()
   orders()
-    
+ 
+
  },[])
 
  const data={
@@ -136,33 +138,10 @@ const handleRemove=(idPedido)=>{
 }
 }
 
-  const [arrowDown, setArrowDown]= useState(false)
-  const [arrowRight, setArrowRight] = useState(true)
-  const [adress, setAdress] = useState(false)
-  var height ="hideAdress"
-  if (adress==true){
-    height = "showAdress"
-  }else{
-    height = "hideAdress"
 
-  }
-  function handleShowArrow(e){
-   
-    e.preventDefault();
 
-      setArrowDown(true)
-      setArrowRight(false)
-      setAdress(true)
-    
-   
-  }
-  function handleHideArrow() {
-    setArrowDown(false)
-    setArrowRight(true)
-    setAdress(false)
-  }
  
-
+ 
 
     return(
 
@@ -235,12 +214,10 @@ const handleRemove=(idPedido)=>{
                     <div className="order_title">Valor Total: <span>R${pedido.valorTotal}</span></div>
                   ))}
             </div>
-            <div className="order_title">Endereço de entregar
-              {arrowRight ? <span onClick={handleShowArrow}><FaAngleRight /></span>:null }
-              {arrowDown ? <span onClick={handleHideArrow}><FaAngleDown /></span> : null}
+            <div className="order_title">Endereço de entregar 
+             
               </div>
-              {
-                adress?
+             
             
             <div className="order_adress">
               {order.pedido.map((pedido, index) => (
@@ -259,14 +236,13 @@ const handleRemove=(idPedido)=>{
 
               ))} 
             </div>
-                : null
-                }
+                
             <div className="btns btn_order">                  
               <button className="cancelar" onClick={() => handleCancel(order._d)}>cancelar</button>
             </div>
         </div>
 
-        <div className="order_item" id={height}>
+        <div className="order_item">
           { order.pedido.map((pedido, index) => (
               pedido.itemComprado.map((cart) => (
           <>
@@ -291,31 +267,7 @@ const handleRemove=(idPedido)=>{
           ))
 
           ))} 
-
-          {order.pedido.map((pedido, index) => (
-            pedido.bebidas.map((cart) => (
-              <>
-                <div className="cardBase">
-                  <div className="cardImg">
-                    <img src={url2 + cart.file} alt={url2 + cart.file} />
-                    <h3>{cart.nome}</h3>
-
-                  </div>
-
-                  <div className="cardText">
-                    <div className="texts">{cart.description.length < "30" ? cart.description : cart.description.slice(0, 60) + "..."}</div>
-                    <div>Quantidade: {cart.qty}</div>
-                    <div className="cardPreco">
-                      <div className="preco">R$ {cart.preco}</div>
-
-                    </div>
-                  </div>
-                </div>
-
-              </>
-            ))
-
-          ))} 
+ 
         </div>
 
         </div>

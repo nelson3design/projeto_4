@@ -28,7 +28,7 @@ import Pedido from "./front/component/pedido";
 
 import User from "./front/component/user";
 
-
+import Teste from "./front/component/teste";
 
 function App() {
 
@@ -41,7 +41,7 @@ function App() {
       <Routes>
 
         {/* front-end */}
-
+          <Route exact path="/teste" element={<Teste />}></Route> 
         <Route exact path="/" element={<Start/>}></Route> 
         <Route path="/cardapio" element={<Cardapio/>}></Route> 
          <Route path="/pizza" element={<Pizza/>}></Route> 

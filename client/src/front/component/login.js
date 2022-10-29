@@ -110,9 +110,10 @@ export default function Login(){
                     
                     localStorage.setItem("token", JSON.stringify(res.data.token));
                     localStorage.setItem("id", JSON.stringify(res.data.id));
+                    localStorage.setItem("costumer", JSON.stringify(res.data.nome));
                   navigate('/pedido')
                     //window.location.reload();
-    
+                  console.log(res.data)
                    
                 } catch (error) {
                     console.log(error)

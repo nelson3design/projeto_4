@@ -63,7 +63,7 @@ function Header(){
 
 
 
-const url="http://localhost:5000/"
+const url="http://localhost:4000/"
     const [showBarra, setShowBarra] = useState(false)
 
     const [hamb, setHamb] = useState(true)
@@ -94,7 +94,7 @@ const url="http://localhost:5000/"
        const handleSearch2= async (e)=>{
         e.preventDefault()
          return await axios 
-         .get(`http://localhost:5000/item/?q=${value}`)
+         .get(`http://localhost:4000/item/${value}`)
          .then((response)=>{
          
       
@@ -181,7 +181,7 @@ const url="http://localhost:5000/"
                       <Link to={`/comprar/${dados.id}`} style={{textDecoration: "none"}} className="linkHover">
               <div className="cardBase">
             <div className="cardImg">
-                <img src={url+dados.image} alt={url+dados.image}/>
+                <img src={url+dados.file} alt={url+dados.file}/>
                 <h3>{dados.nome}</h3>
 
             </div>

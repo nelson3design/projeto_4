@@ -168,7 +168,7 @@ module.exports = {
 
             const token = createToken(user._id);
             res.cookie("jwt", token, { httpOnly: false, maxAge: maxAge * 1000 });
-            res.status(200).json({ id: user._id, status: true, token });
+            res.status(200).json({ id: user._id, nome: user.nome, status: true, token });
            
             // res.redirect('/user')
            

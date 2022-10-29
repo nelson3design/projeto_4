@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { useState, useEffect, useContext } from 'react';
+import { useState, useEffect, useContext, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useParams } from 'react-router-dom';
 import { CartContext } from "../context/context"
@@ -27,6 +27,10 @@ export default function Compra(){
     setLogOut(false)
   }
   
+  console.log(total)
+  if(total <= 0){
+    navigate('/')
+  }
     // verificar login
 
   var idString = localStorage.getItem("emailCliente")
@@ -103,7 +107,9 @@ export default function Compra(){
           localStorage.setItem("token", JSON.stringify(res.data.token));
           localStorage.setItem("id", JSON.stringify(res.data.id));
           localStorage.setItem("emailCliente", JSON.stringify(item.email));
+          localStorage.setItem("costumer", JSON.stringify(res.data.nome));
           window.location.reload();
+          console.log(res.data)
          
         } catch (error) {
           
@@ -126,14 +132,7 @@ export default function Compra(){
  
 
     const [valor, setValor] = useState("")
-    const [bebidas, setBebidas] = useState([])
-   
   
-
-  
-    
-  const [count, setCount] = useState(0)
-  const [count2, setCount2] = useState(0)
   const [total2, setTotal2] = useState("")
 
  
@@ -168,15 +167,17 @@ const getId=(()=>{
 const {id} =useParams()
 
 var idClienteString= localStorage.getItem("idCliente")
+  var costumerString = localStorage.getItem("costumer")
 
 var idCliente = JSON.parse(idClienteString)
+  var costumer = JSON.parse(costumerString)
    
  // fazer comprar
   const data = {
+    costumer: costumer,
     idCliente: idCliente,
     status: "pago",
     itemComprado: itemComprado,
-    bebidas: bebidas,
     valorTotal: valorTotal,
     cep: cepIn,
     rua: ruaIn,
@@ -229,13 +230,9 @@ const handleSubmit=((e)=>{
       }
 
  
-      
-      
       const [beb, setBeb] = useState([])
 
       const url3="http://localhost:4000/bebidas"
-     
-  
      
   
         const listBebida=()=>{
@@ -247,47 +244,11 @@ const handleSubmit=((e)=>{
 
 
  
-
- 
-   const handlePlus2 =(dado)=>{
-     setCount2(dado.quantItem++)
-     setCount(count+1)
-    
-     setTotal2( Number(total2) + (Number(dado.preco)))
-    
-     const exist = bebidas.find((x) => x._id === dado._id)
-     if (exist) {
-
-       setBebidas(
-         bebidas.map((x) =>
-           x._id === dado._id ? { ...exist, qty: exist.qty + 1 } : x
-         )
-       )
-
-     } else {
-       setBebidas([...bebidas, { ...dado, qty: 1 }])
-     }
-     
-    
-   }
-
- 
-
- 
-  const handleMenos2 =(dado)=>{
-    setCount(count - 1)
-    setCount2(dado.quantItem--)
-    setTotal2(total2-(Number(dado.preco)))
-    
-   }
-
-  
-
  
     return(
         <>
         <HeaderCardapio/>
-
+       
        
         {/* section login  */}
 
@@ -576,53 +537,7 @@ const handleSubmit=((e)=>{
 
    {/* adicinal item */}
        
-       <div className='adicional'>
-        <div className='adicionalTitle'>Adicional</div>
-       
       
-        <div className='adicionalContent'>
-          
-           {
-              
-                      beb.map((dado)=>(
-                 
-                <div className='adicinalCard' key={dado.id}>
-                 <div>{dado.nome}</div>
-                  
-                  
-                  <div className='btnPrecoAdicional'>
-                  <div className='preco'>R$ {dado.preco}</div>
-                  <div className='btnAdicional'>
-
-               
-
-                
-
-                     {dado.quantItem-1 > 0 && <div id={dado.preco-1} className="plusAdd" onClick={(e) => handleMenos2(dado)}> - </div>}
-                     
-                       {dado.quantItem-1 > 0 ? <div>{dado.quantItem-1}</div> : null}
-
-                   <div className="plusAdd" onClick={(e)=>handlePlus2(dado)}> + </div>
-
-                
-                  </div>
-                 
-                  </div> 
-
-                 
-
-                  
-                </div>
-                 
-              ))
-              
-              }
-           </div>
-        
-      
-
-       
-       </div>
         <div className='formdados dados2'>
 
         <input type="submit" className="btnFormCompra" value="Pagar agora"/>
@@ -634,7 +549,7 @@ const handleSubmit=((e)=>{
     </div>
 
             {/* remumo do pedido */}
-
+<div className='resumo'>
     <div className=''>
 
       <div className='titleCompra'>RESUMO DO PEDIDO</div>
@@ -683,8 +598,50 @@ const handleSubmit=((e)=>{
                 {carts.length > 0 ? <div className="precoCompra">Subtotal: R$ {Number(total + total2).toFixed(2)}</div> : null}
 
     </div>
-            </div>
+   </div>
 
+      <div className='adicional'>
+        <div className='adicionalTitle'>Adicional</div>
+
+
+        <div className='adicionalContent'>
+
+          {
+
+            beb.map((dado, index) => (
+
+              <div className='adicinalCard' key={index}>
+                <div>{dado.nome}</div>
+
+
+                <div className='btnPrecoAdicional'>
+                  <div className='preco'>R$ {dado.preco}</div>
+                  <div className='btnAdicional'>
+
+
+                    <div className="btn" onClick={(e) => handleAdd(dado)}><span>adicionar</span></div>
+
+
+
+                  </div>
+
+                </div>
+
+
+
+
+              </div>
+
+            ))
+
+          }
+        </div>
+
+
+
+
+      </div>
+</div>
     </div>
 </section>
      <Cart />

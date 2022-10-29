@@ -3,6 +3,7 @@
     display: grid!important;
     place-items: center;
     margin: 50px 0;
+    
 }
 #hideUserOrder {
     display: none!important;
@@ -341,6 +342,13 @@
 }
 
 @media (max-width:1025px) {
+    .infoCompraItems {
+        width: 100%;
+    }
+    #showUserOrder {
+             margin: 30px 0;
+            padding: 0 3%;
+        }
     .compraForm{
         order: 2;
     }
@@ -351,7 +359,12 @@
     }
 
     .formdados {
-        padding: 0;
+        padding: 30px 0;
+       margin-top: 30px;
+       border-radius: 10px;
+    }
+    .formdados h2{
+       text-align: center;
     }
 
     .compraContent {
@@ -360,9 +373,13 @@
         justify-content: space-between;
         position: relative;
         flex-direction: column;
-        background-color: white;
+        /* background-color: white; */
     }
-
+.resumo{
+    display: flex;
+   gap: 30px;
+   flex-direction: column;
+}
     .adicional {
 
         border-radius: 10px;
@@ -372,10 +389,12 @@
         width: 100%;
         height: auto;
         background-color: rgb(255, 255, 255);
-
-        padding: 0px;
+        padding: 0;
+        padding-bottom: 20px;
     }
-
+.select {
+   margin: 0 50px;
+}
     .formInput {
         width: 100%;
         display: flex;
@@ -435,7 +454,7 @@
                                     border-top-right-radius: 0px;
                                     border-bottom-left-radius: 10px;
                                     border-bottom-right-radius: 10px;
-                                    margin: 62px 0 30px 0;
+                                    margin: 0;
                                     width: 100%;
                                     display: flex;
                                     align-items: center;
@@ -488,7 +507,7 @@
 }
 .btnFormCompra{
     width: 90%;
- 
+ margin: 0 50px;
  
 }
 

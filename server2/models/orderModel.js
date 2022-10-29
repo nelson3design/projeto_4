@@ -1,6 +1,10 @@
 const mongoose = require('mongoose')
 
 const Pedido = mongoose.model('Pedido', {
+    costumer: {
+        type: String,
+        require: true
+    },
     idCliente: {
         type: String,
         require: true

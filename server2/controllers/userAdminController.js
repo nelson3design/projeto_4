@@ -16,6 +16,7 @@ const createToken = (id) => {
 
 module.exports = {
 
+  
     async privateLogin(req, res) {
         const id = req.params.id
 

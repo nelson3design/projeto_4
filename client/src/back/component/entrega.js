@@ -81,80 +81,91 @@ export default function Entrega() {
 
           <>
 
-            <div className="caixa">
+            <div className="order_base">
+              <div className="order_content container">
+                <div className="orders">
+                  {order.map((order, index) => (
+                    <div className="order_itens">
+                      <div className="order_info">
 
-              <div>
-                {order.map((order, index) => (
-                  <>
-                    <div>Status: {order.status}</div>
-                    <div>Confirmado: {order.confirmar}</div>
-                    <div>Cancelado: {order.cancelar}</div>
-                    <div>Preparado: {order.preparar}</div>
-                    <div>Terminado: {order.terminar}</div>
-                    <div>Entregado: {order.entregar}</div>
-                    <div>Finalizado: {order.finalizar}</div>
 
-                    {order.pedido.map((pedido, index) => (
-                      pedido.itemComprado.map((cart) => (
-                        <>
-                          <img src={url2 + cart.file} alt={url2 + cart.file} />
-                          <div>Nome: {cart.nome}</div>
-                          <div>Categoria: {cart.categoria}</div>
-                          <div>Description: {cart.description}</div>
-                          <div>Quantidade: {cart.qty}</div>
-                          <div>Preço: {cart.preco}</div>
-                        </>
-                      ))
+                        <div className="order_title"> Numero do pedido: <span>#{order._id.slice(15, -1)}</span></div>
+                        <div className="bar"></div>
+                        <div>
 
-                    ))}
 
-                    {order.pedido.map((pedido, index) => (
-                      pedido.bebidas.map((cart) => (
-                        <>
-                          <img src={url2 + cart.file} alt={url2 + cart.file} />
-                          <div>Nome: {cart.nome}</div>
-                          <div>Categoria: {cart.categoria}</div>
-                          <div>Description: {cart.description}</div>
-                          <div>Quantidade: {cart.qty}</div>
-                          <div>Preço: {cart.preco}</div>
+                          <div className="order_title">Cliente: <span> {order.costumer}</span></div>
+                          <div className="order_title">Data: <span> {order.data.slice(0, 10)}</span></div>
+                          {order.pedido.map((pedido, index) => (
 
-                        </>
-                      ))
+                            <div className="order_title">Valor Total: <span>R${pedido.valorTotal}</span></div>
+                          ))}
+                        </div>
+                        <div className="order_title">Endereço de entregar
 
-                    ))}
+                        </div>
 
-                    {order.pedido.map((pedido, index) => (
-                      pedido.entrega.map((cart) => (
-                        <>
-                          <div>Rua: {cart.rua}</div>
-                          <div>CEP: {cart.cep}</div>
-                          <div>Numero: {cart.numero}</div>
-                          <div>Complemento: {cart.complemento}</div>
-                          <div>Bairro: {cart.bairro}</div>
-                          <div>Cidade: {cart.cidade}</div>
-                          <div>Estado: {cart.estado}</div>
 
-                        </>
-                      ))
+                        <div className="order_adress">
+                          {order.pedido.map((pedido, index) => (
+                            pedido.entrega.map((cart) => (
+                              <>
+                                <div className="order_title">Rua: <span>{cart.rua}</span></div>
+                                <div className="order_title">CEP: <span>{cart.cep}</span></div>
+                                <div className="order_title">Numero: <span>{cart.numero}</span></div>
+                                <div className="order_title">Complemento: <span>{cart.complemento}</span></div>
+                                <div className="order_title">Bairro: <span>{cart.bairro}</span></div>
+                                <div className="order_title">Cidade: <span>{cart.cidade}</span></div>
+                                <div className="order_title">Estado: <span>{cart.estado}</span></div>
 
-                    ))}
+                              </>
+                            ))
 
-                    {order.pedido.map((pedido, index) => (
+                          ))}
+                        </div>
 
-                      <div>Valor Total: {pedido.valorTotal}</div>
-                    ))}
+                        <div className="btns btn_order">
+                          <div className="btns">
+                            <button className="confirmar" onClick={() => handleEntregar(order._id)}>entregar</button>
+                            <button className="cancelar" onClick={() => handleFinalizar(order._id)}>finalizar</button>
+                          </div>
+                        </div>
+                      </div>
 
-                    <div className="btns">
-                      <button className="confirmar" onClick={() => handleEntregar(order._id)}>entregar</button>
-                      <button className="cancelar" onClick={() => handleFinalizar(order._id)}>finalizar</button>
+                      <div className="order_item">
+                        {order.pedido.map((pedido, index) => (
+                          pedido.itemComprado.map((cart) => (
+                            <>
+
+                              <div className="cardBase">
+                                <div className="cardImg">
+                                  <img src={url2 + cart.file} alt={url2 + cart.file} />
+                                  <h3>{cart.nome}</h3>
+
+                                </div>
+
+                                <div className="cardText">
+                                  <div className="texts">{cart.description.length < "30" ? cart.description : cart.description.slice(0, 60) + "..."}</div>
+                                  <div>Quantidade: {cart.qty}</div>
+                                  <div className="cardPreco">
+                                    <div className="preco">R$ {cart.preco}</div>
+
+                                  </div>
+                                </div>
+                              </div>
+                            </>
+                          ))
+
+                        ))}
+
+                      </div>
+
                     </div>
-                  </>
 
-                ))}
+                  ))}
+
+                </div>
               </div>
-
-             
-
             </div>
 
           </>

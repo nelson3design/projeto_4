@@ -173,4 +173,9 @@
     .btnPedido:hover {
         opacity: .3;
     }
+        .username {
+            
+            margin-left: 2%;
+           
+        }
 }
