@@ -126,8 +126,11 @@ export default function Entrega() {
 
                         <div className="btns btn_order">
                           <div className="btns">
-                            <button className="confirmar" onClick={() => handleEntregar(order._id)}>entregar</button>
-                            <button className="cancelar" onClick={() => handleFinalizar(order._id)}>finalizar</button>
+                            
+                            {order.entregar == "off" ? <button className="confirmar" onClick={() => handleEntregar(order._id)}>entregar</button> :null }
+                            {order.entregar == "on" ? <button className="cancelar" onClick={() => handleFinalizar(order._id)}>finalizar</button> : null}
+
+                            
                           </div>
                         </div>
                       </div>

@@ -333,7 +333,13 @@
     justify-content: space-between;
     align-items: center;
 }
-
+.btn_add{
+    background-color: red;
+    color: white;
+    padding: 2px 15px;
+    text-transform: capitalize;
+    cursor: pointer;
+}
 .btnAdicional {
     display: flex;
     justify-content: space-between;

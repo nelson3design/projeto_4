@@ -126,8 +126,10 @@ var id ={
 
                         <div className="btns btn_order">
                           <div className="btns">
-                            <button className="confirmar" onClick={() => handlePreparar(order._id)}>preparar</button>
-                            <button className="cancelar" onClick={() => handleTerminar(order._id)}>terminar</button>
+                           
+                            {order.preparar == "off" ? <button className="confirmar" onClick={() => handlePreparar(order._id)}>preparar</button> :null }
+                            {order.preparar == "on" ? <button className="cancelar" onClick={() => handleTerminar(order._id)}>terminar</button> :null }
+                           
                           </div>
                         </div>
                       </div>

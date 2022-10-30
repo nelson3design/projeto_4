@@ -29,7 +29,8 @@ import Pedido from "./front/component/pedido";
 import User from "./front/component/user";
 
 import Teste from "./front/component/teste";
-
+import Banner from "./back/component/banner"
+import CreateBanner from "./back/component/createBanner";
 function App() {
 
 
@@ -60,11 +61,14 @@ function App() {
          <Route path="/admin/dashboard" element={<BackList/>}></Route> 
          <Route path="/admin/dashboard/create" element={<BackCreate/>}></Route>
          <Route path="/admin/dashboard/update/:id" element={<BackUpdate/>}></Route>
+
+          <Route path="/admin/dashboard/create/banner" element={<CreateBanner />}></Route>
            
          <Route path="/admin/dashboard/andamento" element={<Ativos/>}></Route>  
          <Route path="/admin/dashboard/preparo" element={<Preparo/>}></Route>  
          <Route path="/admin/dashboard/entrega" element={<Entrega/>}></Route>  
          <Route path="/admin/dashboard/historico" element={<Historico/>}></Route>  
+          <Route path="/admin/dashboard/banner" element={<Banner />}></Route>  
          
        
       </Routes>

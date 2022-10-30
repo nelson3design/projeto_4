@@ -60,9 +60,11 @@ export default function Historico() {
 
             <div className="order_base">
               <div className="order_content container">
+                
                 <div className="orders">
                   {order.map((order, index) => (
                     <div className="order_itens">
+                    
                       <div className="order_info">
 
 

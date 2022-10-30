@@ -27,7 +27,6 @@ export default function Compra(){
     setLogOut(false)
   }
   
-  console.log(total)
   if(total <= 0){
     navigate('/')
   }
@@ -97,7 +96,17 @@ export default function Compra(){
       }
     });
   })
+  fetch(`https://viacep.com.br//ws/${cep}/json/`)
+    .then(response => response.json())
+    .then(res => {
+      setCep(res.cep)
+      setRua(res.logradouro)
+      setBairro(res.bairro)
+      setCidade(res.localidade)
+      setEstado(res.uf)
 
+    })
+    console.log(cep)
 // customer login
   function btnLogin(e) {
     e.preventDefault()
@@ -141,6 +150,18 @@ useEffect(()=>{
   getId()
 },[])
 
+ 
+  fetch(`https://viacep.com.br//ws/${cepIn}/json/`)
+    .then(response => response.json())
+    .then(res => {
+      setCepIn(res.cep)
+      setRuaIn(res.logradouro)
+      setBairroIn(res.bairro)
+      setCidadeIn(res.localidade)
+      setEstadoIn(res.uf)
+      
+    })
+ 
 const valorTotal = Number(total + total2).toFixed(2)
 
 const itemComprado = carts
@@ -356,34 +377,34 @@ const handleSubmit=((e)=>{
                       <div className='compraFormContent numerInput1'>
                         <label>Estado</label>
                             <select value={estado} onChange={(e) => setEstado(e.target.value)} className="select">
-                          <option value="">Escolhe um estado</option>
-                          <option value="Acre">Acre</option>
-                          <option value="Alagoas">Alagoas</option>
-                          <option value="Amapá">Amapá</option>
-                          <option value="Amazonas">Amazonas</option>
-                          <option value="Bahia">Bahia</option>
-                          <option value="Ceará">Ceará</option>
-                          <option value="Espírito Santo">Espírito Santo</option>
-                          <option value="Goiás">Goiás</option>
-                          <option value="Maranhão">Maranhão</option>
-                          <option value="Mato Grosso">Mato Grosso</option>
-                          <option value="Mato Grosso do Sul">Mato Grosso do Sul</option>
-                          <option value="Minas Gerais">Minas Gerais</option>
-                          <option value="Pará">Pará</option>
-                          <option value="Paraíba">Paraíba</option>
-                          <option value="Paraná">Paraná</option>
-                          <option value="Pernambuco">Pernambuco</option>
-                          <option value="Piauí">Piauí</option>
-                          <option value="Rio de Janeiro">Rio de Janeiro</option>
-                          <option value="Rio Grande do Norte">Rio Grande do Norte</option>
-                          <option value="Rio Grande do Sul">Rio Grande do Sul</option>
-                          <option value="Rondônia">Rondônia</option>
-                          <option value="Roraima">Roraima</option>
-                          <option value="Santa Catarina">Santa Catarina</option>
-                          <option value="São Paulo">São Paulo</option>
-                          <option value="Sergipe">Sergipe</option>
-                          <option value="Tocantins">Tocantins</option>
-                          <option value="Distrito Federal">Distrito Federal</option>
+                              <option value="">Escolhe um estado</option>
+                              <option value="AC">Acre</option>
+                              <option value="AL">Alagoas</option>
+                              <option value="AP">Amapá</option>
+                              <option value="AM">Amazonas</option>
+                              <option value="BA">Bahia</option>
+                              <option value="CE">Ceará</option>
+                              <option value="ES">Espírito Santo</option>
+                              <option value="GO">Goiás</option>
+                              <option value="MA">Maranhão</option>
+                              <option value="MT">Mato Grosso</option>
+                              <option value="MS">Mato Grosso do Sul</option>
+                              <option value="MG">Minas Gerais</option>
+                              <option value="PA">Pará</option>
+                              <option value="PB">Paraíba</option>
+                              <option value="PR">Paraná</option>
+                              <option value="PE">Pernambuco</option>
+                              <option value="PI">Piauí</option>
+                              <option value="RJ">Rio de Janeiro</option>
+                              <option value="RN">Rio Grande do Norte</option>
+                              <option value="RS">Rio Grande do Sul</option>
+                              <option value="RO">Rondônia</option>
+                              <option value="RR">Roraima</option>
+                              <option value="SC">Santa Catarina</option>
+                              <option value="SP">São Paulo</option>
+                              <option value="SE">Sergipe</option>
+                              <option value="TO">Tocantins</option>
+                              <option value="DF">Distrito Federal</option>
 
                         </select>
                       </div>
@@ -430,13 +451,13 @@ const handleSubmit=((e)=>{
           <h2>ENDEREÇO DE ENTREGA</h2>
       <div className='formInput'>
       <div className='compraFormContent'>
-        <label>Rua</label>   
-        <input value={ruaIn} onChange={(e)=>setRuaIn(e.target.value)} placeholder="rua caraúna" required/>
+        <label>Cep</label>   
+          <input value={cepIn} onChange={(e) => setCepIn(e.target.value)} placeholder="88131740" required/>
        </div>
-        
+                    
        <div className='compraFormContent'>
-       <label>Cep</label>
-        <input value={cepIn} onChange={(e)=>setCepIn(e.target.value)} placeholder="88131740" required/>
+       <label>Rua</label>
+          <input value={ruaIn} onChange={(e) => setRuaIn(e.target.value)} placeholder="rua caraúna" required/>
        </div>
 
       </div>
@@ -458,33 +479,33 @@ const handleSubmit=((e)=>{
                       <label>Estado</label>
                       <select value={estadoIn} onChange={(e) => setEstadoIn(e.target.value)} className="select">
                         <option value="">Escolhe um estado</option>
-                        <option value="Acre">Acre</option>
-                        <option value="Alagoas">Alagoas</option>
-                        <option value="Amapá">Amapá</option>
-                        <option value="Amazonas">Amazonas</option>
-                        <option value="Bahia">Bahia</option>
-                        <option value="Ceará">Ceará</option>
-                        <option value="Espírito Santo">Espírito Santo</option>
-                        <option value="Goiás">Goiás</option>
-                        <option value="Maranhão">Maranhão</option>
-                        <option value="Mato Grosso">Mato Grosso</option>
-                        <option value="Mato Grosso do Sul">Mato Grosso do Sul</option>
-                        <option value="Minas Gerais">Minas Gerais</option>
-                        <option value="Pará">Pará</option>
-                        <option value="Paraíba">Paraíba</option>
-                        <option value="Paraná">Paraná</option>
-                        <option value="Pernambuco">Pernambuco</option>
-                        <option value="Piauí">Piauí</option>
-                        <option value="Rio de Janeiro">Rio de Janeiro</option>
-                        <option value="Rio Grande do Norte">Rio Grande do Norte</option>
-                        <option value="Rio Grande do Sul">Rio Grande do Sul</option>
-                        <option value="Rondônia">Rondônia</option>
-                        <option value="Roraima">Roraima</option>
-                        <option value="Santa Catarina">Santa Catarina</option>
-                        <option value="São Paulo">São Paulo</option>
-                        <option value="Sergipe">Sergipe</option>
-                        <option value="Tocantins">Tocantins</option>
-                        <option value="Distrito Federal">Distrito Federal</option>
+                        <option value="AC">Acre</option>
+                        <option value="AL">Alagoas</option>
+                        <option value="AP">Amapá</option>
+                        <option value="AM">Amazonas</option>
+                        <option value="BA">Bahia</option>
+                        <option value="CE">Ceará</option>
+                        <option value="ES">Espírito Santo</option>
+                        <option value="GO">Goiás</option>
+                        <option value="MA">Maranhão</option>
+                        <option value="MT">Mato Grosso</option>
+                        <option value="MS">Mato Grosso do Sul</option>
+                        <option value="MG">Minas Gerais</option>
+                        <option value="PA">Pará</option>
+                        <option value="PB">Paraíba</option>
+                        <option value="PR">Paraná</option>
+                        <option value="PE">Pernambuco</option>
+                        <option value="PI">Piauí</option>
+                        <option value="RJ">Rio de Janeiro</option>
+                        <option value="RN">Rio Grande do Norte</option>
+                        <option value="RS">Rio Grande do Sul</option>
+                        <option value="RO">Rondônia</option>
+                        <option value="RR">Roraima</option>
+                        <option value="SC">Santa Catarina</option>
+                        <option value="SP">São Paulo</option>
+                        <option value="SE">Sergipe</option>
+                        <option value="TO">Tocantins</option>
+                        <option value="DF">Distrito Federal</option>
 
                       </select>
       </div>
@@ -505,6 +526,7 @@ const handleSubmit=((e)=>{
 
      {/* card-cartao */}
      <div className='pagamento'>
+      <span className='aviso'>*Não precisa adicionar dados do seu cartão</span>
       <div className='titlePagamento'>pagamento</div>
       <div className='aviso'>Preencha os dados do seu Cartão</div>
 
@@ -619,7 +641,7 @@ const handleSubmit=((e)=>{
                   <div className='btnAdicional'>
 
 
-                    <div className="btn" onClick={(e) => handleAdd(dado)}><span>adicionar</span></div>
+                    <div className="btn" onClick={(e) => handleAdd(dado)}><span className='btn_add'>adicionar</span></div>
 
 
 

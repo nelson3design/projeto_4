@@ -5,6 +5,7 @@ const productController = require('./controllers/productController')
 const userController = require('./controllers/userController')
 const userAdminController = require('./controllers/userAdminController')
 const orderController = require('./controllers/orderController')
+const bannerController = require('./controllers/bannerController')
 const User = require('./models/userModel')
 const path = require('path')
 const { checkUser } = require("./middlewares/authMiddleware");
@@ -77,6 +78,12 @@ router.post('/edit-action', upload.single('upload'), productController.editActio
 router.get('/delete/:id', productController.deleteProduct)
 router.get('/item/:q', productController.searchProduct)
 
+router.post('/add-banner', upload.single('upload'), bannerController.createBanner)
+router.get('/banners', bannerController.allBanner)
+router.get('/banner/:id', bannerController.oneBanner)
+router.get('/desktop', bannerController.desktop)
+router.get('/mobile', bannerController.mobile)
+router.get('/delete/banner/:id', bannerController.deleteBanner)
 
 router.get('/hamburguer', productController.hamburguer)
 router.get('/pizza', productController.pizza)

@@ -6,7 +6,9 @@
 #hideOrder {
     display: block;
 }
-
+.entregado{
+    cursor: not-allowed!important;
+}
 .pedidoBase1{
     width: 90%;
    

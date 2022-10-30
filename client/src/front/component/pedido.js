@@ -238,7 +238,9 @@ const handleRemove=(idPedido)=>{
             </div>
                 
             <div className="btns btn_order">                  
-              <button className="cancelar" onClick={() => handleCancel(order._d)}>cancelar</button>
+              {order.confirmar == "off" ? <button className="cancelar" onClick={() => handleCancel(order._d)}>cancelar</button> :
+                null
+              }
             </div>
         </div>
 

@@ -27,7 +27,7 @@ function Update() {
 
    
 
-console.log(id)
+
 
 const loadName=()=>{
 

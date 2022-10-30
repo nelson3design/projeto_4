@@ -1,7 +1,7 @@
 import { useState } from "react";
 import "../styles/header.css"
 import { MdOutlineRestaurant } from "react-icons/md";
-import { FaClipboardCheck,FaTimes,FaBars } from "react-icons/fa";
+import { FaClipboardCheck, FaTimes, FaBars, FaRegImages } from "react-icons/fa";
 
 
 
@@ -36,6 +36,7 @@ function Header(){
                    
                 <li className="ative"><a href="http://localhost:3000/admin/dashboard"><MdOutlineRestaurant/> <span>cardápio</span></a></li>
                 <li><a href="http://localhost:3000/admin/dashboard/andamento"><FaClipboardCheck/> <span>pedidos</span></a></li>
+                <li><a href="http://localhost:3000/admin/dashboard/banner"><FaRegImages /> <span>banner</span></a></li>
 
                 </ul>
             </nav>
@@ -43,6 +44,7 @@ function Header(){
                 <ul className="mobileLinks">
                   <li className="ative"><a href="http://localhost:3000/admin/dashboard"><MdOutlineRestaurant/> <span>cardápio</span></a></li>
                   <li><a href="http://localhost:3000/admin/dashboard/andamento"><FaClipboardCheck/> <span>pedidos</span></a></li>
+                  <li><a href="http://localhost:3000/admin/dashboard/banner"><FaRegImages /> <span>banner</span></a></li>
                 </ul>
              : null}
 

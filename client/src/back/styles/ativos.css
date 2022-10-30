@@ -1,4 +1,34 @@
 
+.modal_base{
+  width: 100%;
+  display: grid;
+  position: relative;
+  min-height: auto;
+  padding: 40px 0;
+}
+.modal_close{
+  position: absolute;
+  top: 5%;
+  right: 5%;
+  font-size: 30px;
+  color: white;
+  width: 50px;
+  height: 50px;
+  background-color: red;
+  border-radius: 100%;
+  text-align: center;
+  cursor: pointer;
+}
+.modal_image{
+  width: 80%;
+  height: 100%;
+  margin: auto;
+  place-items: center;
+}
+.modal_image img {
+  width: 100%;
+
+}
 .baseContent{
     width: 100%;
     display: grid;
@@ -11,13 +41,15 @@
 
 .baseItens{
     margin: 50px 0 60px 0;
-    width: 90%;
+    width: 100%;
     display: flex;
     gap: 20px;
     flex-wrap: wrap;
     justify-content: center;
 }
-
+.image_banner{
+  cursor: pointer;
+}
 
 .caixa{
     width: 350px;
