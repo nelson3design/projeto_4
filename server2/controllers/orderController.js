@@ -11,7 +11,7 @@ module.exports = {
 
     async order(req, res) {
        
-        const { costumer,idCliente, status, itemComprado,valorTotal, rua, cep,numero,bairro,cidade,estado,complemento } = req.body
+        const { costumer, idCliente, status, itemComprado,itemAdicional,valorTotal, rua, cep,numero,bairro,cidade,estado,complemento } = req.body
 
         const entrega = [{
             "rua": rua,
@@ -22,7 +22,7 @@ module.exports = {
             "cidade": cidade,
             "estado": estado
         }]
-        const pedido = { itemComprado, entrega, valorTotal }
+        const pedido = { itemComprado, itemAdicional, entrega, valorTotal }
       
         try {
            

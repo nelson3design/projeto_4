@@ -123,5 +123,6 @@ router.get('/order/ativo', orderController.orderActive)
 router.get('/order/preparado', orderController.orderPreparar)
 router.get('/order/entregado', orderController.orderEntregar)
 router.get('/order/finalizado', orderController.orderFinalizar)
+router.get('/order/cancelado', orderController.orderCancelar)
 
 module.exports = router

@@ -12,6 +12,10 @@ width: 0vw;
 overflow: hidden;
 }
 
+.name{
+    color: white;
+}
+
 .side {
     background-color: #5F5F5F;
     width: 15%;

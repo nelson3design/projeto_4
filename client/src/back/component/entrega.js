@@ -100,6 +100,19 @@ export default function Entrega() {
 
                             <div className="order_title">Valor Total: <span>R${pedido.valorTotal}</span></div>
                           ))}
+                          <div className="bar"></div>
+                          <div className="order_title">Item adicional </div>
+
+                          {order.pedido.map((pedido, index) => (
+                            pedido.itemAdicional.map((cart) => (
+                              <>
+                                <div className="order_title"><span>{cart.nome}</span></div>
+                                <div className="order_title"><span>QTY: {cart.qty}</span></div>
+                              </>
+                            ))
+
+                          ))}
+                          <div className="bar"></div>
                         </div>
                         <div className="order_title">Endereço de entregar
 

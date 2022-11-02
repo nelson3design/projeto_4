@@ -16,7 +16,11 @@
     padding: 50px 0;
     height: auto;
 }
-
+.btnPlus,.btnMenos {
+    color: rgb(0, 0, 0);
+    font-size: 30px;
+    cursor: pointer;
+}
 .compraContent {
     width: 80%;
     display: flex;

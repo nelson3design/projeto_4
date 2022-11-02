@@ -89,38 +89,41 @@ export default function Login(){
 
     })
 
+    const [emailError, setEmailError]= useState('')
+    const [passwordError, setPasswordError] = useState('')
+    const [invalid, setInvalid] = useState('')
 
     function btnLogin(e){
     e.preventDefault()
         let item = { email, password }
 
         if(item.email===""){
-            console.log('email é obrigatorio')
+        
+            setEmailError('o Email é obrigatorio!')
            
         } else if (item.password === ""){
-            console.log('password é obrigatorio')
+            
+            setPasswordError('a Senha é obrigatorio!')
           
         }
          else{
+            setEmailError('')
+            setPasswordError('')
 
-            axios.post("http://localhost:4000/login", item).then((res) => {
-              
-    
-                try {
-                    
+
+            axios.post("http://localhost:4000/login", item)
+                .then((res) => {
                     localStorage.setItem("token", JSON.stringify(res.data.token));
                     localStorage.setItem("id", JSON.stringify(res.data.id));
                     localStorage.setItem("costumer", JSON.stringify(res.data.nome));
-                  navigate('/pedido')
-                    //window.location.reload();
-                  console.log(res.data)
-                   
-                } catch (error) {
-                    console.log(error)
-                   
-                }
-    
-            }); 
+                   navigate('/pedido')
+                })
+                .catch((error) => {
+                    if (error.response) {
+                        console.log(error.response.data.msg);
+                        setInvalid(error.response.data.msg)
+                    }
+                });
         }
 
 
@@ -148,14 +151,17 @@ export default function Login(){
                 <div>
                     <label>Email</label>
                     <input type="text" value={email} onChange={(e)=>setEmail(e.target.value)}/>
+                     <small className="error">{emailError}</small>
                 </div>
                 <div>
-                    <label>Senha</label>               
+                    <label>Senha</label> 
                     <input type="text" value={password} onChange={(e)=>setPassword(e.target.value)}/>
+                    <small className="error">{passwordError}</small>              
+                     
                 </div>
                 </div>
             
-
+                <small className="error">{invalid}</small>
                 <input className="btnPedido" type="submit" value="login"/>
             </form>
             <span className="login_info" onClick={handleLogin}>Não tem uma conta? Cadastre-se</span>

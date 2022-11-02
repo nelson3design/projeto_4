@@ -124,7 +124,7 @@ module.exports = {
         const user = await UserAdmin.findOne({ nome: nome })
 
         if (!user) {
-            res.status(422).json({ msg: 'usuário não encontrado!' })
+            res.status(422).json({ msg: 'Usuário não cadastrado!' })
         }
 
         // check if password match

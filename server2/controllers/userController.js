@@ -151,7 +151,7 @@ module.exports = {
         const user = await User.findOne({ email: email })
 
         if (!user) {
-            res.status(422).json({ msg: 'usuário não encontrado!' })
+            res.status(422).json({ msg: 'E-mail não existe!' })
         }
 
         // check if password match

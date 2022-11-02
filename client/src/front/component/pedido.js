@@ -117,26 +117,19 @@ useEffect(()=>{
 
 
 
-const handleCancel=(idPedido)=>{
-
- axios.post(url2+"editcancelar-action/"+idPedido).then((response)=>{
-    
-  
-    listItem()
-  })
-}
 
 
-const handleRemove=(idPedido)=>{
-  console.log(idPedido)
-  if(window.confirm('tem certeza de excluir esse pedido')){
-    axios.delete(`${url2}delete-pedido/${idPedido}`).then((response) => {
-        
-        listItem()
-        
-    });
-}
-}
+
+  const handleCancel = (order) => {
+    var id = {
+      id: order._id
+    }
+
+    axios.post(url2 + "cancelar/", id).then((response) => {
+
+      orders()
+    })
+  }
 
 
 
@@ -200,7 +193,7 @@ const handleRemove=(idPedido)=>{
             <div className="order_title"> Numero do pedido: <span>#{order._id.slice(15, -1)}</span></div>
             <div className="bar"></div>
             <div>
-              {order.confirmar === "off" ? <div className="order_title">Pedido processando: <span><ThreeDots color="green" height={30} width={30} /></span></div> : null}
+              {order.confirmar === "off" && order.cancelar =="off" ? <div className="order_title">Pedido processando: <span><ThreeDots color="green" height={30} width={30} /></span></div> : null}
               {order.confirmar === "on" ? <div className="order_title">Confirmado: <MdDone /></div> : null}
               {order.confirmar === "off" && order.cancelar === "on" ? <div className="order_title">Cancelado: <MdDone /></div> : null}
               {order.preparar === "on" && order.terminar === "off" ? <div className="order_title">Preparando: <span><ThreeDots color="green" height={30} width={30} /></span></div> : null}
@@ -213,7 +206,20 @@ const handleRemove=(idPedido)=>{
 
                     <div className="order_title">Valor Total: <span>R${pedido.valorTotal}</span></div>
                   ))}
+              <div className="bar"></div>
+              <div className="order_title">Item adicional </div>
+
+              {order.pedido.map((pedido, index) => (
+                pedido.itemAdicional.map((cart) => (
+                  <>
+                    <div className="order_title"><span>{cart.nome}</span></div>
+                    <div className="order_title"><span>QTY: {cart.qty}</span></div>                   
+                  </>
+                ))
+
+              ))} 
             </div>
+            <div className="bar"></div>
             <div className="order_title">Endereço de entregar 
              
               </div>
@@ -238,8 +244,8 @@ const handleRemove=(idPedido)=>{
             </div>
                 
             <div className="btns btn_order">                  
-              {order.confirmar == "off" ? <button className="cancelar" onClick={() => handleCancel(order._d)}>cancelar</button> :
-                null
+              {order.confirmar == "off" && order.cancelar == "off" ? <button className="cancelar" onClick={() => handleCancel(order)}>cancelar</button> :
+                <button className="cancelado" >cancelado</button>
               }
             </div>
         </div>
@@ -271,6 +277,7 @@ const handleRemove=(idPedido)=>{
           ))} 
  
         </div>
+
 
         </div>
 

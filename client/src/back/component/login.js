@@ -22,35 +22,40 @@ export default function Login(){
     },[])
 
 
+    const [nameError, setNameError] = useState('')
+    const [passwordError, setPasswordError] = useState('')
+    const [invalid, setInvalid] = useState('')
+
     function login(e) {
         e.preventDefault()
         let item = { nome, password }
 
         if (item.nome === "") {
-            console.log('user é obrigatorio')
+
+            setNameError('o usuário é obrigatorio!')
 
         } else if (item.password === "") {
-            console.log('password é obrigatorio')
+
+            setPasswordError('a Senha é obrigatorio!')
 
         }
         else {
+            setNameError('')
+            setPasswordError('')
 
-            axios.post("http://localhost:4000/admin/login", item).then((res) => {
 
-
-                try {
-
+            axios.post("http://localhost:4000/admin/login", item)
+                .then((res) => {
                     localStorage.setItem("tokenAdmin", JSON.stringify(res.data.token));
                     localStorage.setItem("idAdmin", JSON.stringify(res.data.id));
                     navigate('/admin/dashboard')
-                
-                    console.log(item)
-                } catch (error) {
-                    console.log(error)
-
-                }
-
-            });
+                })
+                .catch((error) => {
+                    if (error.response) {
+                        console.log(error.response.data.msg);
+                        setInvalid(error.response.data.msg)
+                    }
+                });
         }
 
 
@@ -69,16 +74,18 @@ export default function Login(){
                 <form onSubmit={login}>
                 <div className="formItens">
                   <div>
-                    <label>usuário</label>
+                    <label>Usuário</label>
                     <input type="text" value={nome} onChange={(e)=>setNome(e.target.value)}/>
+                    <small className="error">{nameError}</small>
                    </div>
                 <div>
-                    <label>senha</label>               
+                    <label>Senha</label>               
                      <input type="password" value={password} onChange={(e) => setPassword(e.target.value)}/>
+                    <small className="error">{passwordError}</small>    
                 </div>
                 </div>
              
-
+                            <small className="error">{invalid}</small>
                 <input className="btnPedido" type="submit" value="entrar"/>
                 </form>
             </div>

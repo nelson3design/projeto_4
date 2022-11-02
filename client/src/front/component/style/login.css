@@ -10,3 +10,7 @@
     opacity: .3;
     cursor: pointer;
 }
+
+.error{
+    color: red;
+}

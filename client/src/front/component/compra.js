@@ -96,17 +96,21 @@ export default function Compra(){
       }
     });
   })
-  fetch(`https://viacep.com.br//ws/${cep}/json/`)
-    .then(response => response.json())
-    .then(res => {
-      setCep(res.cep)
-      setRua(res.logradouro)
-      setBairro(res.bairro)
-      setCidade(res.localidade)
-      setEstado(res.uf)
 
-    })
-    console.log(cep)
+
+
+    fetch(`https://viacep.com.br//ws/${cep}/json/`)
+      .then(response => response.json())
+      .then(res => {
+        setCep(res.cep)
+        setRua(res.logradouro)
+        setBairro(res.bairro)
+        setCidade(res.localidade)
+        setEstado(res.uf)
+  
+      })
+  
+   
 // customer login
   function btnLogin(e) {
     e.preventDefault()
@@ -142,7 +146,10 @@ export default function Compra(){
 
     const [valor, setValor] = useState("")
   
-  const [total2, setTotal2] = useState("")
+  const [beb, setBeb] = useState([])
+  const [ad, setAd] = useState([])
+
+  const totalAdd = ad.reduce((a, b) => a + b.preco * b.qty, 0)
 
  
    
@@ -150,22 +157,26 @@ useEffect(()=>{
   getId()
 },[])
 
+
+
  
-  fetch(`https://viacep.com.br//ws/${cepIn}/json/`)
-    .then(response => response.json())
-    .then(res => {
-      setCepIn(res.cep)
-      setRuaIn(res.logradouro)
-      setBairroIn(res.bairro)
-      setCidadeIn(res.localidade)
-      setEstadoIn(res.uf)
-      
-    })
+
+   fetch(`https://viacep.com.br//ws/${cepIn}/json/`)
+     .then(response => response.json())
+     .then(res => {
+       setCepIn(res.cep)
+       setRuaIn(res.logradouro)
+       setBairroIn(res.bairro)
+       setCidadeIn(res.localidade)
+       setEstadoIn(res.uf)
+
+     })
+
  
-const valorTotal = Number(total + total2).toFixed(2)
+const valorTotal = Number(total + totalAdd).toFixed(2)
 
 const itemComprado = carts
- 
+const itemAdicional =ad
 
 // data customer login
 const [customer, setCustomer ] = useState("")
@@ -188,10 +199,10 @@ const getId=(()=>{
 const {id} =useParams()
 
 var idClienteString= localStorage.getItem("idCliente")
-  var costumerString = localStorage.getItem("costumer")
+var costumerString = localStorage.getItem("costumer")
 
 var idCliente = JSON.parse(idClienteString)
-  var costumer = JSON.parse(costumerString)
+var costumer = JSON.parse(costumerString)
    
  // fazer comprar
   const data = {
@@ -199,6 +210,7 @@ var idCliente = JSON.parse(idClienteString)
     idCliente: idCliente,
     status: "pago",
     itemComprado: itemComprado,
+    itemAdicional: itemAdicional,
     valorTotal: valorTotal,
     cep: cepIn,
     rua: ruaIn,
@@ -251,18 +263,65 @@ const handleSubmit=((e)=>{
       }
 
  
-      const [beb, setBeb] = useState([])
+ 
 
       const url3="http://localhost:4000/bebidas"
      
   
         const listBebida=()=>{
           axios.get(`${url3}`).then((response) => {
-            setBeb(response.data);
-              
+            //setBeb(response.data);
+            //console.log(response.data)
+            const arr = response.data
+            var data = arr.map(obj => ({ ...obj, qty: 0 }))
+            setBeb(data);
           });
         }
 
+   const [count ,setCount]=useState("0")
+
+  
+
+  function handlePlus(dados) {
+    setCount(dados.qty ++)
+    
+    const exist = ad.find((x) => x._id === dados._id)
+    if (exist) {
+
+      setAd(
+        ad.map((x) =>
+          x._id === dados._id ? { ...exist, qty: exist.qty + 1 } : x
+        )
+      )
+
+    } else {
+      setAd([...ad, { ...dados, qty: 1 }])
+    }
+  }
+
+
+
+  function handleMenos(dados){
+    setCount(dados.qty--)
+    const exist = ad.find((x) => x._id === dados._id)
+    if (exist) {
+
+      setAd(
+        ad.map((x) =>
+          x._id === dados._id ? { ...exist, qty: exist.qty - 1 } : x
+        )
+      )
+
+    }
+
+    if(dados.qty <=0){
+
+      const filterItem = ad.filter(index => index._id !== dados._id)
+      setAd(filterItem)
+    }
+  }
+  console.log(ad)
+ 
 
  
  
@@ -617,7 +676,7 @@ const handleSubmit=((e)=>{
                     ))
                   }
                 </div>
-                {carts.length > 0 ? <div className="precoCompra">Subtotal: R$ {Number(total + total2).toFixed(2)}</div> : null}
+                  {carts.length > 0 ? <div className="precoCompra">Subtotal: R$ {Number(total + totalAdd).toFixed(2)}</div> : null}
 
     </div>
    </div>
@@ -638,10 +697,15 @@ const handleSubmit=((e)=>{
 
                 <div className='btnPrecoAdicional'>
                   <div className='preco'>R$ {dado.preco}</div>
+
                   <div className='btnAdicional'>
 
-
-                    <div className="btn" onClick={(e) => handleAdd(dado)}><span className='btn_add'>adicionar</span></div>
+                   
+                  
+                    {dado.qty > 0 ? <div className='btnMenos' onClick={() => handleMenos(dado)}>-</div> : null}
+                    {dado.qty > 0 ? <div className='preco'>{dado.qty}</div> :null }
+                    <div className='btnPlus' onClick={() => handlePlus(dado)}>+</div>
+                   
 
 
 
